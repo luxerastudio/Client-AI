@@ -1,8 +1,0 @@
-{
-  "deployment": {
-    "commit": "54cfc666f0d912f37797e11a90a312e1f4c7d518",
-    "timestamp": "2026-04-21T23:25:58.3NZ",
-    "project": "client-ai-system",
-    "status": "ready"
-  }
-}

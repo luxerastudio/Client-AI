@@ -1,8 +1,0 @@
-{
-  "lock": {
-    "active": true,
-    "commit": "caecdb2e792a58534dbe0140ecbe9e85c586a00c",
-    "timestamp": "2026-04-21T23:18:00.3NZ",
-    "type": "zero-fail-deploy"
-  }
-}

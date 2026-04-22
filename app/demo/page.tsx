@@ -135,7 +135,8 @@ export default function DemoPage() {
       }
     } catch (err) {
       console.error("API ERROR:", err);
-      setError(`Connection failed: ${err instanceof Error ? err.message : 'Unknown error'}. Please check your connection and try again.`);
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      setError(`API Error: ${errorMessage}. Please try again.`);
     } finally {
       setLoading(false);
       setLoadingStage('');
@@ -190,7 +191,7 @@ export default function DemoPage() {
                 value={data.niche}
                 onChange={(e) => setData({ ...data, niche: e.target.value })}
                 placeholder="e.g., dentist, plumber, lawyer"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg text-black bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
             
@@ -203,7 +204,7 @@ export default function DemoPage() {
                 value={data.location}
                 onChange={(e) => setData({ ...data, location: e.target.value })}
                 placeholder="e.g., USA, California, New York"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg text-black bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
           </div>

@@ -120,9 +120,6 @@ importers:
 
   apps/frontend:
     dependencies:
-      '@repo/core':
-        specifier: workspace:*
-        version: link:../../packages/core
       jsonwebtoken:
         specifier: ^9.0.3
         version: 9.0.3

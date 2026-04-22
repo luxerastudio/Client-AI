@@ -10,6 +10,8 @@ import { apiProtection } from '@/lib/core/api-protection';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
+  console.log("API ROUTE: Request received");
+  
   // Extract input data for response scope
   let inputNiche = '';
   let inputLocation = '';
@@ -20,6 +22,8 @@ export async function POST(request: NextRequest) {
     'test_execution',
     100, // Estimated credits for test execution
     async (userId, body) => {
+      console.log("API ROUTE: Protected execution started");
+      
       // Input validation - server side
       if (!body.niche || typeof body.niche !== 'string') {
         throw new Error('Niche is required and must be a string');
@@ -87,11 +91,11 @@ export async function POST(request: NextRequest) {
         userId
       };
 
+      console.log("API ROUTE: Executing acquisition flow");
       // Execute full acquisition flow
       const flowResult = await coreSystem.runAcquisitionFlow(testInput);
+      console.log("API ROUTE: Flow execution completed");
       
-      // Store result for response
-      result.result = flowResult;
       return flowResult;
     }
   );

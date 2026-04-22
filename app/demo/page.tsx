@@ -87,7 +87,7 @@ export default function DemoPage() {
 
     setLoading(true);
     setError('');
-    setResult(null);
+    // Don't reset result here - let previous results remain until new data arrives
 
     // Simulate loading stages with realistic delays
     for (let i = 0; i < stages.length; i++) {
@@ -120,7 +120,13 @@ export default function DemoPage() {
       console.log("API RESPONSE STATUS:", response.status);
       
       const result: ExecutionResult = await response.json();
-      console.log("API RESPONSE DATA:", result);
+      console.log("FULL API RESPONSE:", JSON.stringify(result, null, 2));
+      
+      // Validate response structure
+      if (!result) {
+        throw new Error("Invalid API response structure");
+      }
+      
       setResult(result);
       
       if (!result.success) {

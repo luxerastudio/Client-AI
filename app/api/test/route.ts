@@ -10,6 +10,10 @@ import { apiProtection } from '@/lib/core/api-protection';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
+  // Extract input data for response scope
+  let inputNiche = '';
+  let inputLocation = '';
+  
   // HARD LOCK: Execute with API protection
   const result = await apiProtection.executeProtected(
     request,
@@ -58,6 +62,10 @@ export async function POST(request: NextRequest) {
       const industry = nicheToIndustry[normalizedNiche] || 
         normalizedNiche.charAt(0).toUpperCase() + normalizedNiche.slice(1);
 
+      // Store input for response
+      inputNiche = body.niche;
+      inputLocation = body.location;
+
       // Create user access if not exists (with FREE tier for testing)
       const userAccess = await accessControl.getUserAccess(userId);
       if (!userAccess) {
@@ -80,15 +88,27 @@ export async function POST(request: NextRequest) {
       };
 
       // Execute full acquisition flow
-      return await coreSystem.runAcquisitionFlow(testInput);
+      const flowResult = await coreSystem.runAcquisitionFlow(testInput);
+      
+      // Store result for response
+      result.result = flowResult;
+      return flowResult;
     }
   );
 
   if (result.success) {
     const flowResult = result.result;
+    console.log("API ROUTE: Flow result received:", {
+      leadsCount: flowResult?.leads?.length || 0,
+      personalizedLeadsCount: flowResult?.personalizedLeads?.length || 0,
+      outreachMessagesCount: flowResult?.outreachMessages?.length || 0,
+      offersCount: flowResult?.offers?.length || 0,
+      pipelineEntriesCount: flowResult?.pipelineEntries?.length || 0
+    });
+    
     return NextResponse.json({
       success: true,
-      input: { niche: result.result?.config?.criteria?.industry, location: result.result?.config?.criteria?.location },
+      input: { niche: inputNiche, location: inputLocation },
       output: {
         leadsGenerated: flowResult?.leads?.length || 0,
         personalizedLeads: flowResult?.personalizedLeads?.length || 0,

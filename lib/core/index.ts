@@ -184,6 +184,9 @@ export class CoreSystem {
     };
 
     return await executionGuard.executeWithGuard(accessRequest, async () => {
+      console.log("CORE SYSTEM: Starting acquisition flow for user:", userId);
+      console.log("CORE SYSTEM: Config received:", config);
+      
       const results: any = {
         leads: [],
         personalizedLeads: [],
@@ -195,8 +198,10 @@ export class CoreSystem {
       };
 
       // Step 1: Lead Engine - Generate leads
+      console.log("CORE SYSTEM: Step 1 - Generating leads...");
       const leads = await leadEngine.generateLeads(config);
       results.leads = leads;
+      console.log("CORE SYSTEM: Leads generated:", leads.length);
       
       // Step 2: Process each lead through the complete pipeline
       for (const lead of leads) {
@@ -205,6 +210,7 @@ export class CoreSystem {
         results.pipelineEntries.push(pipelineEntry);
 
         // Step 4: Personalization Engine - Enrich lead
+        console.log("CORE SYSTEM: Step 4 - Personalizing lead:", lead.company);
         const profile = await personalizationEngine.createProfile(lead.id);
         
         // Update profile with lead data
@@ -235,6 +241,7 @@ export class CoreSystem {
         });
 
         // Step 5: Outreach Engine - Create campaign and generate message
+        console.log("CORE SYSTEM: Step 5 - Creating outreach for lead:", lead.company);
         const campaign = await outreachEngine.createCampaign(
           'Acquisition Campaign',
           [lead.id],
@@ -251,9 +258,11 @@ export class CoreSystem {
         await outreachEngine.sendMessage(outreachMessage.id);
         
         results.outreachMessages.push(outreachMessage);
+        console.log("CORE SYSTEM: Outreach message created for lead:", lead.company);
 
         // Step 6: Offer Engine - Create offer (only for qualified leads)
         if (lead.qualified && lead.score >= 70) {
+          console.log("CORE SYSTEM: Step 6 - Creating offer for qualified lead:", lead.company);
           const offer = await offerEngine.createOffer(lead.id, 'professional_package');
           const personalizedOffer = await offerEngine.personalizeOffer(offer.id, {
             company: lead.company,
@@ -274,6 +283,16 @@ export class CoreSystem {
           results.pipelineStates.push(updatedEntry);
         }
       }
+
+      console.log("CORE SYSTEM: Pipeline execution complete");
+      console.log("CORE SYSTEM: Final results summary:", {
+        leadsGenerated: results.leads.length,
+        personalizedLeads: results.personalizedLeads.length,
+        outreachMessages: results.outreachMessages.length,
+        offersCreated: results.offers.length,
+        pipelineEntries: results.pipelineEntries.length,
+        pipelineStates: results.pipelineStates.length
+      });
 
       return results;
     });

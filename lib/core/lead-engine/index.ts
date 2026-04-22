@@ -31,18 +31,24 @@ export class LeadEngine {
   private leads: Map<string, Lead> = new Map();
 
   async generateLeads(config: LeadGenerationConfig): Promise<Lead[]> {
+    console.log("LEAD ENGINE: Starting lead generation with config:", config);
+    
     // Core lead generation logic
     const leads: Lead[] = [];
     
     // Realistic business name patterns by industry
     const businessPatterns = this.getBusinessPatterns(config.criteria.industry?.[0] || 'Healthcare');
+    console.log("LEAD ENGINE: Business patterns found:", businessPatterns.length);
     
     // Real US cities for realistic locations
     const cities = this.getCitiesByLocation(config.criteria.location?.[0] || 'USA');
+    console.log("LEAD ENGINE: Cities found:", cities.length);
     
     const industries = config.criteria.industry || ['Healthcare'];
+    const actualLeadCount = Math.max(1, Math.min(config.maxLeads, 5)); // Ensure at least 1 lead
+    console.log("LEAD ENGINE: Generating", actualLeadCount, "leads");
     
-    for (let i = 0; i < Math.min(config.maxLeads, 5); i++) {
+    for (let i = 0; i < actualLeadCount; i++) {
       const businessData = businessPatterns[i % businessPatterns.length];
       const city = cities[i % cities.length];
       
@@ -77,7 +83,11 @@ export class LeadEngine {
       // Qualify the lead
       const qualifiedLead = await this.qualifyLead(lead);
       leads.push(qualifiedLead);
+      console.log(`LEAD ENGINE: Generated lead ${i + 1}/${actualLeadCount}:`, qualifiedLead.company);
     }
+    
+    console.log("LEAD ENGINE: Total leads generated:", leads.length);
+    console.log("LEAD ENGINE: Generated leads:", leads.map(l => ({ id: l.id, company: l.company, email: l.email, qualified: l.qualified, score: l.score })));
     
     return leads;
   }

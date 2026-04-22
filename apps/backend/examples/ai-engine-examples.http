@@ -1,0 +1,401 @@
+### AI Engine API Examples
+### Use with REST Client extensions like VS Code REST Client
+
+# Set base URL
+@baseUrl = http://localhost:3001/api/v1
+@contentType = application/json
+
+### 1. Quick Generate (Simple workflow)
+POST {{baseUrl}}/ai-engine/generate
+Content-Type: {{contentType}}
+
+{
+  "input": "Write a professional email announcing a new AI-powered productivity tool",
+  "config": {
+    "model": "gpt-3.5-turbo",
+    "temperature": 0.7,
+    "maxTokens": 800,
+    "style": "professional",
+    "refinementRules": [
+      {
+        "type": "formatting",
+        "config": { "format": "email" }
+      },
+      {
+        "type": "content",
+        "config": { "action": "improve", "target": "clarity" }
+      }
+    ]
+  }
+}
+
+### 2. Create AI Workflow
+POST {{baseUrl}}/ai-engine/workflows
+Content-Type: {{contentType}}
+
+{
+  "name": "Content Marketing Pipeline",
+  "description": "Multi-step workflow for creating marketing content",
+  "type": "content_generation",
+  "modelConfig": {
+    "provider": "openai",
+    "model": "gpt-3.5-turbo",
+    "temperature": 0.7,
+    "maxTokens": 1500
+  },
+  "userId": "user123",
+  "steps": [
+    {
+      "id": "analysis",
+      "layer": "input_analysis",
+      "name": "Analyze Input",
+      "config": {},
+      "order": 0,
+      "dependencies": []
+    },
+    {
+      "id": "prompting",
+      "layer": "prompt_structuring",
+      "name": "Structure Prompt",
+      "config": {
+        "style": "marketing",
+        "outputFormat": "structured"
+      },
+      "order": 1,
+      "dependencies": ["analysis"]
+    },
+    {
+      "id": "generation",
+      "layer": "ai_generation",
+      "name": "Generate Content",
+      "config": {},
+      "order": 2,
+      "dependencies": ["prompting"]
+    },
+    {
+      "id": "refinement",
+      "layer": "output_refinement",
+      "name": "Refine Output",
+      "config": {
+        "refinementRules": [
+          {
+            "type": "formatting",
+            "config": { "format": "markdown" }
+          },
+          {
+            "type": "style",
+            "config": { "style": "engaging", "tone": "positive" }
+          }
+        ]
+      },
+      "order": 3,
+      "dependencies": ["generation"]
+    }
+  ]
+}
+
+### 3. Execute AI Workflow (Replace WORKFLOW_ID with actual ID)
+POST {{baseUrl}}/ai-engine/workflows/WORKFLOW_ID/execute
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "userInput": "Create a blog post about the benefits of AI automation for small businesses",
+    "targetAudience": "small business owners",
+    "tone": "informative and encouraging"
+  },
+  "maxRetries": 2
+}
+
+### 4. Get Execution Status (Replace EXECUTION_ID with actual ID)
+GET {{baseUrl}}/ai-engine/executions/EXECUTION_ID/status
+
+### 5. Cancel Execution (Replace EXECUTION_ID with actual ID)
+POST {{baseUrl}}/ai-engine/executions/EXECUTION_ID/cancel
+
+### 6. Validate Workflow
+POST {{baseUrl}}/ai-engine/workflows/validate
+Content-Type: {{contentType}}
+
+{
+  "name": "Test Workflow",
+  "type": "content_generation",
+  "modelConfig": {
+    "provider": "openai",
+    "model": "gpt-3.5-turbo"
+  },
+  "steps": [
+    {
+      "id": "step1",
+      "layer": "input_analysis",
+      "name": "Analysis",
+      "order": 0,
+      "dependencies": []
+    },
+    {
+      "id": "step2",
+      "layer": "prompt_structuring",
+      "name": "Prompting",
+      "order": 1,
+      "dependencies": ["step1"]
+    },
+    {
+      "id": "step3",
+      "layer": "ai_generation",
+      "name": "Generation",
+      "order": 2,
+      "dependencies": ["step2"]
+    },
+    {
+      "id": "step4",
+      "layer": "output_refinement",
+      "name": "Refinement",
+      "order": 3,
+      "dependencies": ["step3"]
+    }
+  ]
+}
+
+### 7. YouTube Script Generation Workflow
+POST {{baseUrl}}/ai-engine/workflows
+Content-Type: {{contentType}}
+
+{
+  "name": "YouTube Script Generator",
+  "description": "Creates engaging YouTube video scripts",
+  "type": "content_generation",
+  "modelConfig": {
+    "provider": "openai",
+    "model": "gpt-3.5-turbo",
+    "temperature": 0.8,
+    "maxTokens": 2000
+  },
+  "userId": "user123",
+  "steps": [
+    {
+      "id": "topic_analysis",
+      "layer": "input_analysis",
+      "name": "Analyze Topic",
+      "order": 0,
+      "dependencies": []
+    },
+    {
+      "id": "script_prompt",
+      "layer": "prompt_structuring",
+      "name": "Create Script Prompt",
+      "config": {
+        "style": "conversational",
+        "outputFormat": "script"
+      },
+      "order": 1,
+      "dependencies": ["topic_analysis"]
+    },
+    {
+      "id": "script_generation",
+      "layer": "ai_generation",
+      "name": "Generate Script",
+      "config": {
+        "maxTokens": 2000
+      },
+      "order": 2,
+      "dependencies": ["script_prompt"]
+    },
+    {
+      "id": "script_refinement",
+      "layer": "output_refinement",
+      "name": "Refine Script",
+      "config": {
+        "refinementRules": [
+          {
+            "type": "formatting",
+            "config": { "format": "script" }
+          },
+          {
+            "type": "content",
+            "config": { "action": "improve", "target": "engagement" }
+          }
+        ]
+      },
+      "order": 3,
+      "dependencies": ["script_generation"]
+    }
+  ]
+}
+
+### 8. SEO Content Optimization Workflow
+POST {{baseUrl}}/ai-engine/workflows
+Content-Type: {{contentType}}
+
+{
+  "name": "SEO Content Optimizer",
+  "description": "Optimizes content for search engines",
+  "type": "optimization",
+  "modelConfig": {
+    "provider": "openai",
+    "model": "gpt-3.5-turbo",
+    "temperature": 0.3,
+    "maxTokens": 2500
+  },
+  "userId": "user123",
+  "steps": [
+    {
+      "id": "content_analysis",
+      "layer": "input_analysis",
+      "name": "Analyze Content",
+      "order": 0,
+      "dependencies": []
+    },
+    {
+      "id": "seo_prompt",
+      "layer": "prompt_structuring",
+      "name": "Create SEO Prompt",
+      "config": {
+        "style": "seo",
+        "outputFormat": "optimized"
+      },
+      "order": 1,
+      "dependencies": ["content_analysis"]
+    },
+    {
+      "id": "seo_optimization",
+      "layer": "ai_generation",
+      "name": "Optimize for SEO",
+      "order": 2,
+      "dependencies": ["seo_prompt"]
+    },
+    {
+      "id": "final_refinement",
+      "layer": "output_refinement",
+      "name": "Final Refinement",
+      "config": {
+        "refinementRules": [
+          {
+            "type": "validation",
+            "config": { "checks": ["grammar", "spelling", "readability"] }
+          },
+          {
+            "type": "content",
+            "config": { "action": "optimize", "target": "seo" }
+          }
+        ]
+      },
+      "order": 3,
+      "dependencies": ["seo_optimization"]
+    }
+  ]
+}
+
+### 9. Execute YouTube Script Workflow (Replace WORKFLOW_ID)
+POST {{baseUrl}}/ai-engine/workflows/WORKFLOW_ID/execute
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "userInput": "10 AI Tools That Will Revolutionize Your Workflow in 2024",
+    "duration": "12 minutes",
+    "style": "educational and engaging",
+    "targetAudience": "tech professionals and entrepreneurs"
+  }
+}
+
+### 10. Quick Generate with Different Styles
+POST {{baseUrl}}/ai-engine/generate
+Content-Type: {{contentType}}
+
+{
+  "input": "Explain quantum computing in simple terms",
+  "config": {
+    "model": "gpt-3.5-turbo",
+    "temperature": 0.5,
+    "maxTokens": 1000,
+    "style": "educational",
+    "outputFormat": "simple_explanation",
+    "refinementRules": [
+      {
+        "type": "content",
+        "config": { "action": "simplify", "target": "complexity" }
+      },
+      {
+        "type": "formatting",
+        "config": { "format": "bullet_points" }
+      }
+    ]
+  }
+}
+
+### 11. Error Handling Test - Invalid Workflow
+POST {{baseUrl}}/ai-engine/workflows
+Content-Type: {{contentType}}
+
+{
+  "name": "",
+  "type": "invalid_type",
+  "modelConfig": {},
+  "steps": []
+}
+
+### 12. Complex Multi-Step Analysis Workflow
+POST {{baseUrl}}/ai-engine/workflows
+Content-Type: {{contentType}}
+
+{
+  "name": "Deep Analysis Pipeline",
+  "description": "Comprehensive content analysis and insights generation",
+  "type": "analysis",
+  "modelConfig": {
+    "provider": "openai",
+    "model": "gpt-4",
+    "temperature": 0.2,
+    "maxTokens": 3000
+  },
+  "userId": "user123",
+  "steps": [
+    {
+      "id": "initial_analysis",
+      "layer": "input_analysis",
+      "name": "Initial Analysis",
+      "order": 0,
+      "dependencies": []
+    },
+    {
+      "id": "context_prompt",
+      "layer": "prompt_structuring",
+      "name": "Contextual Prompt",
+      "config": {
+        "style": "analytical",
+        "outputFormat": "detailed"
+      },
+      "order": 1,
+      "dependencies": ["initial_analysis"]
+    },
+    {
+      "id": "deep_analysis",
+      "layer": "ai_generation",
+      "name": "Deep Analysis",
+      "config": {
+        "maxTokens": 3000
+      },
+      "order": 2,
+      "dependencies": ["context_prompt"]
+    },
+    {
+      "id": "insight_extraction",
+      "layer": "output_refinement",
+      "name": "Extract Insights",
+      "config": {
+        "refinementRules": [
+          {
+            "type": "content",
+            "config": { "action": "extract", "target": "insights" }
+          },
+          {
+            "type": "formatting",
+            "config": { "format": "structured_report" }
+          }
+        ]
+      },
+      "order": 3,
+      "dependencies": ["deep_analysis"]
+    }
+  ]
+}

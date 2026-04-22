@@ -1,0 +1,266 @@
+{
+  "templates": {
+    "content_generation": {
+      "simple_blog": {
+        "name": "Simple Blog Post Generator",
+        "description": "Generates a basic blog post on any topic",
+        "type": "content_generation",
+        "steps": [
+          {
+            "id": "generate-blog",
+            "name": "Generate Blog Content",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "content",
+              "prompt": "Write an engaging blog post about {topic}",
+              "maxTokens": 1500,
+              "temperature": 0.7
+            },
+            "order": 0
+          }
+        ]
+      },
+      "email_campaign": {
+        "name": "Email Campaign Generator",
+        "description": "Creates marketing email sequences",
+        "type": "content_generation",
+        "steps": [
+          {
+            "id": "subject-line",
+            "name": "Generate Subject Lines",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "content",
+              "prompt": "Generate 5 compelling email subject lines for {product} campaign",
+              "maxTokens": 200,
+              "temperature": 0.8
+            },
+            "order": 0
+          },
+          {
+            "id": "email-body",
+            "name": "Generate Email Body",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "content",
+              "prompt": "Write a persuasive marketing email for {product} targeting {audience}",
+              "maxTokens": 800,
+              "temperature": 0.6
+            },
+            "order": 1
+          }
+        ]
+      }
+    },
+    "youtube_script": {
+      "educational": {
+        "name": "Educational YouTube Script",
+        "description": "Creates educational video scripts",
+        "type": "youtube_script",
+        "steps": [
+          {
+            "id": "script-outline",
+            "name": "Create Script Outline",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "youtube_script",
+              "prompt": "Create a detailed outline for an educational YouTube video about {topic}",
+              "duration": "{duration}",
+              "style": "educational",
+              "maxTokens": 1000
+            },
+            "order": 0
+          },
+          {
+            "id": "full-script",
+            "name": "Generate Full Script",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "youtube_script",
+              "prompt": "Write the complete YouTube script for {topic} with timestamps and speaker notes",
+              "duration": "{duration}",
+              "style": "educational",
+              "maxTokens": 2000
+            },
+            "order": 1
+          }
+        ]
+      },
+      "review": {
+        "name": "Product Review Script",
+        "description": "Creates product review video scripts",
+        "type": "youtube_script",
+        "steps": [
+          {
+            "id": "review-script",
+            "name": "Generate Review Script",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "youtube_script",
+              "prompt": "Create a comprehensive product review script for {product}",
+              "duration": "{duration}",
+              "style": "review",
+              "maxTokens": 1800
+            },
+            "order": 0
+          }
+        ]
+      }
+    },
+    "seo_writing": {
+      "blog_seo": {
+        "name": "SEO Blog Optimizer",
+        "description": "Optimizes blog content for search engines",
+        "type": "seo_writing",
+        "steps": [
+          {
+            "id": "seo-optimization",
+            "name": "Optimize Content for SEO",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "seo_content",
+              "prompt": "{content}",
+              "keywords": "{keywords}",
+              "maxTokens": 2500
+            },
+            "order": 0
+          }
+        ]
+      },
+      "landing_page": {
+        "name": "Landing Page SEO",
+        "description": "Creates SEO-optimized landing page content",
+        "type": "seo_writing",
+        "steps": [
+          {
+            "id": "headline",
+            "name": "Generate SEO Headline",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "content",
+              "prompt": "Create 5 SEO-friendly headlines for {product} landing page targeting {keywords}",
+              "maxTokens": 300
+            },
+            "order": 0
+          },
+          {
+            "id": "page-content",
+            "name": "Generate Landing Page Content",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "seo_content",
+              "prompt": "Write compelling landing page content for {product}",
+              "keywords": "{keywords}",
+              "maxTokens": 1500
+            },
+            "order": 1
+          }
+        ]
+      }
+    },
+    "automation_pipeline": {
+      "content_marketing": {
+        "name": "Content Marketing Pipeline",
+        "description": "Complete content marketing automation",
+        "type": "automation_pipeline",
+        "steps": [
+          {
+            "id": "topic-research",
+            "name": "Research Topics",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "content",
+              "prompt": "Research trending topics in {industry} for {timeframe}",
+              "maxTokens": 800
+            },
+            "order": 0
+          },
+          {
+            "id": "blog-post",
+            "name": "Generate Blog Post",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "content",
+              "prompt": "Write a comprehensive blog post about {topic}",
+              "maxTokens": 2000
+            },
+            "order": 1
+          },
+          {
+            "id": "social-content",
+            "name": "Create Social Media Content",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "content",
+              "prompt": "Create 5 social media posts promoting the blog post about {topic}",
+              "maxTokens": 600
+            },
+            "order": 2
+          },
+          {
+            "id": "newsletter",
+            "name": "Generate Newsletter Content",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "content",
+              "prompt": "Write a newsletter summary of the blog post about {topic}",
+              "maxTokens": 800
+            },
+            "order": 3
+          }
+        ]
+      },
+      "product_launch": {
+        "name": "Product Launch Pipeline",
+        "description": "Automated product launch content creation",
+        "type": "automation_pipeline",
+        "steps": [
+          {
+            "id": "press-release",
+            "name": "Generate Press Release",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "content",
+              "prompt": "Write a professional press release for {product} launch",
+              "maxTokens": 1000
+            },
+            "order": 0
+          },
+          {
+            "id": "blog-announcement",
+            "name": "Create Blog Announcement",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "content",
+              "prompt": "Write an exciting blog post announcing {product}",
+              "maxTokens": 1500
+            },
+            "order": 1
+          },
+          {
+            "id": "email-campaign",
+            "name": "Generate Email Campaign",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "content",
+              "prompt": "Create a 3-email campaign sequence for {product} launch",
+              "maxTokens": 1200
+            },
+            "order": 2
+          },
+          {
+            "id": "social-blast",
+            "name": "Create Social Media Blast",
+            "type": "ai_generation",
+            "config": {
+              "generationType": "content",
+              "prompt": "Generate 10 social media posts for {product} launch across different platforms",
+              "maxTokens": 800
+            },
+            "order": 3
+          }
+        ]
+      }
+    }
+  }
+}

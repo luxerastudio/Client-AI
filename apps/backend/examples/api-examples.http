@@ -1,0 +1,207 @@
+### AI SaaS Backend API Examples
+### Use with REST Client extensions like VS Code REST Client
+
+# Set base URL
+@baseUrl = http://localhost:3001/api/v1
+@contentType = application/json
+
+### Health Check
+GET http://localhost:3001/health
+
+### 1. Generate Simple Content
+POST {{baseUrl}}/content/generate
+Content-Type: {{contentType}}
+
+{
+  "type": "content",
+  "prompt": "Write a professional email announcing a new product launch",
+  "config": {
+    "maxTokens": 500,
+    "temperature": 0.7
+  }
+}
+
+### 2. Generate YouTube Script
+POST {{baseUrl}}/content/generate
+Content-Type: {{contentType}}
+
+{
+  "type": "youtube_script",
+  "prompt": "The Future of Artificial Intelligence",
+  "config": {
+    "duration": "10 minutes",
+    "style": "educational",
+    "maxTokens": 1500
+  }
+}
+
+### 3. Generate SEO Content
+POST {{baseUrl}}/content/generate
+Content-Type: {{contentType}}
+
+{
+  "type": "seo_content",
+  "prompt": "Artificial intelligence is transforming how businesses operate in the digital age.",
+  "keywords": ["AI", "business transformation", "digital age", "automation"],
+  "config": {
+    "maxTokens": 1000,
+    "temperature": 0.5
+  }
+}
+
+### 4. Create Simple Content Generation Workflow
+POST {{baseUrl}}/workflows
+Content-Type: {{contentType}}
+
+{
+  "name": "Blog Post Generator",
+  "description": "Generates blog posts using AI",
+  "type": "content_generation",
+  "userId": "user123",
+  "steps": [
+    {
+      "id": "generate-content",
+      "name": "Generate Blog Content",
+      "type": "ai_generation",
+      "config": {
+        "generationType": "content",
+        "prompt": "Write a comprehensive blog post about the benefits of AI automation for small businesses",
+        "maxTokens": 1500,
+        "temperature": 0.7
+      },
+      "order": 0
+    }
+  ]
+}
+
+### 5. Create Multi-Step YouTube Workflow
+POST {{baseUrl}}/workflows
+Content-Type: {{contentType}}
+
+{
+  "name": "YouTube Content Pipeline",
+  "description": "Complete YouTube video creation pipeline",
+  "type": "youtube_script",
+  "userId": "user123",
+  "steps": [
+    {
+      "id": "script-generation",
+      "name": "Generate YouTube Script",
+      "type": "ai_generation",
+      "config": {
+        "generationType": "youtube_script",
+        "prompt": "10 Ways AI Can Boost Your Productivity",
+        "duration": "12 minutes",
+        "style": "educational",
+        "maxTokens": 2000
+      },
+      "order": 0
+    }
+  ]
+}
+
+### 6. Create SEO Optimization Workflow
+POST {{baseUrl}}/workflows
+Content-Type: {{contentType}}
+
+{
+  "name": "SEO Content Optimizer",
+  "description": "Optimizes content for search engines",
+  "type": "seo_writing",
+  "userId": "user123",
+  "steps": [
+    {
+      "id": "seo-optimization",
+      "name": "Optimize for SEO",
+      "type": "ai_generation",
+      "config": {
+        "generationType": "seo_content",
+        "prompt": "Our new AI-powered analytics platform provides real-time insights and predictive modeling for businesses of all sizes.",
+        "keywords": ["AI analytics", "real-time insights", "predictive modeling", "business intelligence"],
+        "maxTokens": 2000
+      },
+      "order": 0
+    }
+  ]
+}
+
+### 7. Execute Workflow (Replace WORKFLOW_ID with actual ID from previous responses)
+POST {{baseUrl}}/workflows/WORKFLOW_ID/execute
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "targetAudience": "small business owners",
+    "tone": "professional"
+  }
+}
+
+### 8. Check Workflow Execution Status (Replace EXECUTION_ID with actual ID)
+GET {{baseUrl}}/workflows/executions/EXECUTION_ID/status
+
+### 9. Create Complex Automation Pipeline
+POST {{baseUrl}}/workflows
+Content-Type: {{contentType}}
+
+{
+  "name": "Content Marketing Pipeline",
+  "description": "Complete content marketing automation",
+  "type": "automation_pipeline",
+  "userId": "user123",
+  "steps": [
+    {
+      "id": "research",
+      "name": "Topic Research",
+      "type": "ai_generation",
+      "config": {
+        "generationType": "content",
+        "prompt": "Research trending topics in AI and automation for Q4 2024",
+        "maxTokens": 800
+      },
+      "order": 0
+    },
+    {
+      "id": "blog-post",
+      "name": "Generate Blog Post",
+      "type": "ai_generation",
+      "config": {
+        "generationType": "content",
+        "prompt": "Write a detailed blog post based on the research findings",
+        "maxTokens": 2000
+      },
+      "order": 1
+    },
+    {
+      "id": "social-media",
+      "name": "Create Social Media Content",
+      "type": "ai_generation",
+      "config": {
+        "generationType": "content",
+        "prompt": "Create 5 social media posts promoting the blog post",
+        "maxTokens": 600
+      },
+      "order": 2
+    }
+  ]
+}
+
+### 10. Error Handling Example - Invalid Request
+POST {{baseUrl}}/content/generate
+Content-Type: {{contentType}}
+
+{
+  "type": "invalid_type",
+  "prompt": ""
+}
+
+### 11. Rate Limiting Test (Send multiple requests quickly)
+POST {{baseUrl}}/content/generate
+Content-Type: {{contentType}}
+
+{
+  "type": "content",
+  "prompt": "Quick test message",
+  "config": {
+    "maxTokens": 100
+  }
+}

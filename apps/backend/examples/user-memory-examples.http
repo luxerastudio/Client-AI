@@ -1,0 +1,824 @@
+### User Context Memory System API Examples
+### Use with REST Client extensions like VS Code REST Client
+
+# Set base URL
+@baseUrl = http://localhost:3001/api/v1
+@contentType = application/json
+
+### 1. Create User Preferences
+POST {{baseUrl}}/user-memory/user123/preferences
+Content-Type: {{contentType}}
+
+{
+  "preferences": {
+    "tone": "professional",
+    "style": "informative",
+    "length": "medium",
+    "complexity": "moderate",
+    "language": "en",
+    "targetAudience": "business professionals",
+    "industry": "technology",
+    "keywords": ["AI", "automation", "efficiency"],
+    "avoidKeywords": ["outdated", "inefficient"],
+    "customInstructions": "Focus on practical business applications and measurable results"
+  }
+}
+
+### 2. Get User Preferences
+GET {{baseUrl}}/user-memory/user123/preferences
+
+### 3. Update User Preferences
+PUT {{baseUrl}}/user-memory/user123/preferences
+Content-Type: {{contentType}}
+
+{
+  "preferences": {
+    "tone": "casual",
+    "style": "conversational",
+    "keywords": ["AI", "automation", "efficiency", "innovation"]
+  }
+}
+
+### 4. Add Prompt History
+POST {{baseUrl}}/user-memory/interactions
+Content-Type: {{contentType}}
+
+{
+  "userId": "user123",
+  "interactionType": "prompt",
+  "data": {
+    "stepId": "generate_output",
+    "stepType": "generate_output",
+    "stepName": "Generate Output"
+  },
+  "context": {
+    "sessionId": "session_abc123",
+    "metadata": {
+      "workflowType": "seo_article"
+    }
+  },
+  "outcome": {
+    "success": true,
+    "modifications": [],
+    "satisfaction": 8
+  },
+  "timestamp": "2024-01-15T10:30:00Z",
+  "duration": 5000,
+  "metadata": {
+    "contentType": "seo_article",
+    "workflowType": "seo_article",
+    "tokensUsed": 150,
+    "cost": 0.003,
+    "qualityScore": 8.5
+  }
+}
+
+### 5. Get Prompt History
+GET {{baseUrl}}/user-memory/user123/prompt-history?limit=10
+
+### 6. Search Prompt History
+GET {{baseUrl}}/user-memory/user123/prompt-history/search?query=AI%20automation
+
+### 7. Analyze Prompt Trends
+GET {{baseUrl}}/user-memory/user123/prompt-trends
+
+### 8. Detect Behavior Patterns
+POST {{baseUrl}}/user-memory/user123/behavior-patterns/detect
+
+### 9. Get Behavior Patterns
+GET {{baseUrl}}/user-memory/user123/behavior-patterns?patternType=time_preference
+
+### 10. Personalize Content
+POST {{baseUrl}}/user-memory/user123/personalize
+Content-Type: {{contentType}}
+
+{
+  "content": "Artificial intelligence is transforming how businesses operate in the modern world. Machine learning algorithms are becoming increasingly sophisticated, enabling companies to automate complex processes and gain valuable insights from data.",
+  "context": {
+    "contentType": "seo_article",
+    "workflowType": "seo_article"
+  }
+}
+
+### 11. Adapt Prompt
+POST {{baseUrl}}/user-memory/user123/adapt-prompt
+Content-Type: {{contentType}}
+
+{
+  "prompt": "Write about AI in business",
+  "context": {
+    "workflowType": "seo_article"
+  }
+}
+
+### 12. Check if Should Personalize
+GET {{baseUrl}}/user-memory/user123/should-personalize?context={"contentType":"seo_article"}
+
+### 13. Get User Insights
+GET {{baseUrl}}/user-memory/user123/insights
+
+### 14. Get Personalization Score
+GET {{baseUrl}}/user-memory/user123/personalization-score
+
+### 15. Get User Memory Stats
+GET {{baseUrl}}/user-memory/user123/stats
+
+### 16. Add Content Feedback
+POST {{baseUrl}}/user-memory/user123/content-preferences/seo_article/feedback
+Content-Type: {{contentType}}
+
+{
+  "rating": 9,
+  "feedback": "Excellent content with great structure and valuable insights",
+  "aspects": ["clarity", "relevance", "depth", "usefulness"]
+}
+
+### 17. Get Content Preferences
+GET {{baseUrl}}/user-memory/user123/content-preferences?contentType=seo_article
+
+### 18. Get Interaction History
+GET {{baseUrl}}/user-memory/user123/interactions?limit=20
+
+### 19. Get Adaptation History
+GET {{baseUrl}}/user-memory/user123/adaptations
+
+### 20. Add Adaptation
+POST {{baseUrl}}/user-memory/adaptations
+Content-Type: {{contentType}}
+
+{
+  "userId": "user123",
+  "adaptationType": "tone",
+  "original": "The system processes data efficiently.",
+  "adapted": "The system processes data with remarkable efficiency and precision.",
+  "context": {
+    "contentType": "seo_article"
+  },
+  "trigger": "automatic_detection",
+  "effectiveness": 8.5,
+  "confidence": 0.9,
+  "timestamp": "2024-01-15T11:00:00Z"
+}
+
+### 21. Update User Configuration
+PUT {{baseUrl}}/user-memory/user123/config
+Content-Type: {{contentType}}
+
+{
+  "maxPromptHistory": 2000,
+  "patternDetectionThreshold": 0.8,
+  "personalizationEnabled": true,
+  "autoAdaptation": true
+}
+
+### 22. Get User Configuration
+GET {{baseUrl}}/user-memory/user123/config
+
+### 23. Quick Personalize Content
+POST {{baseUrl}}/user-memory/quick-personalize
+Content-Type: {{contentType}}
+
+{
+  "userId": "user123",
+  "content": "Machine learning is revolutionizing how we approach data analysis and decision making in modern businesses.",
+  "contentType": "seo_article"
+}
+
+### 24. Quick Adapt Prompt
+POST {{baseUrl}}/user-memory/quick-adapt-prompt
+Content-Type: {{contentType}}
+
+{
+  "userId": "user123",
+  "prompt": "Explain machine learning for beginners",
+  "workflowType": "educational_content"
+}
+
+### 25. Search Users by Preferences
+GET {{baseUrl}}/user-memory/users/search?preferences.tone=professional&preferences.language=en
+
+### 26. Find Similar Users
+GET {{baseUrl}}/user-memory/user123/similar?limit=5
+
+### 27. Export User Data
+GET {{baseUrl}}/user-memory/user123/export
+
+### 28. Import User Data
+POST {{baseUrl}}/user-memory/user456/import
+Content-Type: {{contentType}}
+
+{
+  "preferences": {
+    "userId": "user456",
+    "preferences": {
+      "tone": "casual",
+      "style": "conversational",
+      "language": "en",
+      "keywords": ["AI", "technology", "innovation"]
+    },
+    "behaviorPatterns": {
+      "frequentTopics": ["artificial intelligence", "machine learning"],
+      "preferredStructures": ["introduction", "main points", "conclusion"],
+      "commonModifications": ["add more examples", "simplify language"],
+      "feedbackPatterns": ["improve clarity", "add depth"]
+    },
+    "adaptationHistory": [],
+    "metadata": {
+      "createdAt": "2024-01-15T00:00:00Z",
+      "updatedAt": "2024-01-15T00:00:00Z",
+      "lastInteraction": "2024-01-15T00:00:00Z",
+      "interactionCount": 0,
+      "adaptationCount": 0
+    }
+  },
+  "promptHistory": [
+    {
+      "id": "prompt_1",
+      "userId": "user456",
+      "prompt": "What is AI?",
+      "context": {
+        "workflowType": "educational_content"
+      },
+      "response": "AI is a technology that enables computers to learn from data and make decisions.",
+      "metadata": {
+        "timestamp": "2024-01-15T10:00:00Z",
+        "contentType": "educational_content",
+        "workflowType": "educational_content",
+        "tokensUsed": 50,
+        "cost": 0.001,
+        "qualityScore": 7.5
+      }
+    }
+  ]
+}
+
+### 29. Batch Update Preferences
+POST {{baseUrl}}/user-memory/batch/preferences
+Content-Type: {{contentType}}
+
+[
+  {
+    "userId": "user123",
+    "preferences": {
+      "tone": "professional",
+      "style": "formal"
+    }
+  },
+  {
+    "userId": "user456",
+    "preferences": {
+      "tone": "casual",
+      "style": "conversational"
+    }
+  }
+]
+
+### 30. Batch Add Interactions
+POST {{baseUrl}}/user-memory/batch/interactions
+Content-Type: {{contentType}}
+
+[
+  {
+    "userId": "user123",
+    "interactionType": "content_generation",
+    "data": {
+      "stepId": "generate_output",
+      "stepType": "generate_output"
+    },
+    "outcome": {
+      "success": true,
+      "modifications": [],
+      "satisfaction": 8
+    },
+    "timestamp": "2024-01-15T10:30:00Z",
+    "metadata": {
+      "contentType": "seo_article"
+    }
+  },
+  {
+    "userId": "user456",
+    "interactionType": "prompt",
+    "data": {
+      "stepId": "generate_output",
+      "stepType": "generate_output"
+    },
+    "outcome": {
+      "success": true,
+      "modifications": ["add more detail"],
+      "satisfaction": 7
+    },
+    "timestamp": "2024-01-15T11:00:00Z",
+    "metadata": {
+      "contentType": "educational_content"
+    }
+  }
+]
+
+### 31. Cleanup Old Memory
+POST {{baseUrl}}/user-memory/user123/cleanup?olderThanDays=30
+
+### 32. Delete Old Prompt History
+DELETE {{baseUrl}}/user-memory/user123/prompt-history?beforeDate=2024-01-01T00:00:00Z
+
+### 33. Delete Old Interaction History
+DELETE {{baseUrl}}/user-memory/user123/interactions?beforeDate=2024-01-01T00:00:00Z
+
+### 34. Delete Old Adaptation History
+DELETE {{baseUrl}}/user-memory/user123/adaptations?beforeDate=2024-01-01T00:00:00Z
+
+### 35. Delete Content Preferences
+DELETE {{baseUrl}}/user-memory/user123/content-preferences?contentType=seo_article
+
+### 36. Delete Behavior Pattern
+DELETE {{baseUrl}}/user-memory/behavior-patterns/pattern_123
+
+### 37. Delete User Preferences
+DELETE {{baseUrl}}/user-memory/user123/preferences
+
+### 38. Get System Information
+GET {{baseUrl}}/user-memory/info
+
+### 39. Complex Workflow Example - Complete Personalization Flow
+
+### Step 1: Create User Preferences
+POST {{baseUrl}}/user-memory/user789/preferences
+Content-Type: {{contentType}}
+
+{
+  "preferences": {
+    "tone": "engaging",
+    "style": "conversational",
+    "length": "medium",
+    "complexity": "moderate",
+    "language": "en",
+    "targetAudience": "youtube viewers",
+    "industry": "entertainment",
+    "keywords": ["entertaining", "educational", "viral", "engaging"],
+    "avoidKeywords": ["boring", "technical", "academic"],
+    "customInstructions": "Create content that is both entertaining and educational, suitable for YouTube audience"
+  }
+}
+
+###
+
+### Step 2: Add Initial Interaction
+POST {{baseUrl}}/user-memory/interactions
+Content-Type: {{contentType}}
+
+{
+  "userId": "user789",
+  "interactionType": "prompt",
+  "data": {
+    "stepId": "generate_output",
+    "stepType": "generate_output",
+    "stepName": "Generate YouTube Script"
+  },
+  "context": {
+    "sessionId": "youtube_session_123",
+    "metadata": {
+      "workflowType": "youtube_script"
+    }
+  },
+  "outcome": {
+    "success": true,
+    "modifications": [],
+    "satisfaction": 6
+  },
+  "timestamp": "2024-01-15T14:00:00Z",
+  "duration": 8000,
+  "metadata": {
+    "contentType": "youtube_script",
+    "workflowType": "youtube_script",
+    "tokensUsed": 300,
+    "cost": 0.006,
+    "qualityScore": 6.5
+  }
+}
+
+###
+
+### Step 3: Personalize Content
+POST {{baseUrl}}/user-memory/user789/personalize
+Content-Type: {{contentType}}
+
+{
+  "content": "Today we're going to talk about artificial intelligence and how it's changing our world. AI systems can now write, create images, and even make decisions. This technology is advancing rapidly and affecting many industries.",
+  "context": {
+    "contentType": "youtube_script",
+    "workflowType": "youtube_script"
+  }
+}
+
+###
+
+### Step 4: Add Feedback and Adaptation
+POST {{baseUrl}}/user-memory/user789/content-preferences/youtube_script/feedback
+Content-Type: {{contentType}}
+
+{
+  "rating": 8,
+  "feedback": "Much better after personalization! The tone is more engaging and the content is well-suited for YouTube.",
+  "aspects": ["tone", "engagement", "suitability"]
+}
+
+###
+
+### Step 5: Add Adaptation Data
+POST {{baseUrl}}/user-memory/adaptations
+Content-Type: {{contentType}}
+
+{
+  "userId": "user789",
+  "adaptationType": "tone",
+  "original": "Today we're going to talk about artificial intelligence and how it's changing our world.",
+  "adapted": "Hey everyone! Today we're diving into the fascinating world of artificial intelligence and how it's totally transforming our daily lives!",
+  "context": {
+    "contentType": "youtube_script"
+  },
+  "trigger": "personalization_request",
+  "effectiveness": 8.5,
+  "confidence": 0.9,
+  "timestamp": "2024-01-15T14:30:00Z",
+  "feedback": {
+    "userRating": 8,
+    "systemRating": 8.5,
+    "comments": "Great improvement in engagement and audience suitability"
+  }
+}
+
+###
+
+### Step 6: Get Final Insights
+GET {{baseUrl}}/user-memory/user789/insights
+
+###
+
+### Step 7: Get Final Personalization Score
+GET {{baseUrl}}/user-memory/user789/personalization-score
+
+### 40. Performance Testing - Multiple Users
+
+### Create preferences for multiple users
+POST {{baseUrl}}/user-memory/user001/preferences
+Content-Type: {{contentType}}
+
+{
+  "preferences": {
+    "tone": "professional",
+    "style": "formal",
+    "language": "en"
+  }
+}
+
+###
+
+POST {{baseUrl}}/user-memory/user002/preferences
+Content-Type: {{contentType}}
+
+{
+  "preferences": {
+    "tone": "casual",
+    "style": "conversational",
+    "language": "en"
+  }
+}
+
+###
+
+POST {{baseUrl}}/user-memory/user003/preferences
+Content-Type: {{contentType}}
+
+{
+  "preferences": {
+    "tone": "technical",
+    "style": "analytical",
+    "language": "en"
+  }
+}
+
+### 41. Batch Operations Performance Test
+
+POST {{baseUrl}}/user-memory/batch/preferences
+Content-Type: {{contentType}}
+
+[
+  {
+    "userId": "user101",
+    "preferences": {
+      "tone": "professional",
+      "targetAudience": "business executives"
+    }
+  },
+  {
+    "userId": "user102",
+    "preferences": {
+      "tone": "casual",
+      "targetAudience": "general audience"
+    }
+  },
+  {
+    "userId": "user103",
+    "preferences": {
+      "tone": "educational",
+      "targetAudience": "students"
+    }
+  },
+  {
+    "userId": "user104",
+    "preferences": {
+      "tone": "entertaining",
+      "targetAudience": "social media users"
+    }
+  },
+  {
+    "userId": "user105",
+    "preferences": {
+      "tone": "persuasive",
+      "targetAudience": "potential customers"
+    }
+  }
+]
+
+### 42. Search and Discovery Tests
+
+### Search users with specific preferences
+GET {{baseUrl}}/user-memory/users/search?preferences.tone=professional&preferences.targetAudience=business%20executives
+
+### Search users with specific patterns
+GET {{baseUrl}}/user-memory/users/search?patterns=time_preference&patterns=content_type_preference
+
+### Search users active in specific date range
+GET {{baseUrl}}/user-memory/users/search?activityRange.start=2024-01-01T00:00:00Z&activityRange.end=2024-01-31T23:59:59Z
+
+### 43. Advanced Analytics Tests
+
+### Get comprehensive user insights
+GET {{baseUrl}}/user-memory/user123/insights
+
+### Get personalization effectiveness metrics
+GET {{baseUrl}}/user-memory/user123/personalization-score
+
+### Get memory usage statistics
+GET {{baseUrl}}/user-memory/user123/stats
+
+### 44. Content Type Specific Tests
+
+### YouTube Script Personalization
+POST {{baseUrl}}/user-memory/quick-personalize
+Content-Type: {{contentType}}
+
+{
+  "userId": "user123",
+  "content": "Let's explore the latest trends in technology and innovation.",
+  "contentType": "youtube_script"
+}
+
+### SEO Article Personalization
+POST {{baseUrl}}/user-memory/quick-personalize
+Content-Type: {{contentType}}
+
+{
+  "userId": "user123",
+  "content": "Search engine optimization is crucial for online visibility and business growth.",
+  "contentType": "seo_article"
+}
+
+### Ad Copy Personalization
+POST {{baseUrl}}/user-memory/quick-personalize
+Content-Type: {{contentType}}
+
+{
+  "userId": "user123",
+  "content": "Our innovative solution can transform your business operations.",
+  "contentType": "ad_copy"
+}
+
+### Email Personalization
+POST {{baseUrl}}/user-memory/quick-personalize
+Content-Type: {{contentType}}
+
+{
+  "userId": "user123",
+  "content": "Dear valued customer, we're excited to share our latest updates with you.",
+  "contentType": "email"
+}
+
+### 45. Error Handling Tests
+
+### Test with invalid user ID
+GET {{baseUrl}}/user-memory/invalid_user/preferences
+
+### Test with missing required fields
+POST {{baseUrl}}/user-memory/user123/personalize
+Content-Type: {{contentType}}
+
+{
+  "context": {
+    "contentType": "seo_article"
+  }
+}
+
+### Test with invalid adaptation type
+POST {{baseUrl}}/user-memory/adaptations
+Content-Type: {{contentType}}
+
+{
+  "userId": "user123",
+  "adaptationType": "invalid_type",
+  "original": "Test content",
+  "adapted": "Test adapted content"
+}
+
+### Test with invalid rating
+POST {{baseUrl}}/user-memory/user123/content-preferences/seo_article/feedback
+Content-Type: {{contentType}}
+
+{
+  "rating": 15,
+  "feedback": "Invalid rating test",
+  "aspects": ["test"]
+}
+
+### 46. Configuration Management Tests
+
+### Update configuration with invalid values
+PUT {{baseUrl}}/user-memory/user123/config
+Content-Type: {{contentType}}
+
+{
+  "maxPromptHistory": -1,
+  "patternDetectionThreshold": 1.5,
+  "personalizationEnabled": "not_a_boolean"
+}
+
+### Test configuration limits
+PUT {{baseUrl}}/user-memory/user123/config
+Content-Type: {{contentType}}
+
+{
+  "maxPromptHistory": 50000,
+  "retentionPeriod": 1000
+}
+
+### 47. Memory Management Tests
+
+### Test cleanup with various date ranges
+POST {{baseUrl}}/user-memory/user123/cleanup?olderThanDays=7
+
+POST {{baseUrl}}/user-memory/user123/cleanup?olderThanDays=90
+
+POST {{baseUrl}}/user-memory/user123/cleanup?olderThanDays=365
+
+### Test deletion with date ranges
+DELETE {{baseUrl}}/user-memory/user123/prompt-history?beforeDate=2023-12-31T23:59:59Z
+
+DELETE {{baseUrl}}/user-memory/user123/interactions?beforeDate=2023-12-31T23:59:59Z
+
+DELETE {{baseUrl}}/user-memory/user123/adaptations?beforeDate=2023-12-31T23:59:59Z
+
+### 48. Integration Test - Complete User Journey
+
+### Step 1: Create new user with preferences
+POST {{baseUrl}}/user-memory/user999/preferences
+Content-Type: {{contentType}}
+
+{
+  "preferences": {
+    "tone": "professional",
+    "style": "informative",
+    "length": "medium",
+    "complexity": "moderate",
+    "language": "en",
+    "targetAudience": "business professionals",
+    "keywords": ["AI", "automation", "efficiency", "innovation"],
+    "customInstructions": "Focus on business value and practical applications"
+  }
+}
+
+###
+
+### Step 2: Simulate multiple interactions
+POST {{baseUrl}}/user-memory/batch/interactions
+Content-Type: {{contentType}}
+
+[
+  {
+    "userId": "user999",
+    "interactionType": "prompt",
+    "data": {
+      "stepId": "generate_output",
+      "stepType": "generate_output"
+    },
+    "outcome": {
+      "success": true,
+      "modifications": [],
+      "satisfaction": 7
+    },
+    "timestamp": "2024-01-15T09:00:00Z",
+    "metadata": {
+      "contentType": "seo_article"
+    }
+  },
+  {
+    "userId": "user999",
+    "interactionType": "content_generation",
+    "data": {
+      "stepId": "generate_output",
+      "stepType": "generate_output"
+    },
+    "outcome": {
+      "success": true,
+      "modifications": ["add more examples"],
+      "satisfaction": 6
+    },
+    "timestamp": "2024-01-15T09:30:00Z",
+    "metadata": {
+      "contentType": "seo_article"
+    }
+  },
+  {
+    "userId": "user999",
+    "interactionType": "feedback",
+    "data": {
+      "stepId": "quality_score",
+      "stepType": "quality_score"
+    },
+    "outcome": {
+      "success": true,
+      "modifications": [],
+      "satisfaction": 8
+    },
+    "timestamp": "2024-01-15T10:00:00Z",
+    "metadata": {
+      "contentType": "seo_article"
+    }
+  }
+]
+
+###
+
+### Step 3: Detect patterns
+POST {{baseUrl}}/user-memory/user999/behavior-patterns/detect
+
+###
+
+### Step 4: Personalize content
+POST {{baseUrl}}/user-memory/user999/personalize
+Content-Type: {{contentType}}
+
+{
+  "content": "Artificial intelligence represents a paradigm shift in how businesses approach problem-solving and decision-making.",
+  "context": {
+    "contentType": "seo_article",
+    "workflowType": "seo_article"
+  }
+}
+
+###
+
+### Step 5: Add feedback loop
+POST {{baseUrl}}/user-memory/user999/content-preferences/seo_article/feedback
+Content-Type: {{contentType}}
+
+{
+  "rating": 9,
+  "feedback": "Excellent personalization! The content perfectly matches my professional style and business focus.",
+  "aspects": ["tone", "relevance", "professionalism", "clarity"]
+}
+
+###
+
+### Step 6: Get comprehensive results
+GET {{baseUrl}}/user-memory/user999/insights
+
+###
+
+### Step 7: Get final metrics
+GET {{baseUrl}}/user-memory/user999/stats
+
+###
+
+### Step 8: Export complete user data
+GET {{baseUrl}}/user-memory/user999/export
+
+### 49. Stress Testing - Large Data Volumes
+
+### Create many users with preferences
+POST {{baseUrl}}/user-memory/batch/preferences
+Content-Type: {{contentType}}
+
+[
+  {"userId": "stress_user_001", "preferences": {"tone": "professional", "language": "en"}},
+  {"userId": "stress_user_002", "preferences": {"tone": "casual", "language": "en"}},
+  {"userId": "stress_user_003", "preferences": {"tone": "formal", "language": "en"}},
+  {"userId": "stress_user_004", "preferences": {"tone": "conversational", "language": "en"}},
+  {"userId": "stress_user_005", "preferences": {"tone": "technical", "language": "en"}},
+  {"userId": "stress_user_006", "preferences": {"tone": "educational", "language": "en"}},
+  {"userId": "stress_user_007", "preferences": {"tone": "entertaining", "language": "en"}},
+  {"userId": "stress_user_008", "preferences": {"tone": "persuasive", "language": "en"}},
+  {"userId": "stress_user_009", "preferences": {"tone": "analytical", "language": "en"}},
+  {"userId": "stress_user_010", "preferences": {"tone": "creative", "language": "en"}}
+]
+
+### 50. Final System Health Check
+GET {{baseUrl}}/user-memory/info

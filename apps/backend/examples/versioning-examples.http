@@ -1,0 +1,579 @@
+### Versioning System API Examples
+### Use with REST Client extensions like VS Code REST Client
+
+# Set base URL
+@baseUrl = http://localhost:3001/api/v1
+@contentType = application/json
+
+### 1. Create Version Request
+POST {{baseUrl}}/versioning/requests
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "content": "Artificial intelligence is transforming how businesses operate in the modern world. Machine learning algorithms are becoming increasingly sophisticated, enabling companies to automate complex processes and gain valuable insights from data.",
+    "context": {
+      "targetAudience": "business professionals",
+      "purpose": "informative article",
+      "keywords": ["AI", "machine learning", "business transformation"],
+      "tone": "professional"
+    }
+  },
+  "config": {
+    "maxVersions": 3,
+    "strategy": "sequential",
+    "selectionCriteria": "quality",
+    "improvementThreshold": 7,
+    "enableComparison": true,
+    "autoSelect": false,
+    "retainAllVersions": true
+  }
+}
+
+### 2. Generate Versions for Request
+POST {{baseUrl}}/versioning/requests/REQUEST_ID/generate
+
+### 3. Get Version Request Details
+GET {{baseUrl}}/versioning/requests/REQUEST_ID
+
+### 4. Get All Versions for Request
+GET {{baseUrl}}/versioning/requests/REQUEST_ID/versions
+
+### 5. Select Best Version
+POST {{baseUrl}}/versioning/requests/REQUEST_ID/select-best
+Content-Type: {{contentType}}
+
+{
+  "criteria": "quality"
+}
+
+### 6. Get Selected Version
+GET {{baseUrl}}/versioning/requests/REQUEST_ID/selected
+
+### 7. Compare Multiple Versions
+POST {{baseUrl}}/versioning/requests/REQUEST_ID/compare
+Content-Type: {{contentType}}
+
+{
+  "versionIds": ["VERSION_ID_1", "VERSION_ID_2", "VERSION_ID_3"],
+  "criteria": ["quality", "content", "cost"]
+}
+
+### 8. Rank Versions by Criteria
+POST {{baseUrl}}/versioning/requests/REQUEST_ID/rank
+Content-Type: {{contentType}}
+
+{
+  "criteria": "quality"
+}
+
+### 9. Generate Improved Version
+POST {{baseUrl}}/versioning/versions/VERSION_ID/improve
+Content-Type: {{contentType}}
+
+{
+  "feedback": "The content needs better clarity and more specific examples. Add more depth to the analysis and improve the overall structure.",
+  "context": {
+    "targetAudience": "business professionals",
+    "purpose": "informative article"
+  }
+}
+
+### 10. Generate Variations
+POST {{baseUrl}}/versioning/versions/VERSION_ID/variations
+Content-Type: {{contentType}}
+
+{
+  "count": 2,
+  "context": {
+    "targetAudience": "technical executives",
+    "purpose": "strategic insights"
+  }
+}
+
+### 11. Add Feedback to Version
+POST {{baseUrl}}/versioning/versions/VERSION_ID/feedback
+Content-Type: {{contentType}}
+
+{
+  "versionId": "VERSION_ID",
+  "type": "quality",
+  "rating": 8,
+  "comments": "Good overall quality but could use more specific examples",
+  "suggestions": [
+    "Add real-world case studies",
+    "Include specific metrics and data",
+    "Provide actionable recommendations"
+  ],
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+
+### 12. Get Version Feedback
+GET {{baseUrl}}/versioning/versions/VERSION_ID/feedback
+
+### 13. Search Versions
+GET {{baseUrl}}/versioning/versions/search?status=selected&minQualityScore=8&tags=improved
+
+### 14. Get Versions by Status
+GET {{baseUrl}}/versioning/versions/status/generated
+
+### 15. Update Version
+PUT {{baseUrl}}/versioning/versions/VERSION_ID
+Content-Type: {{contentType}}
+
+{
+  "status": "selected",
+  "qualityScore": 8.5,
+  "metadata": {
+    "tags": ["selected", "high_quality"]
+  }
+}
+
+### 16. Select Specific Version
+POST {{baseUrl}}/versioning/requests/REQUEST_ID/versions/VERSION_ID/select
+
+### 17. Reject Version
+POST {{baseUrl}}/versioning/requests/REQUEST_ID/versions/VERSION_ID/reject
+
+### 18. Run Improvement Loop
+POST {{baseUrl}}/versioning/requests/REQUEST_ID/improve
+Content-Type: {{contentType}}
+
+{
+  "maxIterations": 3,
+  "targetQuality": 8.5
+}
+
+### 19. Get Version Metrics
+GET {{baseUrl}}/versioning/requests/REQUEST_ID/metrics
+
+### 20. Get System Metrics
+GET {{baseUrl}}/versioning/metrics
+
+### 21. Quick Version Generation - YouTube Script
+POST {{baseUrl}}/versioning/youtube-script
+Content-Type: {{contentType}}
+
+{
+  "content": "AI is changing how we create content for YouTube. Let me tell you about the latest tools and techniques that can help you grow your channel.",
+  "config": {
+    "maxVersions": 4,
+    "enableImprovementLoop": true,
+    "targetQuality": 8.0
+  }
+}
+
+### 22. Quick Version Generation - SEO Article
+POST {{baseUrl}}/versioning/seo-article
+Content-Type: {{contentType}}
+
+{
+  "content": "Search engine optimization is crucial for online visibility. This guide covers the most important SEO strategies for 2024.",
+  "config": {
+    "maxVersions": 3,
+    "strategy": "improvement",
+    "targetQuality": 8.5
+  }
+}
+
+### 23. Quick Version Generation - Ad Copy
+POST {{baseUrl}}/versioning/ad-copy
+Content-Type: {{contentType}}
+
+{
+  "content": "Our AI-powered solution can transform your business. Get started today and see immediate results.",
+  "config": {
+    "maxVersions": 5,
+    "strategy": "parallel",
+    "enableComparison": true
+  }
+}
+
+### 24. Quick Version Generation - Email
+POST {{baseUrl}}/versioning/email
+Content-Type: {{contentType}}
+
+{
+  "content": "Dear team, I'm excited to share our quarterly results. We've achieved significant growth across all key metrics.",
+  "config": {
+    "maxVersions": 2,
+    "autoSelect": true,
+    "targetQuality": 8.0
+  }
+}
+
+### 25. Generic Quick Generation
+POST {{baseUrl}}/versioning/quick-generate
+Content-Type: {{contentType}}
+
+{
+  "content": "The future of work is being reshaped by artificial intelligence and automation. Companies that adapt quickly will thrive in this new landscape.",
+  "contentType": "seo_article",
+  "config": {
+    "maxVersions": 3,
+    "enableImprovementLoop": true,
+    "targetQuality": 8.0
+  }
+}
+
+### 26. Create Template
+POST {{baseUrl}}/versioning/templates
+Content-Type: {{contentType}}
+
+{
+  "name": "Blog Post Template",
+  "description": "Template for generating high-quality blog posts with multiple versions",
+  "config": {
+    "maxVersions": 4,
+    "strategy": "improvement",
+    "selectionCriteria": "quality",
+    "improvementThreshold": 7.5,
+    "enableComparison": true,
+    "autoSelect": false,
+    "retainAllVersions": true
+  },
+  "promptTemplate": "Generate a blog post about {topic} for {targetAudience}. The tone should be {tone} and include {keywords}.",
+  "variationStrategies": ["different_tone", "different_structure", "different_focus"],
+  "qualityThresholds": {
+    "minimum": 7.0,
+    "excellent": 8.5
+  }
+}
+
+### 27. Get All Templates
+GET {{baseUrl}}/versioning/templates
+
+### 28. Get Specific Template
+GET {{baseUrl}}/versioning/templates/TEMPLATE_ID
+
+### 29. Update Template
+PUT {{baseUrl}}/versioning/templates/TEMPLATE_ID
+Content-Type: {{contentType}}
+
+{
+  "name": "Updated Blog Post Template",
+  "description": "Enhanced template with better variation strategies",
+  "config": {
+    "maxVersions": 5,
+    "strategy": "parallel",
+    "improvementThreshold": 8.0
+  }
+}
+
+### 30. Delete Template
+DELETE {{baseUrl}}/versioning/templates/TEMPLATE_ID
+
+### 31. Get System Information
+GET {{baseUrl}}/versioning/info
+
+### 32. Complex Workflow Example - Sequential Strategy
+POST {{baseUrl}}/versioning/requests
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "content": "Machine learning models are becoming more sophisticated and capable of handling complex tasks. From natural language processing to computer vision, AI is transforming industries.",
+    "context": {
+      "targetAudience": "technical professionals",
+      "purpose": "educational overview",
+      "keywords": ["machine learning", "AI", "neural networks", "deep learning"],
+      "tone": "technical but accessible"
+    }
+  },
+  "config": {
+    "maxVersions": 4,
+    "strategy": "sequential",
+    "selectionCriteria": "quality",
+    "improvementThreshold": 7.5,
+    "enableComparison": true,
+    "autoSelect": false,
+    "retainAllVersions": true,
+    "enableImprovementLoop": true,
+    "maxImprovementIterations": 2,
+    "targetQuality": 8.5
+  }
+}
+
+### 33. Complex Workflow Example - Parallel Strategy
+POST {{baseUrl}}/versioning/requests
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "content": "Digital marketing strategies must evolve to meet changing consumer behaviors. Social media, content marketing, and SEO are all critical components of a successful online presence.",
+    "context": {
+      "targetAudience": "marketing managers",
+      "purpose": "strategic guidance",
+      "keywords": ["digital marketing", "social media", "SEO", "content marketing"],
+      "tone": "strategic and actionable"
+    }
+  },
+  "config": {
+    "maxVersions": 5,
+    "strategy": "parallel",
+    "selectionCriteria": "quality",
+    "improvementThreshold": 7.0,
+    "enableComparison": true,
+    "autoSelect": false,
+    "retainAllVersions": true,
+    "generateVariations": true,
+    "variationCount": 2
+  }
+}
+
+### 34. Complex Workflow Example - Improvement Strategy
+POST {{baseUrl}}/versioning/requests
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "content": "Customer relationship management is essential for business success. Modern CRM systems help companies track interactions, manage sales pipelines, and improve customer satisfaction.",
+    "context": {
+      "targetAudience": "business owners",
+      "purpose": "product recommendation",
+      "keywords": ["CRM", "customer relationship", "sales", "customer satisfaction"],
+      "tone": "persuasive and informative"
+    }
+  },
+  "config": {
+    "maxVersions": 3,
+    "strategy": "improvement",
+    "selectionCriteria": "quality",
+    "improvementThreshold": 6.5,
+    "enableComparison": true,
+    "autoSelect": false,
+    "retainAllVersions:": true,
+    "enableImprovementLoop": true,
+    "maxImprovementIterations": 4,
+    "targetQuality": 8.0
+  }
+}
+
+### 35. Complex Workflow Example - Variation Strategy
+POST {{baseUrl}}/versioning/requests
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "content": "Sustainable business practices are no longer optional. Companies that prioritize environmental responsibility and social impact are seeing increased customer loyalty and employee satisfaction.",
+    "context": {
+      "targetAudience": "corporate executives",
+      "purpose": "strategic insight",
+      "keywords": ["sustainability", "ESG", "corporate responsibility", "green business"],
+      "tone": "professional and forward-thinking"
+    }
+  },
+  "config": {
+    "maxVersions": 4,
+    "strategy": "variation",
+    "selectionCriteria": "quality",
+    "improvementThreshold": 7.0,
+    "enableComparison": true,
+    "autoSelect": false,
+    "retainAllVersions": true,
+    "generateVariations": true,
+    "variationCount": 3
+  }
+}
+
+### 36. Error Handling Test - Invalid Request
+POST {{baseUrl}}/versioning/requests
+Content-Type: {{contentType}}
+
+{
+  "config": {
+    "maxVersions": 15
+  }
+}
+
+### 37. Error Handling Test - Invalid Version ID
+GET {{baseUrl}}/versioning/versions/INVALID_ID
+
+### 38. Error Handling Test - Invalid Strategy
+POST {{baseUrl}}/versioning/requests
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "content": "Test content"
+  },
+  "config": {
+    "strategy": "invalid_strategy"
+  }
+}
+
+### 39. Performance Test - Large Content
+POST {{baseUrl}}/versioning/quick-generate
+Content-Type: {{contentType}}
+
+{
+  "content": "The rapid advancement of artificial intelligence has fundamentally transformed the landscape of modern business operations. Machine learning algorithms, once confined to research laboratories, now power critical business functions ranging from customer service chatbots to predictive analytics platforms. Natural language processing enables computers to understand and generate human-like text, while computer vision systems can analyze images and videos with remarkable accuracy. These technologies are not just improving efficiency; they're creating entirely new business models and revenue streams. Companies that embrace AI are seeing significant competitive advantages, while those that resist risk being left behind in an increasingly digital marketplace. The integration of AI into business processes requires careful planning, substantial investment, and a cultural shift toward data-driven decision-making. However, the rewards are substantial: improved operational efficiency, enhanced customer experiences, better risk management, and the ability to scale operations without proportional increases in staffing costs. As we look to the future, the convergence of AI with other emerging technologies like blockchain, IoT, and quantum computing promises to unlock even more transformative possibilities for businesses willing to innovate and adapt.",
+  "contentType": "seo_article",
+  "config": {
+    "maxVersions": 3,
+    "enableImprovementLoop": true,
+    "targetQuality": 8.0
+  }
+}
+
+### 40. Batch Operations Example
+POST {{baseUrl}}/versioning/requests
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "content": "Cloud computing has revolutionized how businesses approach IT infrastructure. The ability to scale resources on demand, pay only for what you use, and access enterprise-grade services without massive upfront investments has democratized technology access.",
+    "context": {
+      "targetAudience": "IT managers",
+      "purpose": "technical overview",
+      "keywords": ["cloud computing", "scalability", "cost optimization", "enterprise services"],
+      "tone": "technical and informative"
+    }
+  },
+  "config": {
+    "maxVersions": 2,
+    "strategy": "parallel",
+    "selectionCriteria": "quality",
+    "improvementThreshold": 7.0,
+    "enableComparison": true,
+    "autoSelect": true,
+    "retainAllVersions": false
+  }
+}
+
+### 41. Get Specific Version Details
+GET {{baseUrl}}/versioning/versions/VERSION_ID
+
+### 42. Update Version Request Status
+PUT {{baseUrl}}/versioning/requests/REQUEST_ID
+Content-Type: {{contentType}}
+
+{
+  "status": "completed",
+  "context": {
+    "finalSelection": "completed",
+    "totalVersions": 3
+  }
+}
+
+### 43. Delete Version
+DELETE {{baseUrl}}/versioning/versions/VERSION_ID
+
+### 44. Delete Version Request
+DELETE {{baseUrl}}/versioning/requests/REQUEST_ID
+
+### 45. Advanced Search with Multiple Criteria
+GET {{baseUrl}}/versioning/versions/search?status=selected&minQualityScore=8&maxQualityScore=10&tags=improved,best&dateStart=2024-01-01&dateEnd=2024-12-31
+
+### 46. Version Management Workflow - Complete Example
+# Step 1: Create request
+POST {{baseUrl}}/versioning/requests
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "content": "Artificial intelligence is revolutionizing healthcare delivery systems worldwide.",
+    "context": {
+      "targetAudience": "healthcare professionals",
+      "purpose": "educational overview",
+      "keywords": ["AI", "healthcare", "medical technology", "patient care"],
+      "tone": "professional and informative"
+    }
+  },
+  "config": {
+    "maxVersions": 3,
+    "strategy": "sequential",
+    "selectionCriteria": "quality",
+    "improvementThreshold": 7.5,
+    "enableComparison": true,
+    "autoSelect": false,
+    "retainAllVersions": true
+  }
+}
+
+###
+
+# Step 2: Generate versions (replace REQUEST_ID from step 1 response)
+POST {{baseUrl}}/versioning/requests/REQUEST_ID/generate
+
+###
+
+# Step 3: Compare versions
+POST {{baseUrl}}/versioning/requests/REQUEST_ID/compare
+Content-Type: {{contentType}}
+
+{
+  "versionIds": ["VERSION_ID_1", "VERSION_ID_2", "VERSION_ID_3"],
+  "criteria": ["quality", "content"]
+}
+
+###
+
+# Step 4: Select best version
+POST {{baseUrl}}/versioning/requests/REQUEST_ID/select-best
+Content-Type: {{contentType}}
+
+{
+  "criteria": "quality"
+}
+
+###
+
+# Step 5: Run improvement loop if needed
+POST {{baseUrl}}/versioning/requests/REQUEST_ID/improve
+Content-Type: {{contentType}}
+
+{
+  "maxIterations": 2,
+  "targetQuality": 8.5
+}
+
+###
+
+# Step 6: Get final results
+GET {{baseUrl}}/versioning/requests/REQUEST_ID/selected
+
+### 47. Template-Based Version Generation
+# First create a template
+POST {{baseUrl}}/versioning/templates
+Content-Type: {{contentType}}
+
+{
+  "name": "Marketing Content Template",
+  "description": "Template for generating marketing content with multiple variations",
+  "config": {
+    "maxVersions": 4,
+    "strategy": "variation",
+    "selectionCriteria": "quality",
+    "improvementThreshold": 7.0,
+    "enableComparison": true,
+    "autoSelect": false,
+    "retainAllVersions": true
+  },
+  "promptTemplate": "Create compelling marketing content about {product} for {audience}. Focus on {benefits} and use {tone} tone.",
+  "variationStrategies": ["different_tone", "different_focus", "different_style"],
+  "qualityThresholds": {
+    "minimum": 7.0,
+    "excellent": 8.5
+  }
+}
+
+###
+
+# Then use the template for generation
+POST {{baseUrl}}/versioning/quick-generate
+Content-Type: {{contentType}}
+
+{
+  "content": "Our innovative AI-powered analytics platform helps businesses make data-driven decisions with ease.",
+  "contentType": "ad_copy",
+  "config": {
+    "templateId": "TEMPLATE_ID",
+    "templateVariables": {
+      "product": "AI analytics platform",
+      "audience": "business executives",
+      "benefits": "cost savings, efficiency gains, competitive advantage",
+      "tone": "persuasive and professional"
+    }
+  }
+}

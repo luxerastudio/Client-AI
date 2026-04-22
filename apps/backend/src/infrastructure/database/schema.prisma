@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  role      UserRole @default(USER)
+  apiKey    String?  @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  workflows Workflow[]
+  
+  @@map("users")
+}
+
+model Workflow {
+  id          String        @id @default(cuid())
+  name        String
+  description String?
+  type        WorkflowType
+  status      WorkflowStatus @default(DRAFT)
+  steps       Json
+  config      Json?
+  userId      String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  user       User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  executions WorkflowExecution[]
+
+  @@map("workflows")
+}
+
+model WorkflowExecution {
+  id          String        @id @default(cuid())
+  workflowId  String
+  status      WorkflowStatus
+  startedAt   DateTime
+  completedAt DateTime?
+  results     Json
+  error       String?
+
+  workflow Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@map("workflow_executions")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  PREMIUM
+}
+
+enum WorkflowType {
+  CONTENT_GENERATION
+  YOUTUBE_SCRIPT
+  SEO_WRITING
+  AUTOMATION_PIPELINE
+}
+
+enum WorkflowStatus {
+  DRAFT
+  ACTIVE
+  COMPLETED
+  FAILED
+}

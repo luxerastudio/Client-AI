@@ -1,0 +1,587 @@
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T08:38:07.094Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T08:38:07.097Z"}
+{"level":"info","message":"Received SIGINT, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T08:41:54.807Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T11:27:15.081Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T11:27:15.085Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T11:31:25.188Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T11:31:32.360Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T11:31:32.363Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T11:32:11.571Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T11:32:11.915Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T11:32:11.918Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T11:32:16.581Z"}
+{"error":{},"level":"error","message":"Failed to start server","service":"ai-saas-backend","timestamp":"2026-04-22T11:32:16.961Z"}
+{"error":{},"level":"error","message":"Failed to start server","service":"ai-saas-backend","timestamp":"2026-04-22T11:32:30.416Z"}
+{"error":{},"level":"error","message":"Failed to start server","service":"ai-saas-backend","timestamp":"2026-04-22T11:32:57.959Z"}
+{"error":{"code":"FST_ERR_DUPLICATED_ROUTE","message":"Method 'GET' already declared for route '/health'","name":"FastifyError","statusCode":500},"level":"error","message":"Failed to start server","service":"ai-saas-backend","timestamp":"2026-04-22T11:37:00.738Z"}
+{"error":{"code":"FST_ERR_DUPLICATED_ROUTE","message":"Method 'GET' already declared for route '/health'","name":"FastifyError","statusCode":500},"level":"error","message":"Failed to start server","service":"ai-saas-backend","timestamp":"2026-04-22T11:37:55.514Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T11:38:27.378Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T11:38:27.381Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T11:38:32.191Z"}
+{"error":{},"level":"error","message":"Failed to start server","service":"ai-saas-backend","timestamp":"2026-04-22T11:38:32.546Z"}
+{"error":{},"level":"error","message":"Failed to start server","service":"ai-saas-backend","timestamp":"2026-04-22T11:39:03.522Z"}
+{"error":{},"level":"error","message":"Failed to start server","service":"ai-saas-backend","timestamp":"2026-04-22T11:41:44.698Z"}
+{"error":{"address":"0.0.0.0","code":"EADDRINUSE","errno":-48,"port":3001,"syscall":"listen"},"level":"error","message":"Failed to start server","service":"ai-saas-backend","timestamp":"2026-04-22T11:47:41.282Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T11:48:40.712Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T11:48:40.715Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:00:02.492Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:00:02.981Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:00:02.981Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:00:02.984Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:00:02.984Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:00:09.176Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:00:09.177Z"}
+{"error":{},"level":"error","message":"Failed to start server","service":"ai-saas-backend","timestamp":"2026-04-22T12:00:09.646Z"}
+{"error":{},"level":"error","message":"Failed to start server","service":"ai-saas-backend","timestamp":"2026-04-22T12:00:09.651Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:04:45.700Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:04:45.724Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:04:45.736Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:04:54.977Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:04:54.989Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:04:55.015Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:05:24.706Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:05:24.724Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:05:24.729Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:05:38.750Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:05:38.766Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:05:38.819Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:05:52.880Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:05:52.884Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:05:52.885Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:06:11.933Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:06:11.949Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:06:11.950Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:06:24.640Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:06:24.645Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:06:24.660Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:06:48.542Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:06:48.543Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:06:48.550Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:07:14.855Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:07:14.861Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:07:14.864Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:07:18.998Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:07:19.004Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:07:19.005Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:07:26.795Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:07:26.798Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:07:26.800Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:07:41.928Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:07:41.939Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:07:41.940Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:08:14.071Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:08:14.071Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:08:14.094Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:08:18.406Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:08:18.424Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:08:18.720Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:16.617Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:16.628Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:16.640Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.533Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.545Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.548Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.599Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.599Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.602Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.602Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.617Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.617Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.619Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.619Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.624Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.624Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.632Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:36.632Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.066Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.066Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.507Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.521Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.528Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.573Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.574Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.577Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.577Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.584Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.584Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.589Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.590Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.593Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.593Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.600Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:09:49.600Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:04.690Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:04.693Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.322Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.330Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.332Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.393Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.394Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.398Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.398Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.405Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.405Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.402Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.403Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.405Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.405Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.414Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:09.414Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.317Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.321Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.787Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.787Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.789Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.844Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.845Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.849Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.851Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.851Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.909Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.909Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.845Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.845Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.849Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.851Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.851Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.909Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:10:40.909Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:19.614Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:19.615Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.095Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.097Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.101Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.151Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.151Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.154Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.157Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.157Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.207Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.207Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.150Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.151Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.155Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.157Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.158Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.207Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:20.208Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:31.281Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:31.296Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:31.830Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:31.834Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:31.844Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:40.089Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:40.101Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:40.106Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:45.612Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:45.617Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:45.620Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:50.192Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:50.205Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:12:50.207Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:09.794Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:09.811Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:09.819Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:09.994Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:09.994Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:09.998Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:10.002Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:10.002Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:10.065Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:10.065Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:10.007Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:10.008Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:10.011Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:10.013Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:10.014Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:10.076Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:10.077Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.186Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.188Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.659Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.661Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.670Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.798Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.799Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.801Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.804Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.804Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.855Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.855Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.799Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.800Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.803Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.805Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.805Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.855Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:19.855Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:25.400Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:25.406Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:25.862Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:25.864Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:25.874Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.051Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.051Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.055Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.057Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.058Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.107Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.107Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.049Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.049Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.052Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.055Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.055Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.116Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:26.116Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.227Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.231Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.653Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.667Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.670Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.809Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.810Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.813Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.816Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.816Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.938Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.938Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.854Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.854Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.857Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.859Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.860Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.957Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:33.957Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:38.929Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:38.935Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.474Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.487Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.498Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.627Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.627Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.630Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.632Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.632Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.759Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.759Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.687Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.688Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.691Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.694Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.695Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.770Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:13:39.770Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:17:59.869Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:17:59.873Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.339Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.345Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.343Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.559Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.560Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.566Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.569Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.570Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.632Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.632Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.586Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.587Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.590Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.593Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.593Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.646Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:00.646Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:04.775Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:04.793Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.334Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.349Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.355Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.480Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.480Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.484Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.490Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.491Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.556Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.556Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.515Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.516Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.519Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.523Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.523Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.576Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:05.576Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:24.569Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:24.574Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.123Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.125Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.129Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.267Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.269Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.273Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.275Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.275Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.323Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.324Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.273Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.273Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.276Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.279Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.279Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.329Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:18:25.329Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:01.242Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:01.247Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:01.931Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:01.931Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:01.931Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.071Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.072Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.075Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.077Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.077Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.125Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.125Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.071Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.072Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.075Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.077Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.077Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.126Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:02.126Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:10.865Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:10.874Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.368Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.377Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.410Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.505Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.505Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.510Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.512Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.512Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.561Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.561Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.511Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.511Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.514Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.517Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.517Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.561Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:11.561Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:19.711Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:19.712Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.194Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.196Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.272Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.419Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.419Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.423Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.426Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.426Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.477Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.477Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.440Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.440Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.444Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.446Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.446Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.495Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:19:20.495Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.122Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.123Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.680Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.684Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.694Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.951Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.951Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.953Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.951Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.954Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.956Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.956Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:15.022Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:15.022Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.953Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.956Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.959Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:14.959Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:15.044Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:15.045Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:50.206Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:50.207Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:50.823Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:50.840Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:50.871Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.139Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.142Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.154Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.143Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.148Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.154Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.155Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.278Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.278Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.154Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.162Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.165Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.165Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.299Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:20:51.299Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:30.148Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:30.158Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:30.707Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:30.709Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:30.714Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:30.961Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:30.989Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:31.004Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.650Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.657Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.658Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.867Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.871Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.877Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.872Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.874Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.877Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.877Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.941Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.941Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.868Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.872Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.879Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.879Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.944Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:21:50.944Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:25:50.682Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:25:50.683Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:25:51.127Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:25:51.129Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:25:51.131Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.714Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.727Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.729Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.973Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.974Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.981Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.975Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.978Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.983Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.984Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:09.031Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:09.033Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.981Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.985Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.987Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:08.987Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:09.039Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:09.039Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:52.985Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:52.988Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:53.438Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:53.441Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:53.451Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:53.657Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:53.720Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:26:53.733Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.409Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.559Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.560Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.622Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.623Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.626Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.628Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.629Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.690Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.690Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.760Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.762Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.763Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.766Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.769Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.769Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.818Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:27:01.818Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:30:47.262Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T12:30:47.264Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:30:47.693Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:30:47.696Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:30:47.700Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.149Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.178Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.183Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.392Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.417Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.435Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.393Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.397Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.400Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.400Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.504Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.504Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.435Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.439Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.442Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.443Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.529Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T12:31:03.529Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:11:50.645Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T14:11:51.255Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T14:11:51.256Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T14:11:51.258Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T14:11:51.261Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T14:11:51.261Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T14:11:51.307Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T14:11:51.307Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:13:05.143Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T14:13:05.670Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:20:02.398Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:20:51.034Z"}
+{"level":"info","message":"EnhancedDependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T14:20:51.631Z"}
+{"level":"info","message":"Services registered: 21","service":"ai-saas-backend","timestamp":"2026-04-22T14:20:51.631Z"}
+{"level":"info","message":"Initialization order: dbConnection -> aiEngine -> userMemoryRepository -> userMemoryService -> promptEnhancer -> userRepository -> sessionRepository -> apiKeyRepository -> scoringResultRepository -> scoringEngine -> workflowRegistry -> workflowExecutionRepository -> workflowEngine -> authService -> aiController -> workflowController -> scoringController -> securityController -> versionController -> userMemoryController -> workflowEngineController","service":"ai-saas-backend","timestamp":"2026-04-22T14:20:51.631Z"}
+{"level":"info","message":"Health info: {\"totalServices\":21,\"initializedServices\":21,\"singletonInstances\":21,\"activeScopes\":0,\"servicesByLifecycle\":{\"singleton\":21,\"transient\":0,\"scoped\":0}}","service":"ai-saas-backend","timestamp":"2026-04-22T14:20:51.631Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T14:20:51.632Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T14:20:51.635Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T14:20:51.639Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T14:20:51.639Z"}
+{"level":"info","message":"Server started on port 3002","service":"ai-saas-backend","timestamp":"2026-04-22T14:20:51.678Z"}
+{"level":"info","message":"API documentation available at http://localhost:3002/docs","service":"ai-saas-backend","timestamp":"2026-04-22T14:20:51.678Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T14:22:29.925Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:22:30.612Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:22:30.618Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:23:23.479Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:25:17.845Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:26:09.958Z"}
+{"level":"info","message":"Received SIGTERM, shutting down gracefully","service":"ai-saas-backend","timestamp":"2026-04-22T14:30:53.328Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:30:57.934Z"}
+{"level":"info","message":"Initializing DependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:35:20.449Z"}
+{"level":"info","message":"DependencyContainer initialized successfully","service":"ai-saas-backend","timestamp":"2026-04-22T14:35:20.613Z"}
+{"level":"info","message":"Registering routes...","service":"ai-saas-backend","timestamp":"2026-04-22T14:35:20.614Z"}
+{"level":"info","message":"Health routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T14:35:20.616Z"}
+{"level":"info","message":"AI routes registered","service":"ai-saas-backend","timestamp":"2026-04-22T14:35:20.619Z"}
+{"level":"info","message":"Routes registration completed","service":"ai-saas-backend","timestamp":"2026-04-22T14:35:20.619Z"}
+{"level":"info","message":"Server started on port 3001","service":"ai-saas-backend","timestamp":"2026-04-22T14:35:20.662Z"}
+{"level":"info","message":"API documentation available at http://localhost:3001/docs","service":"ai-saas-backend","timestamp":"2026-04-22T14:35:20.662Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:35:49.410Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:36:20.173Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:36:34.047Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:38:13.108Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:39:10.025Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T14:41:17.146Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:01:46.224Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:02:48.965Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:02:57.218Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:02:59.472Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:02:59.476Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:03:29.351Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:03:29.352Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:03:36.434Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:03:36.435Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:03:56.649Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:03:56.652Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:03:58.881Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:03:58.882Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:04:00.436Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:04:00.436Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:04:03.559Z"}
+{"level":"info","message":"Initializing EnhancedDependencyContainer...","service":"ai-saas-backend","timestamp":"2026-04-22T15:04:03.569Z"}

@@ -1,0 +1,397 @@
+### Workflow Engine API Examples
+### Use with REST Client extensions like VS Code REST Client
+
+# Set base URL
+@baseUrl = http://localhost:3001/api/v1
+@contentType = application/json
+
+### 1. Get All Templates
+GET {{baseUrl}}/workflow-engine/templates
+
+### 2. Get Templates by Category
+GET {{baseUrl}}/workflow-engine/templates?category=video_content
+
+### 3. Search Templates
+GET {{baseUrl}}/workflow-engine/search?q=youtube
+
+### 4. Get Specific Template
+GET {{baseUrl}}/workflow-engine/templates/youtube-script-generator
+
+### 5. Create Custom Template
+POST {{baseUrl}}/workflow-engine/templates
+Content-Type: {{contentType}}
+
+{
+  "name": "Custom Blog Post Generator",
+  "description": "Generates blog posts with custom structure",
+  "category": "content_marketing",
+  "tags": ["blog", "content", "writing"],
+  "steps": [
+    {
+      "id": "analyze_topic",
+      "type": "analyze_input",
+      "name": "Analyze Topic",
+      "order": 0,
+      "dependencies": [],
+      "config": {
+        "analysisType": "content",
+        "focus": "blog_writing"
+      }
+    },
+    {
+      "id": "structure_content",
+      "type": "breakdown_structure",
+      "name": "Structure Content",
+      "order": 1,
+      "dependencies": ["analyze_topic"],
+      "config": {
+        "structureType": "article"
+      }
+    },
+    {
+      "id": "generate_content",
+      "type": "generate_output",
+      "name": "Generate Content",
+      "order": 2,
+      "dependencies": ["structure_content"],
+      "config": {
+        "outputType": "article",
+        "articleStyle": "engaging"
+      }
+    },
+    {
+      "id": "refine_content",
+      "type": "refine_output",
+      "name": "Refine Content",
+      "order": 3,
+      "dependencies": ["generate_content"],
+      "config": {
+        "refinementType": "clarity_readability"
+      }
+    }
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["topic"],
+    "properties": {
+      "topic": { "type": "string" },
+      "tone": { "type": "string" },
+      "wordCount": { "type": "number" }
+    }
+  }
+}
+
+### 6. Validate Template
+POST {{baseUrl}}/workflow-engine/templates/validate
+Content-Type: {{contentType}}
+
+{
+  "name": "Test Template",
+  "category": "test",
+  "steps": [
+    {
+      "id": "step1",
+      "type": "analyze_input",
+      "name": "First Step",
+      "order": 0,
+      "dependencies": []
+    }
+  ]
+}
+
+### 7. Execute YouTube Script Workflow
+POST {{baseUrl}}/workflow-engine/execute/youtube-script-generator
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "topic": "10 AI Tools That Will Change Your Life in 2024",
+    "duration": "12 minutes",
+    "style": "educational",
+    "targetAudience": "tech enthusiasts",
+    "keywords": ["AI", "tools", "2024", "technology"],
+    "callToAction": "Subscribe for more AI content!"
+  },
+  "config": {
+    "optimizeForSEO": true
+  }
+}
+
+### 8. Execute SEO Article Workflow
+POST {{baseUrl}}/workflow-engine/execute/seo-article-generator
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "topic": "The Future of Artificial Intelligence in Healthcare",
+    "keywords": ["AI", "healthcare", "future", "medicine", "technology"],
+    "targetAudience": "healthcare professionals",
+    "articleLength": "long",
+    "tone": "professional",
+    "primaryKeyword": "AI in healthcare",
+    "wordCount": 2000,
+    "includeMetaDescription": true
+  }
+}
+
+### 9. Execute Ad Copy Workflow
+POST {{baseUrl}}/workflow-engine/execute/ad-copy-generator
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "product": "AI-Powered Project Management Tool",
+    "audience": "Small business owners and project managers",
+    "adType": "social_media",
+    "tone": "professional",
+    "uniqueSellingProposition": "Automate your project management with AI",
+    "keyBenefits": [
+      "Save 10 hours per week",
+      "Reduce project delays by 50%",
+      "Improve team collaboration"
+    ],
+    "callToAction": "Start your free trial today!",
+    "characterLimit": 280,
+    "urgency": true
+  }
+}
+
+### 10. Quick Execute YouTube Script
+POST {{baseUrl}}/workflow-engine/youtube-script
+Content-Type: {{contentType}}
+
+{
+  "topic": "How to Learn Machine Learning in 30 Days",
+  "duration": "15 minutes",
+  "style": "tutorial",
+  "targetAudience": "beginners",
+  "keywords": ["machine learning", "tutorial", "beginners"],
+  "callToAction": "Like and subscribe for more tutorials!"
+}
+
+### 11. Quick Execute SEO Article
+POST {{baseUrl}}/workflow-engine/seo-article
+Content-Type: {{contentType}}
+
+{
+  "topic": "Complete Guide to Remote Work Best Practices",
+  "keywords": ["remote work", "best practices", "guide", "productivity"],
+  "targetAudience": "remote workers",
+  "articleLength": "medium",
+  "tone": "professional",
+  "primaryKeyword": "remote work best practices",
+  "wordCount": 1500
+}
+
+### 12. Quick Execute Ad Copy
+POST {{baseUrl}}/workflow-engine/ad-copy
+Content-Type: {{contentType}}
+
+{
+  "product": "Premium Coffee Subscription Service",
+  "audience": "Coffee lovers and professionals",
+  "adType": "social_media",
+  "tone": "friendly",
+  "uniqueSellingProposition": "Fresh roasted coffee delivered to your door",
+  "keyBenefits": [
+    "Artisanal coffee from around the world",
+    "Fresh roasted weekly",
+    "Flexible subscription plans"
+  ],
+  "callToAction": "Get 50% off your first month!",
+  "characterLimit": 180
+}
+
+### 13. Quick Execute Generic Workflow
+POST {{baseUrl}}/workflow-engine/quick-execute
+Content-Type: {{contentType}}
+
+{
+  "workflowType": "youtube_script",
+  "input": {
+    "topic": "Top 10 Programming Languages to Learn in 2024",
+    "duration": "10 minutes",
+    "style": "educational"
+  }
+}
+
+### 14. Get Execution Status
+GET {{baseUrl}}/workflow-engine/executions/EXECUTION_ID
+
+### 15. Get All Executions
+GET {{baseUrl}}/workflow-engine/executions
+
+### 16. Get Executions for Template
+GET {{baseUrl}}/workflow-engine/executions?templateId=youtube-script-generator
+
+### 17. Cancel Execution
+POST {{baseUrl}}/workflow-engine/executions/EXECUTION_ID/cancel
+
+### 18. Retry Failed Execution
+POST {{baseUrl}}/workflow-engine/executions/EXECUTION_ID/retry
+
+### 19. Get System Information
+GET {{baseUrl}}/workflow-engine/system/info
+
+### 20. Update Template
+PUT {{baseUrl}}/workflow-engine/templates/youtube-script-generator
+Content-Type: {{contentType}}
+
+{
+  "description": "Updated description for YouTube script generator",
+  "metadata": {
+    "version": "1.1.0",
+    "lastUpdated": "2024-01-01"
+  }
+}
+
+### 21. Delete Template
+DELETE {{baseUrl}}/workflow-engine/templates/TEMPLATE_ID
+
+### 22. Complex Custom Workflow - Marketing Campaign
+POST {{baseUrl}}/workflow-engine/templates
+Content-Type: {{contentType}}
+
+{
+  "name": "Marketing Campaign Generator",
+  "description": "Creates complete marketing campaigns with multiple content types",
+  "category": "marketing",
+  "tags": ["marketing", "campaign", "content", "strategy"],
+  "steps": [
+    {
+      "id": "analyze_market",
+      "type": "analyze_input",
+      "name": "Analyze Market & Audience",
+      "order": 0,
+      "dependencies": [],
+      "config": {
+        "analysisType": "marketing",
+        "focus": "campaign_strategy"
+      }
+    },
+    {
+      "id": "structure_campaign",
+      "type": "breakdown_structure",
+      "name": "Structure Campaign Components",
+      "order": 1,
+      "dependencies": ["analyze_market"],
+      "config": {
+        "structureType": "marketing_campaign",
+        "includeTimeline": true
+      }
+    },
+    {
+      "id": "generate_email_sequence",
+      "type": "generate_output",
+      "name": "Generate Email Sequence",
+      "order": 2,
+      "dependencies": ["structure_campaign"],
+      "config": {
+        "outputType": "email",
+        "sequenceLength": 5
+      }
+    },
+    {
+      "id": "generate_social_posts",
+      "type": "generate_output",
+      "name": "Generate Social Media Posts",
+      "order": 2,
+      "dependencies": ["structure_campaign"],
+      "config": {
+        "outputType": "social_media",
+        "platformCount": 3
+      }
+    },
+    {
+      "id": "refine_campaign",
+      "type": "refine_output",
+      "name": "Refine Campaign Materials",
+      "order": 3,
+      "dependencies": ["generate_email_sequence", "generate_social_posts"],
+      "config": {
+        "refinementType": "engagement",
+        "targetTone": "persuasive"
+      }
+    }
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["product", "campaignGoal", "duration"],
+    "properties": {
+      "product": { "type": "string" },
+      "campaignGoal": { "type": "string" },
+      "duration": { "type": "string" },
+      "targetAudience": { "type": "string" },
+      "budget": { "type": "number" },
+      "platforms": { "type": "array", "items": { "type": "string" } }
+    }
+  }
+}
+
+### 23. Execute Marketing Campaign Workflow
+POST {{baseUrl}}/workflow-engine/execute/marketing-campaign-generator
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "product": "Eco-Friendly Water Bottle",
+    "campaignGoal": "Increase brand awareness and drive sales",
+    "duration": "30 days",
+    "targetAudience": "Eco-conscious consumers",
+    "budget": 5000,
+    "platforms": ["Instagram", "Facebook", "Email"]
+  }
+}
+
+### 24. Error Handling Test - Invalid Template
+POST {{baseUrl}}/workflow-engine/templates
+Content-Type: {{contentType}}
+
+{
+  "name": "",
+  "category": "",
+  "steps": []
+}
+
+### 25. Error Handling Test - Invalid Execution
+POST {{baseUrl}}/workflow-engine/execute/invalid-template-id
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "test": "data"
+  }
+}
+
+### 26. Performance Test - Bulk Execution
+POST {{baseUrl}}/workflow-engine/quick-execute
+Content-Type: {{contentType}}
+
+{
+  "workflowType": "ad_copy",
+  "input": {
+    "product": "Test Product",
+    "audience": "Test Audience"
+  }
+}
+
+### 27. Get Template Variants
+GET {{baseUrl}}/workflow-engine/templates?category=video_content
+
+### 28. Execute with Custom Configuration
+POST {{baseUrl}}/workflow-engine/execute/youtube-script-generator
+Content-Type: {{contentType}}
+
+{
+  "input": {
+    "topic": "Advanced JavaScript Techniques",
+    "duration": "20 minutes",
+    "style": "tutorial",
+    "targetAudience": "experienced developers"
+  },
+  "config": {
+    "includeTimestamps": true,
+    "optimizeForSEO": true,
+    "customStyle": "technical"
+  }
+}

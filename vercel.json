@@ -1,18 +1,13 @@
 {
   "version": 2,
   "framework": "nextjs",
-  "buildCommand": "next build",
-  "installCommand": "pnpm install",
-  "outputDirectory": ".next",
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "buildCommand": "cd apps/frontend && pnpm build",
+  "outputDirectory": "apps/frontend/.next",
   "build": {
     "env": {
-      "NEXT_PUBLIC_APP_URL": "https://client-ai-system.vercel.app",
-      "NODE_ENV": "production"
-    }
-  },
-  "functions": {
-    "app/api/**/*.ts": {
-      "maxDuration": 30
+      "NEXT_PUBLIC_API_URL": "https://your-backend-url.com",
+      "NEXT_PUBLIC_ENV": "production"
     }
   }
 }

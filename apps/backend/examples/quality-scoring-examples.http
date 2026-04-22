@@ -1,0 +1,420 @@
+### Quality Scoring API Examples
+### Use with REST Client extensions like VS Code REST Client
+
+# Set base URL
+@baseUrl = http://localhost:3001/api/v1
+@contentType = application/json
+
+### 1. Complete Quality Evaluation with Auto-Regeneration
+POST {{baseUrl}}/quality-scoring/evaluate
+Content-Type: {{contentType}}
+
+{
+  "content": "AI is revolutionizing how we work and live. Machine learning algorithms are becoming increasingly sophisticated, enabling computers to perform tasks that once required human intelligence. From healthcare to finance, AI applications are transforming industries and creating new opportunities for innovation.",
+  "criteria": {
+    "targetAudience": "technology professionals",
+    "purpose": "inform about AI trends",
+    "keywords": ["AI", "machine learning", "healthcare", "finance"],
+    "tone": "professional"
+  },
+  "thresholds": {
+    "minimum": 7,
+    "excellent": 8.5
+  }
+}
+
+### 2. Simple Quality Scoring (No Regeneration)
+POST {{baseUrl}}/quality-scoring/score
+Content-Type: {{contentType}}
+
+{
+  "content": "The rapid advancement of artificial intelligence has transformed numerous industries. Companies are investing heavily in AI research and development to gain competitive advantages. This technological revolution is reshaping how businesses operate and deliver value to customers.",
+  "criteria": {
+    "targetAudience": "business executives",
+    "purpose": "explain AI business impact",
+    "keywords": ["AI", "business", "investment", "competitive"],
+    "tone": "professional"
+  }
+}
+
+### 3. Individual Metric Scoring - Clarity
+POST {{baseUrl}}/quality-scoring/clarity
+Content-Type: {{contentType}}
+
+{
+  "content": "The implementation of artificial intelligence systems requires careful consideration of various factors including data quality, algorithm selection, and ethical implications. Organizations must establish robust governance frameworks to ensure responsible AI deployment.",
+  "context": {
+    "targetAudience": "technical managers",
+    "tone": "formal"
+  }
+}
+
+### 4. Individual Metric Scoring - Relevance
+POST {{baseUrl}}/quality-scoring/relevance
+Content-Type: {{contentType}}
+
+{
+  "content": "Digital marketing strategies have evolved significantly with the advent of social media platforms and data analytics. Modern marketers must leverage multiple channels and personalization techniques to reach target audiences effectively.",
+  "context": {
+    "targetAudience": "marketing professionals",
+    "purpose": "explain digital marketing evolution",
+    "keywords": ["digital marketing", "social media", "analytics", "personalization"],
+    "tone": "professional"
+  }
+}
+
+### 5. Individual Metric Scoring - Depth
+POST {{baseUrl}}/quality-scoring/depth
+Content-Type: {{contentType}}
+
+{
+  "content": "Climate change represents one of the most significant challenges facing humanity. The scientific consensus indicates that human activities are the primary driver of global warming, with greenhouse gas emissions from fossil fuel combustion being the main contributor.",
+  "context": {
+    "domain": "environmental science",
+    "contentType": "research article"
+  }
+}
+
+### 6. Individual Metric Scoring - Usefulness
+POST {{baseUrl}}/quality-scoring/usefulness
+Content-Type: {{contentType}}
+
+{
+  "content": "To improve your productivity, start by identifying your most important tasks using the Eisenhower Matrix. Categorize activities into four quadrants: urgent and important, important but not urgent, urgent but not important, and neither urgent nor important. Focus on the first two quadrants for maximum effectiveness.",
+  "context": {
+    "targetAudience": "professionals",
+    "purpose": "provide productivity tips",
+    "tone": "instructional"
+  }
+}
+
+### 7. Batch Quality Evaluation
+POST {{baseUrl}}/quality-scoring/batch
+Content-Type: {{contentType}}
+
+{
+  "requests": [
+    {
+      "content": "Machine learning models require large datasets for training. The quality and quantity of data directly impact model performance. Data preprocessing is a critical step that involves cleaning, normalization, and feature engineering.",
+      "criteria": {
+        "targetAudience": "data scientists",
+        "purpose": "explain ML data requirements"
+      }
+    },
+    {
+      "content": "Customer relationship management (CRM) systems help businesses manage interactions with current and potential customers. These tools streamline processes and improve customer satisfaction through better communication and service delivery.",
+      "criteria": {
+        "targetAudience": "business managers",
+        "purpose": "explain CRM benefits"
+      }
+    }
+  ]
+}
+
+### 8. Regenerate Low-Quality Content
+POST {{baseUrl}}/quality-scoring/regenerate
+Content-Type: {{contentType}}
+
+{
+  "content": "AI is good. It helps people. Companies use AI. It makes things better. AI will be more important later.",
+  "feedback": {
+    "overall": 4.2,
+    "clarity": 5.0,
+    "relevance": 4.0,
+    "depth": 3.0,
+    "usefulness": 4.8,
+    "breakdown": {
+      "clarity": {
+        "score": 5.0,
+        "suggestions": ["Use more varied sentence structures", "Add transitional phrases"]
+      },
+      "depth": {
+        "score": 3.0,
+        "suggestions": ["Add more detailed explanations", "Include specific examples"]
+      }
+    }
+  },
+  "context": {
+    "targetAudience": "business professionals",
+    "purpose": "explain AI business value",
+    "tone": "professional"
+  },
+  "maxAttempts": 3
+}
+
+### 9. Improve Clarity
+POST {{baseUrl}}/quality-scoring/improve/clarity
+Content-Type: {{contentType}}
+
+{
+  "content": "The system processes data. It uses algorithms. The results are displayed. Users can interact with the interface. The system updates automatically.",
+  "feedback": {
+    "overall": 5.5,
+    "clarity": 4.2,
+    "breakdown": {
+      "clarity": {
+        "score": 4.2,
+        "suggestions": ["Combine related ideas", "Use better transitions", "Vary sentence structure"]
+      }
+    }
+  }
+}
+
+### 10. Improve Relevance
+POST {{baseUrl}}/quality-scoring/improve/relevance
+Content-Type: {{contentType}}
+
+{
+  "content": "Technology has changed many industries. Companies adopt new solutions. This creates opportunities for growth. Innovation drives progress.",
+  "feedback": {
+    "overall": 5.8,
+    "relevance": 4.5,
+    "breakdown": {
+      "relevance": {
+        "score": 4.5,
+        "suggestions": ["Include industry-specific examples", "Address target audience pain points", "Add relevant keywords"]
+      }
+    }
+  },
+  "context": {
+    "targetAudience": "healthcare executives",
+    "purpose": "explain healthcare technology trends",
+    "keywords": ["healthcare", "technology", "digital transformation", "patient care"]
+  }
+}
+
+### 11. Improve Depth
+POST {{baseUrl}}/quality-scoring/improve/depth
+Content-Type: {{contentType}}
+
+{
+  "content": "Social media marketing is important. Businesses use platforms like Facebook and Twitter. They post content to engage users. This helps with brand awareness.",
+  "feedback": {
+    "overall": 5.2,
+    "depth": 3.8,
+    "breakdown": {
+      "depth": {
+        "score": 3.8,
+        "suggestions": ["Add statistical evidence", "Include case studies", "Explain underlying mechanisms"]
+      }
+    }
+  }
+}
+
+### 12. Improve Usefulness
+POST {{baseUrl}}/quality-scoring/improve/usefulness
+Content-Type: {{contentType}}
+
+{
+  "content": "Time management is a skill. People should learn to manage their time better. This helps them be more productive. Many struggle with this.",
+  "feedback": {
+    "overall": 5.9,
+    "usefulness": 4.2,
+    "breakdown": {
+      "usefulness": {
+        "score": 4.2,
+        "suggestions": ["Provide specific action steps", "Include practical examples", "Add measurable outcomes"]
+      }
+    }
+  },
+  "context": {
+    "targetAudience": "students",
+    "purpose": "teach time management techniques"
+  }
+}
+
+### 13. Get Improvement Suggestions
+POST {{baseUrl}}/quality-scoring/suggestions
+Content-Type: {{contentType}}
+
+{
+  "score": {
+    "overall": 6.2,
+    "clarity": 7.5,
+    "relevance": 5.8,
+    "depth": 4.9,
+    "usefulness": 6.6,
+    "breakdown": {
+      "relevance": {
+        "score": 5.8,
+        "suggestions": ["Better target audience alignment", "Include more relevant examples"]
+      },
+      "depth": {
+        "score": 4.9,
+        "suggestions": ["Add more detailed analysis", "Include supporting evidence"]
+      }
+    }
+  }
+}
+
+### 14. Check if Regeneration is Needed
+POST {{baseUrl}}/quality-scoring/check-threshold
+Content-Type: {{contentType}}
+
+{
+  "score": {
+    "overall": 6.5,
+    "clarity": 7.2,
+    "relevance": 6.8,
+    "depth": 5.9,
+    "usefulness": 6.1
+  },
+  "thresholds": {
+    "minimum": 7.0
+  }
+}
+
+### 15. Quick Evaluation - Blog Post
+POST {{baseUrl}}/quality-scoring/blog-post
+Content-Type: {{contentType}}
+
+{
+  "content": "The rise of remote work has transformed how companies approach productivity and collaboration. Tools like Slack, Zoom, and Asana have become essential for distributed teams. This shift has also led to new challenges in maintaining company culture and employee engagement.",
+  "targetAudience": "remote workers and managers"
+}
+
+### 16. Quick Evaluation - Article
+POST {{baseUrl}}/quality-scoring/article
+Content-Type: {{contentType}}
+
+{
+  "content": "Artificial intelligence is revolutionizing healthcare through improved diagnostics, personalized treatment plans, and drug discovery. Machine learning algorithms can analyze medical images with accuracy rates exceeding human experts in some cases, while natural language processing helps extract insights from clinical notes.",
+  "targetAudience": "healthcare professionals"
+}
+
+### 17. Quick Evaluation - Email
+POST {{baseUrl}}/quality-scoring/email
+Content-Type: {{contentType}}
+
+{
+  "content": "Dear Team, I'm excited to announce that our Q3 performance exceeded expectations with a 23% increase in customer acquisition and a 15% improvement in retention rates. Let's celebrate this achievement and focus on maintaining this momentum in Q4.",
+  "targetAudience": "sales team members"
+}
+
+### 18. Quick Evaluation - Ad Copy
+POST {{baseUrl}}/quality-scoring/ad-copy
+Content-Type: {{contentType}}
+
+{
+  "content": "Transform your business with our AI-powered analytics platform. Get real-time insights, predict customer behavior, and increase conversion rates by 35%. Start your free trial today and see the difference data-driven decisions can make.",
+  "targetAudience": "small business owners"
+}
+
+### 19. Quick Evaluation - Social Media
+POST {{baseUrl}}/quality-scoring/social-media
+Content-Type: {{contentType}}
+
+{
+  "content": "Just launched our new feature! Now you can automate your workflow with just one click. Save hours of manual work and focus on what matters most. Try it out and let us know what you think! #ProductLaunch #Automation #Productivity",
+  "targetAudience": "existing customers"
+}
+
+### 20. Quick Generic Evaluation
+POST {{baseUrl}}/quality-scoring/quick
+Content-Type: {{contentType}}
+
+{
+  "content": "Sustainable business practices are no longer optional in today's economy. Companies that prioritize environmental responsibility and social impact are seeing increased customer loyalty and employee satisfaction. This shift toward conscious capitalism is reshaping corporate strategies worldwide.",
+  "contentType": "article",
+  "targetAudience": "business leaders"
+}
+
+### 21. High-Quality Content Example (Should Pass)
+POST {{baseUrl}}/quality-scoring/evaluate
+Content-Type: {{contentType}}
+
+{
+  "content": "The integration of artificial intelligence in healthcare delivery systems represents a paradigm shift in medical practice. Machine learning algorithms now assist physicians in diagnosing diseases with unprecedented accuracy, analyzing complex medical images and identifying patterns that might escape human observation. For instance, AI systems can detect early-stage cancers from mammograms with accuracy rates exceeding 95%, potentially saving countless lives through early intervention. Furthermore, natural language processing applications enable healthcare providers to extract meaningful insights from unstructured clinical notes, facilitating better patient care coordination and personalized treatment strategies. The convergence of these technologies not only improves diagnostic precision but also optimizes resource allocation, reduces healthcare costs, and enhances patient outcomes across diverse medical specialties.",
+  "criteria": {
+    "targetAudience": "healthcare professionals",
+    "purpose": "inform about AI in healthcare",
+    "keywords": ["AI", "healthcare", "diagnostics", "machine learning", "patient care"],
+    "tone": "professional"
+  },
+  "thresholds": {
+    "minimum": 7,
+    "excellent": 8.5
+  }
+}
+
+### 22. Low-Quality Content Example (Should Trigger Regeneration)
+POST {{baseUrl}}/quality-scoring/evaluate
+Content-Type: {{contentType}}
+
+{
+  "content": "AI is new tech. It helps doctors. Computers can see sick people. This is good. AI will get better. More hospitals will use it. Patients will like it. It costs money but helps people.",
+  "criteria": {
+    "targetAudience": "healthcare professionals",
+    "purpose": "inform about AI in healthcare",
+    "keywords": ["AI", "healthcare", "diagnostics", "patient care"],
+    "tone": "professional"
+  },
+  "thresholds": {
+    "minimum": 7,
+    "excellent": 8.5
+  }
+}
+
+### 23. Test with Different Content Types
+POST {{baseUrl}}/quality-scoring/quick
+Content-Type: {{contentType}}
+
+{
+  "content": "To maximize your LinkedIn engagement, post consistently during peak hours (Tuesday-Thursday, 9-11 AM), use relevant hashtags, and encourage comments by asking questions. Include multimedia content and respond to comments within 2 hours to boost visibility.",
+  "contentType": "social_media",
+  "targetAudience": "marketing professionals"
+}
+
+### 24. Error Handling Test - Invalid Content
+POST {{baseUrl}}/quality-scoring/score
+Content-Type: {{contentType}}
+
+{
+  "content": "",
+  "criteria": {
+    "targetAudience": "test audience"
+  }
+}
+
+### 25. Error Handling Test - Missing Required Fields
+POST {{baseUrl}}/quality-scoring/evaluate
+Content-Type: {{contentType}}
+
+{
+  "criteria": {
+    "targetAudience": "test audience"
+  }
+}
+
+### 26. Get System Information
+GET {{baseUrl}}/quality-scoring/info
+
+### 27. Performance Test - Longer Content
+POST {{baseUrl}}/quality-scoring/score
+Content-Type: {{contentType}}
+
+{
+  "content": "The digital transformation of modern enterprises represents one of the most significant business phenomena of the 21st century. Organizations across all sectors are rapidly adopting cloud computing, artificial intelligence, and Internet of Things (IoT) technologies to remain competitive in an increasingly digital marketplace. This transformation extends beyond mere technological adoption; it fundamentally reshapes business models, organizational structures, and customer relationships. Companies that successfully navigate this digital shift often experience improved operational efficiency, enhanced customer experiences, and new revenue streams. However, the journey requires careful planning, substantial investment, and a cultural shift toward digital-first thinking. Leaders must balance innovation with stability, ensuring that digital initiatives align with core business objectives while maintaining regulatory compliance and cybersecurity standards. The rewards are substantial for those who persevere: increased market share, improved agility, and sustainable growth in an era where digital competence determines market leadership.",
+  "criteria": {
+    "targetAudience": "business executives",
+    "purpose": "explain digital transformation",
+    "keywords": ["digital transformation", "cloud computing", "AI", "IoT", "business strategy"],
+    "tone": "professional"
+  }
+}
+
+### 28. Test with Custom Thresholds
+POST {{baseUrl}}/quality-scoring/evaluate
+Content-Type: {{contentType}}
+
+{
+  "content": "Machine learning algorithms are becoming increasingly sophisticated, enabling computers to perform complex tasks that previously required human intelligence. These systems learn from data patterns and improve over time without explicit programming.",
+  "criteria": {
+    "targetAudience": "technical audience",
+    "purpose": "explain ML basics"
+  },
+  "thresholds": {
+    "minimum": 8.0,
+    "excellent": 9.0
+  }
+}

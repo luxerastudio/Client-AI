@@ -25,6 +25,15 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@repo/*": [
+        "packages/*"
+      ],
+      "@repo/core": [
+        "packages/core"
+      ],
+      "@repo/shared": [
+        "packages/shared"
       ]
     },
     "target": "ES2017"
@@ -38,6 +47,7 @@
     ".next/dev/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
-  ]
-}
+    "node_modules",
+    "apps/backend/dist"
+  ],
+  }

@@ -1,0 +1,47 @@
+{
+  "name": "@repo/core",
+  "version": "1.0.0",
+  "description": "AI Client Acquisition System - Core Business Logic",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./lead-engine": {
+      "types": "./dist/core/lead-engine/index.d.ts",
+      "import": "./dist/core/lead-engine/index.js",
+      "require": "./dist/core/lead-engine/index.js"
+    },
+    "./access-control": {
+      "types": "./dist/core/access-control/index.d.ts",
+      "import": "./dist/core/access-control/index.js",
+      "require": "./dist/core/access-control/index.js"
+    },
+    "./execution-guard": {
+      "types": "./dist/core/execution-guard/index.d.ts",
+      "import": "./dist/core/execution-guard/index.js",
+      "require": "./dist/core/execution-guard/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": ["ai", "client-acquisition", "business-logic"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "zod": "^3.22.4",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/uuid": "^9.0.7",
+    "typescript": "^5"
+  }
+}

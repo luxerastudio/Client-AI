@@ -98,11 +98,13 @@ export default function DemoPage() {
     }
 
     try {
-      // Get API endpoint with fallback for production
-      const apiEndpoint = process.env.NEXT_PUBLIC_APP_URL 
-        ? `${process.env.NEXT_PUBLIC_APP_URL}/api/test`
-        : '/api/test';
-        
+      // API endpoint - ALWAYS use relative path for production compatibility
+      const apiEndpoint = '/api/test';
+      
+      console.log("API CALL: Starting acquisition engine request");
+      console.log("API ENDPOINT:", apiEndpoint);
+      console.log("API DATA:", { niche: trimmedNiche.toLowerCase(), location: trimmedLocation });
+      
       const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
@@ -115,7 +117,10 @@ export default function DemoPage() {
         })
       });
 
+      console.log("API RESPONSE STATUS:", response.status);
+      
       const result: ExecutionResult = await response.json();
+      console.log("API RESPONSE DATA:", result);
       setResult(result);
       
       if (!result.success) {
@@ -129,7 +134,8 @@ export default function DemoPage() {
         setError(result.error || errorMessages[result.errorCode || ''] || 'Execution failed');
       }
     } catch (err) {
-      setError('Failed to connect to the acquisition engine. Please check your connection and try again.');
+      console.error("API ERROR:", err);
+      setError(`Connection failed: ${err instanceof Error ? err.message : 'Unknown error'}. Please check your connection and try again.`);
     } finally {
       setLoading(false);
       setLoadingStage('');

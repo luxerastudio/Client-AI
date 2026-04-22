@@ -7,6 +7,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { coreSystem, accessControl } from '@/lib/core';
 import { apiProtection } from '@/lib/core/api-protection';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   // HARD LOCK: Execute with API protection
   const result = await apiProtection.executeProtected(

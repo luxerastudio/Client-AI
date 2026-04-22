@@ -119,23 +119,23 @@ export default function DemoPage() {
 
       console.log("API RESPONSE STATUS:", response.status);
       
-      const result: ExecutionResult = await response.json();
-      console.log("FULL API RESPONSE:", JSON.stringify(result, null, 2));
+      const data = await response.json();
+      console.log("RAW API:", JSON.stringify(data, null, 2));
       
       // Validate response structure
-      if (!result) {
+      if (!data) {
         throw new Error("Invalid API response structure");
       }
       
       // Add safe array fallbacks
       const safe = (arr: any) => Array.isArray(arr) ? arr : [];
       
-      // Extract real data from details (direct path)
-      const leads = safe(result?.details?.leads);
-      const personalized = safe(result?.details?.personalizedLeads);
-      const outreach = safe(result?.details?.outreachMessages);
-      const offers = safe(result?.details?.offers);
-      const pipeline = safe(result?.details?.pipelineEntries);
+      // Extract real data from details.result (correct path)
+      const leads = safe(data?.details?.result?.leads);
+      const personalized = safe(data?.details?.result?.personalizedLeads);
+      const outreach = safe(data?.details?.result?.outreachMessages);
+      const offers = safe(data?.details?.result?.offers);
+      const pipeline = safe(data?.details?.result?.pipelineEntries);
       
       // Force debug logs for key metrics
       console.log("LEADS:", leads.length, "items");
@@ -143,23 +143,25 @@ export default function DemoPage() {
       console.log("OUTREACH:", outreach.length, "items");
       console.log("OFFERS:", offers.length, "items");
       console.log("PIPELINE:", pipeline.length, "items");
+      console.log("STATE UPDATE TRIGGERED");
       
       // Store result with correct metrics derived from details.result
       setResult({
-        ...result,
-        // Override output with real derived metrics
+        success: data?.success || false,
+        input: data?.input || { niche: '', location: '' },
         output: {
           leadsGenerated: leads.length,
           personalizedLeads: personalized.length,
           outreachMessages: outreach.length,
           offersCreated: offers.length,
           pipelineEntries: pipeline.length,
-          creditsUsed: result?.output?.creditsUsed || 0,
-          executionTime: result?.output?.executionTime
-        }
+          creditsUsed: data?.output?.creditsUsed || 0,
+          executionTime: data?.output?.executionTime
+        },
+        details: data?.details || {}
       });
       
-      if (!result.success) {
+      if (!data.success) {
         // Handle specific error cases with user-friendly messages
         const errorMessages: Record<string, string> = {
           'INSUFFICIENT_CREDITS': 'Insufficient credits. Please upgrade your plan to continue.',
@@ -167,7 +169,7 @@ export default function DemoPage() {
           'INVALID_REQUEST': 'Invalid request parameters. Please check your input and try again.',
           'EXECUTION_FAILED': 'Pipeline execution failed. Please try again or contact support.'
         };
-        setError(result.error || errorMessages[result.errorCode || ''] || 'Execution failed');
+        setError(data.error || errorMessages[data.errorCode || ''] || 'Execution failed');
       }
     } catch (err) {
       console.error("API ERROR:", err);

@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "installCommand": "pnpm install",
+  "outputDirectory": ".next",
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_APP_URL": "https://client-ai-system.vercel.app",
+      "NODE_ENV": "production"
+    }
+  },
+  "functions": {
+    "app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  }
+}

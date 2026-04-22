@@ -127,7 +127,37 @@ export default function DemoPage() {
         throw new Error("Invalid API response structure");
       }
       
-      setResult(result);
+      // Add safe array fallbacks
+      const safe = (arr: any) => Array.isArray(arr) ? arr : [];
+      
+      // Extract real data from details (direct path)
+      const leads = safe(result?.details?.leads);
+      const personalized = safe(result?.details?.personalizedLeads);
+      const outreach = safe(result?.details?.outreachMessages);
+      const offers = safe(result?.details?.offers);
+      const pipeline = safe(result?.details?.pipelineEntries);
+      
+      // Force debug logs for key metrics
+      console.log("LEADS:", leads.length, "items");
+      console.log("PERSONALIZED:", personalized.length, "items");
+      console.log("OUTREACH:", outreach.length, "items");
+      console.log("OFFERS:", offers.length, "items");
+      console.log("PIPELINE:", pipeline.length, "items");
+      
+      // Store result with correct metrics derived from details.result
+      setResult({
+        ...result,
+        // Override output with real derived metrics
+        output: {
+          leadsGenerated: leads.length,
+          personalizedLeads: personalized.length,
+          outreachMessages: outreach.length,
+          offersCreated: offers.length,
+          pipelineEntries: pipeline.length,
+          creditsUsed: result?.output?.creditsUsed || 0,
+          executionTime: result?.output?.executionTime
+        }
+      });
       
       if (!result.success) {
         // Handle specific error cases with user-friendly messages

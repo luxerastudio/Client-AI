@@ -6,7 +6,7 @@
   "outputDirectory": ".next",
   "build": {
     "env": {
-      "NEXT_PUBLIC_API_URL": "https://frontend-qoigmkr0u-luxerastudios-projects.vercel.app",
+      "NEXT_PUBLIC_API_URL": "https://reptilian-throng-daintily.ngrok-free.dev",
       "NODE_ENV": "production"
     }
   },
@@ -16,7 +16,7 @@
     }
   },
   "env": {
-    "NEXT_PUBLIC_API_URL": "https://frontend-qoigmkr0u-luxerastudios-projects.vercel.app",
+    "NEXT_PUBLIC_API_URL": "https://reptilian-throng-daintily.ngrok-free.dev",
     "NODE_ENV": "production"
   }
 }

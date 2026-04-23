@@ -6,7 +6,7 @@
   "outputDirectory": "apps/frontend/.next",
   "build": {
     "env": {
-      "NEXT_PUBLIC_API_URL": "https://your-backend-url.com",
+      "NEXT_PUBLIC_API_URL": "https://reptilian-throng-daintily.ngrok-free.dev",
       "NEXT_PUBLIC_ENV": "production"
     }
   }

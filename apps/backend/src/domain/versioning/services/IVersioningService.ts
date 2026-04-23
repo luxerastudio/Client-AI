@@ -200,6 +200,10 @@ export interface IVersionRepository {
   saveFeedback(versionId: string, feedback: VersionFeedback): Promise<void>;
   getFeedback(versionId: string): Promise<VersionFeedback[]>;
   
+  // Comparison operations
+  saveComparison(comparison: VersionComparison): Promise<void>;
+  getComparison(requestId: string): Promise<VersionComparison | null>;
+  
   // Analytics operations
   getRequestMetrics(requestId: string): Promise<any>;
   getSystemMetrics(): Promise<any>;

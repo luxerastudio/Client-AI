@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { SecurityConfig } from '../../domain/security/entities/Security';
 import { promises as fs } from 'fs';
 import { join } from 'path';

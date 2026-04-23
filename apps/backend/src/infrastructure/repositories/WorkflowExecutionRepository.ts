@@ -1,37 +1,24 @@
 import { DatabaseConnection } from '../database/DatabaseConnection';
+import { WorkflowExecution as DomainWorkflowExecution, WorkflowStatus, WorkflowStep, StepStatus } from '../../domain/workflow-engine/entities/Workflow';
 
-export interface WorkflowExecution {
-  id: string;
-  templateId: string;
-  templateName: string;
-  status: 'running' | 'completed' | 'failed' | 'cancelled';
-  input: Record<string, any>;
-  output?: Record<string, any>;
-  steps: any[];
-  currentStep: number;
-  progress: number;
-  error?: string;
-  metadata?: Record<string, any>;
-  startedAt: Date;
-  completedAt?: Date;
-  duration?: number;
-}
+// Re-export the domain type for compatibility
+export type WorkflowExecution = DomainWorkflowExecution;
 
 export interface CreateWorkflowExecutionData {
   templateId: string;
   templateName: string;
-  status: 'running' | 'completed' | 'failed' | 'cancelled';
+  status: WorkflowStatus;
   input: Record<string, any>;
-  steps: any[];
+  steps: WorkflowStep[];
   currentStep: number;
   progress: number;
   metadata?: Record<string, any>;
 }
 
 export interface UpdateWorkflowExecutionData {
-  status?: 'running' | 'completed' | 'failed' | 'cancelled';
+  status?: WorkflowStatus;
   output?: Record<string, any>;
-  steps?: any[];
+  steps?: WorkflowStep[];
   currentStep?: number;
   progress?: number;
   error?: string;

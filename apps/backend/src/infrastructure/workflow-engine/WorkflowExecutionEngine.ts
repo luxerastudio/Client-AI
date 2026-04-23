@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { IWorkflowEngine, IWorkflowOrchestrator, IStepProcessor } from '../../domain/services/IWorkflowEngine';
+import { IWorkflowEngine, IWorkflowOrchestrator, IStepProcessor } from '../../domain/workflow-engine/services/IWorkflowEngine';
 import { WorkflowTemplate, WorkflowExecution, WorkflowStep, WorkflowContext, StepResult, WorkflowStatus, StepStatus } from '../../domain/workflow-engine/entities/Workflow';
 import { WorkflowRegistry } from './WorkflowRegistry';
 
@@ -80,6 +80,20 @@ export class WorkflowExecutionEngine implements IWorkflowEngine, IWorkflowOrches
     if (execution.startedAt) {
       execution.duration = Date.now() - execution.startedAt.getTime();
     }
+  }
+
+  // Legacy IWorkflowEngine interface methods
+  async execute(workflow: WorkflowTemplate, input?: Record<string, any>): Promise<WorkflowExecution> {
+    return await this.executeWorkflow(workflow, input || {});
+  }
+
+  async validate(workflow: WorkflowTemplate): Promise<boolean> {
+    const validation = await this.validateWorkflow(workflow);
+    return validation.isValid;
+  }
+
+  async getExecutionStatus(executionId: string): Promise<WorkflowExecution | null> {
+    return await this.getExecution(executionId);
   }
 
   async retryExecution(executionId: string): Promise<WorkflowExecution> {

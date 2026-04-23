@@ -185,9 +185,9 @@ export class BreakdownStructureProcessor implements IStepProcessor {
   }
 
   private createHierarchy(input: any): any {
-    const hierarchy = {
+    const hierarchy: any = {
       root: true,
-      children: [],
+      children: [] as any[],
       depth: 0
     };
 
@@ -202,7 +202,7 @@ export class BreakdownStructureProcessor implements IStepProcessor {
     } else if (Array.isArray(input)) {
       hierarchy.children = input.map((item, index) => ({
         name: `item_${index}`,
-        type: typeof item,
+        type: typeof item as 'string' | 'number' | 'bigint' | 'boolean' | 'symbol' | 'undefined' | 'object' | 'function',
         value: item,
         children: this.getChildHierarchy(item)
       }));

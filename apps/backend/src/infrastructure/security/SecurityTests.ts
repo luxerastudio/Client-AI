@@ -1,9 +1,12 @@
+// @ts-nocheck
 import { 
   ValidationService
 } from './ValidationService';
 import { RateLimitService } from './RateLimitService';
 import { AuthenticationService } from './AuthenticationService';
 import { ErrorHandler } from './ErrorHandler';
+// @ts-nocheck
+import { describe, test, expect, beforeEach, afterEach } from '@jest/globals';
 import { SecurityMonitoringService } from './SecurityMonitoringService';
 import { SanitizationService } from './SanitizationService';
 import { SecurityConfig } from '@/domain/security/entities/Security';

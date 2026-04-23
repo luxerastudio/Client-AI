@@ -91,7 +91,7 @@ export class WorkflowExecutionEngineDB implements IWorkflowEngine, IWorkflowOrch
       throw new Error(`Execution with id '${executionId}' not found`);
     }
 
-    if (execution.status === 'completed') {
+    if (execution.status === WorkflowStatus.COMPLETED) {
       throw new Error(`Execution ${executionId} is already completed`);
     }
 
@@ -172,7 +172,7 @@ export class WorkflowExecutionEngineDB implements IWorkflowEngine, IWorkflowOrch
       throw new Error(`Execution with id '${executionId}' not found`);
     }
 
-    if (execution.status !== 'failed' && execution.status !== 'cancelled') {
+    if (execution.status !== WorkflowStatus.FAILED && execution.status !== WorkflowStatus.CANCELLED) {
       throw new Error(`Cannot resume execution in status: ${execution.status}`);
     }
 
@@ -183,7 +183,7 @@ export class WorkflowExecutionEngineDB implements IWorkflowEngine, IWorkflowOrch
 
     // Reset execution status and continue from where it left off
     await this.executionRepository.update(executionId, {
-      status: 'running',
+      status: WorkflowStatus.RUNNING,
       error: undefined
     });
 
@@ -318,7 +318,7 @@ export class WorkflowExecutionEngineDB implements IWorkflowEngine, IWorkflowOrch
     const executionData: CreateWorkflowExecutionData = {
       templateId: template.id || template.name,
       templateName: template.name,
-      status: 'running',
+      status: WorkflowStatus.RUNNING,
       input,
       steps: template.steps.map(step => ({ ...step, status: StepStatus.PENDING })),
       currentStep: 0,
@@ -333,8 +333,10 @@ export class WorkflowExecutionEngineDB implements IWorkflowEngine, IWorkflowOrch
       const result = await this.executeSteps(template, execution);
       return result;
     } catch (error) {
-      const duration = Date.now() - execution.startedAt.getTime();
-      await this.executionRepository.markFailed(execution.id, error instanceof Error ? error.message : 'Unknown error', duration);
+      const duration = execution.startedAt ? Date.now() - execution.startedAt.getTime() : 0;
+      if (execution.id) {
+        await this.executionRepository.markFailed(execution.id, error instanceof Error ? error.message : 'Unknown error', duration);
+      }
       throw error;
     }
   }
@@ -352,8 +354,11 @@ export class WorkflowExecutionEngineDB implements IWorkflowEngine, IWorkflowOrch
 
     for (const step of sortedSteps) {
       // Check if execution was cancelled
+      if (!execution.id) {
+        throw new Error('Execution ID is required');
+      }
       const currentExecution = await this.executionRepository.findById(execution.id);
-      if (!currentExecution || currentExecution.status === 'cancelled') {
+      if (!currentExecution || currentExecution.status === WorkflowStatus.CANCELLED) {
         break;
       }
 
@@ -387,8 +392,8 @@ export class WorkflowExecutionEngineDB implements IWorkflowEngine, IWorkflowOrch
         step.error = error instanceof Error ? error.message : 'Unknown error';
         step.completedAt = new Date();
         
-        const duration = Date.now() - execution.startedAt.getTime();
-        await this.executionRepository.markFailed(execution.id, step.error, duration);
+        const duration = execution.startedAt ? Date.now() - execution.startedAt.getTime() : 0;
+        await this.executionRepository.markFailed(execution.id, step.error || 'Step failed', duration);
         
         throw error;
       }
@@ -396,17 +401,45 @@ export class WorkflowExecutionEngineDB implements IWorkflowEngine, IWorkflowOrch
 
     // Execution completed successfully
     const finalOutput = this.collectFinalOutput(context);
-    const duration = Date.now() - execution.startedAt.getTime();
+    const duration = execution.startedAt ? Date.now() - execution.startedAt.getTime() : 0;
     
-    await this.executionRepository.markCompleted(execution.id, finalOutput, duration);
+    await this.executionRepository.markCompleted(execution.id!, finalOutput, duration);
 
     // Return updated execution
-    const completedExecution = await this.executionRepository.findById(execution.id);
+    const completedExecution = await this.executionRepository.findById(execution.id!);
     if (!completedExecution) {
       throw new Error('Failed to retrieve completed execution');
     }
 
     return completedExecution;
+  }
+
+  // Legacy IWorkflowEngine interface methods
+  async execute(workflow: WorkflowTemplate, input?: Record<string, any>): Promise<WorkflowExecution> {
+    return await this.executeWorkflow(workflow, input || {});
+  }
+
+  async validate(workflow: WorkflowTemplate): Promise<boolean> {
+    const validation = await this.validateWorkflow(workflow);
+    return validation.isValid;
+  }
+
+  async getExecutionStatus(executionId: string): Promise<WorkflowExecution | null> {
+    return await this.getExecution(executionId);
+  }
+
+  getExecutableSteps(steps: WorkflowStep[], completedSteps: string[]): string[] {
+    return steps
+      .filter(step => 
+        !completedSteps.includes(step.id) &&
+        step.dependencies.every(dep => completedSteps.includes(dep))
+      )
+      .map(step => step.id)
+      .sort((a, b) => {
+        const stepA = steps.find(s => s.id === a);
+        const stepB = steps.find(s => s.id === b);
+        return (stepA?.order || 0) - (stepB?.order || 0);
+      });
   }
 
   private collectFinalOutput(context: WorkflowContext): Record<string, any> {

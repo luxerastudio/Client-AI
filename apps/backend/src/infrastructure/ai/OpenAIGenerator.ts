@@ -5,12 +5,15 @@ export class OpenAIGenerator implements IAIGenerator {
   private openai: OpenAI;
 
   constructor(apiKey: string) {
-    this.openai = new OpenAI({ apiKey });
+    this.openai = new OpenAI({ 
+      apiKey,
+      baseURL: 'https://api.groq.com/openai/v1'
+    });
   }
 
   async generateContent(prompt: string, config?: Record<string, any>): Promise<string> {
     const response = await this.openai.chat.completions.create({
-      model: config?.model || 'gpt-3.5-turbo',
+      model: config?.model || 'llama-3.3-70b-versatile',
       messages: [
         {
           role: 'system',
@@ -42,7 +45,7 @@ export class OpenAIGenerator implements IAIGenerator {
     Format the script clearly with timestamps and speaker notes.`;
 
     const response = await this.openai.chat.completions.create({
-      model: config?.model || 'gpt-3.5-turbo',
+      model: config?.model || 'llama-3.3-70b-versatile',
       messages: [
         {
           role: 'system',
@@ -78,7 +81,7 @@ Please:
 Return the optimized content with clear sections for each SEO element.`;
 
     const response = await this.openai.chat.completions.create({
-      model: config?.model || 'gpt-3.5-turbo',
+      model: config?.model || 'llama-3.3-70b-versatile',
       messages: [
         {
           role: 'system',

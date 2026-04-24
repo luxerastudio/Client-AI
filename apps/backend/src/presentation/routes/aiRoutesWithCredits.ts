@@ -48,7 +48,7 @@ export async function aiRoutesWithCredits(fastify: FastifyInstance, container: D
           prompt: { type: 'string', minLength: 1 },
           maxTokens: { type: 'number', minimum: 1, maximum: 4000, default: 1000 },
           temperature: { type: 'number', minimum: 0, maximum: 2, default: 0.7 },
-          model: { type: 'string', enum: ['gpt-3.5-turbo', 'gpt-4'], default: 'gpt-3.5-turbo' }
+          model: { type: 'string', enum: ['llama-3.3-70b-versatile'], default: 'llama-3.3-70b-versatile' }
         }
       },
       response: {
@@ -77,7 +77,7 @@ export async function aiRoutesWithCredits(fastify: FastifyInstance, container: D
     }
   }, async (request: AuthenticatedRequest, reply) => {
     try {
-      const { prompt, maxTokens = 1000, temperature = 0.7, model = 'gpt-3.5-turbo' } = request.body as any;
+      const { prompt, maxTokens = 1000, temperature = 0.7, model = 'llama-3.3-70b-versatile' } = request.body as any;
       const userId = request.user?.id || request.securityContext?.user?.id || 'anonymous';
 
       // Calculate credit cost based on request parameters
@@ -188,13 +188,13 @@ export async function aiRoutesWithCredits(fastify: FastifyInstance, container: D
         properties: {
           content: { type: 'string', minLength: 1 },
           analysisType: { type: 'string', enum: ['sentiment', 'keywords', 'summary', 'insights'], default: 'insights' },
-          model: { type: 'string', enum: ['gpt-3.5-turbo', 'gpt-4'], default: 'gpt-3.5-turbo' }
+          model: { type: 'string', enum: ['llama-3.3-70b-versatile'], default: 'llama-3.3-70b-versatile' }
         }
       }
     }
   }, async (request: AuthenticatedRequest, reply) => {
     try {
-      const { content, analysisType = 'insights', model = 'gpt-3.5-turbo' } = request.body as any;
+      const { content, analysisType = 'insights', model = 'llama-3.3-70b-versatile' } = request.body as any;
       const userId = request.user?.id || request.securityContext?.user?.id || 'anonymous';
 
       // Get AI engine
@@ -339,10 +339,11 @@ export async function aiRoutesWithCredits(fastify: FastifyInstance, container: D
 
 // Helper function to calculate AI credit costs
 function calculateAICreditCost(request: any): number {
-  const { prompt = '', maxTokens = 1000, model = 'gpt-3.5-turbo' } = request;
+  const { prompt = '', maxTokens = 1000, model = 'llama-3.3-70b-versatile' } = request;
   
   // Base cost per model
   const modelCosts = {
+    'llama-3.3-70b-versatile': 1,
     'gpt-3.5-turbo': 1,
     'gpt-4': 3,
     'gpt-4-turbo': 2

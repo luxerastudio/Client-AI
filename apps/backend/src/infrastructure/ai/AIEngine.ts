@@ -33,14 +33,15 @@ export class OpenAIProvider implements AIProvider {
   private apiKey: string;
 
   constructor() {
-    this.apiKey = config.ai?.apiKey || process.env.OPENAI_API_KEY || '';
+    this.apiKey = config.ai?.apiKey || process.env.GROQ_API_KEY || process.env.OPENAI_API_KEY || '';
     
     if (!this.apiKey || this.apiKey.includes('sk-dev-key-for-testing-only')) {
-      console.warn('OpenAI API key not found or using dev key. Using mock mode for development.');
+      console.warn('Groq API key not found or using dev key. Using mock mode for development.');
       this.client = null as any; // Will be handled in generate method
     } else {
       this.client = new OpenAI({
         apiKey: this.apiKey,
+        baseURL: 'https://api.groq.com/openai/v1',
         timeout: 60000, // 60 seconds timeout
       });
     }
@@ -55,7 +56,7 @@ export class OpenAIProvider implements AIProvider {
 
       // If no API key, use mock mode for development
       if (!this.client) {
-        console.warn('⚠️ OpenAI API key not configured - using mock mode for development');
+        console.warn('⚠️ Groq API key not configured - using mock mode for development');
         return {
           content: `Mock AI response for prompt: "${request.prompt.substring(0, 100)}..."`,
           usage: {
@@ -63,7 +64,7 @@ export class OpenAIProvider implements AIProvider {
             completionTokens: 20,
             totalTokens: 30
           },
-          model: 'mock-gpt-3.5-turbo',
+          model: 'mock-llama-3.3-70b-versatile',
           finishReason: 'stop'
         };
       }
@@ -84,9 +85,9 @@ export class OpenAIProvider implements AIProvider {
       // Add user prompt
       messages.push({ role: 'user', content: request.prompt });
 
-      // Call OpenAI API
+      // Call Groq API (OpenAI-compatible)
       const completion = await this.client.chat.completions.create({
-        model: request.model || config.ai.model || 'gpt-4',
+        model: request.model || config.ai.model || 'llama-3.3-70b-versatile',
         messages,
         temperature: request.temperature ?? config.ai.temperature ?? 0.7,
         max_tokens: request.maxTokens ?? config.ai.maxTokens ?? 1000,
@@ -113,20 +114,20 @@ export class OpenAIProvider implements AIProvider {
     } catch (error) {
       console.error('OpenAI API Error:', error);
       
-      // Handle specific OpenAI errors
+      // Handle specific API errors (Groq/OpenAI compatible)
       if (error instanceof OpenAI.APIError) {
         if (error.status === 401) {
-          throw new Error('Invalid OpenAI API key');
+          throw new Error('Invalid Groq API key');
         } else if (error.status === 429) {
-          throw new Error('OpenAI API rate limit exceeded');
+          throw new Error('Groq API rate limit exceeded');
         } else if (error.status === 400) {
-          throw new Error('Invalid request to OpenAI API');
+          throw new Error('Invalid request to Groq API');
         } else if (error.status === 500) {
-          throw new Error('OpenAI API server error');
+          throw new Error('Groq API server error');
         }
       }
       
-      throw new Error(`OpenAI API call failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(`Groq API call failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -140,7 +141,7 @@ export class OpenAIProvider implements AIProvider {
       return false;
     }
     
-    if (request.prompt.length > 32000) { // OpenAI context limit
+    if (request.prompt.length > 32000) { // Groq context limit
       return false;
     }
     
@@ -278,8 +279,8 @@ export class AIEngine {
       
       // If no API key, fail safe instead of mocking
       if (!client) {
-        console.error('❌ OpenAI API key not configured - cannot generate AI stream');
-        throw new Error('OpenAI API key not configured. Set OPENAI_API_KEY environment variable to enable AI streaming.');
+        console.error('❌ Groq API key not configured - cannot generate AI stream');
+        throw new Error('Groq API key not configured. Set GROQ_API_KEY environment variable to enable AI streaming.');
       }
       
       // Prepare messages for OpenAI API
@@ -298,9 +299,9 @@ export class AIEngine {
       // Add user prompt
       messages.push({ role: 'user', content: request.prompt });
 
-      // Call OpenAI API with streaming
+      // Call Groq API with streaming (OpenAI-compatible)
       const stream = await client.chat.completions.create({
-        model: request.model || config.ai.model || 'gpt-4',
+        model: request.model || config.ai.model || 'llama-3.3-70b-versatile',
         messages,
         temperature: request.temperature ?? config.ai.temperature ?? 0.7,
         max_tokens: request.maxTokens ?? config.ai.maxTokens ?? 1000,
@@ -311,20 +312,20 @@ export class AIEngine {
     } catch (error) {
       console.error('OpenAI Streaming Error:', error);
       
-      // Handle specific OpenAI errors
+      // Handle specific API errors (Groq/OpenAI compatible)
       if (error instanceof OpenAI.APIError) {
         if (error.status === 401) {
-          throw new Error('Invalid OpenAI API key');
+          throw new Error('Invalid Groq API key');
         } else if (error.status === 429) {
-          throw new Error('OpenAI API rate limit exceeded');
+          throw new Error('Groq API rate limit exceeded');
         } else if (error.status === 400) {
-          throw new Error('Invalid request to OpenAI API');
+          throw new Error('Invalid request to Groq API');
         } else if (error.status === 500) {
-          throw new Error('OpenAI API server error');
+          throw new Error('Groq API server error');
         }
       }
       
-      throw new Error(`OpenAI streaming call failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(`Groq streaming call failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 

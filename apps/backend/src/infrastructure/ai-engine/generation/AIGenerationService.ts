@@ -4,6 +4,7 @@ import { IAIGenerationService } from '@/domain/ai-engine/services/IInputAnalysis
 export class AIGenerationService implements IAIGenerationService {
   private openai: OpenAI;
   private modelCosts: Map<string, number> = new Map([
+    ['llama-3.3-70b-versatile', 0.000001],
     ['gpt-3.5-turbo', 0.000002],
     ['gpt-4', 0.00003],
     ['gpt-4-turbo', 0.00001],
@@ -11,7 +12,10 @@ export class AIGenerationService implements IAIGenerationService {
   ]);
 
   constructor(apiKey: string) {
-    this.openai = new OpenAI({ apiKey });
+    this.openai = new OpenAI({ 
+      apiKey,
+      baseURL: 'https://api.groq.com/openai/v1'
+    });
   }
 
   async generate(request: {
@@ -26,7 +30,7 @@ export class AIGenerationService implements IAIGenerationService {
     cost: number;
   }> {
     const startTime = Date.now();
-    const model = request.config.model || 'gpt-3.5-turbo';
+    const model = request.config.model || 'llama-3.3-70b-versatile';
     
     try {
       const messages = this.buildMessages(request.prompt, request.context, request.config);
@@ -236,7 +240,7 @@ Reasoning:`;
     delta: string;
     isComplete: boolean;
   }>> {
-    const model = request.config.model || 'gpt-3.5-turbo';
+    const model = request.config.model || 'llama-3.3-70b-versatile';
     const messages = this.buildMessages(request.prompt, request.context, request.config);
     
     const stream = await this.openai.chat.completions.create({

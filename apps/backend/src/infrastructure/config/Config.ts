@@ -71,7 +71,7 @@ export const config: Config = {
     level: process.env.LOG_LEVEL || 'info'
   },
   ai: {
-    model: process.env.AI_MODEL || 'gpt-3.5-turbo',
+    model: process.env.AI_MODEL || 'llama-3.3-70b-versatile',
     maxTokens: parseInt(process.env.AI_MAX_TOKENS || '1000'),
     temperature: parseFloat(process.env.AI_TEMPERATURE || '0.7')
   },

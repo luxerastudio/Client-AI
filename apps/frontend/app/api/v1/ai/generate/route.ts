@@ -17,7 +17,7 @@ class MockAIService {
     
     return {
       content: randomResponse,
-      model: 'mock-gpt-4-vercel',
+      model: 'mock-llama-3.3-70b-versatile-vercel',
       usage: {
         prompt_tokens: prompt.length,
         completion_tokens: randomResponse.length,
@@ -61,8 +61,8 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    // Check if OpenAI is configured
-    const hasOpenAI = !!process.env.OPENAI_API_KEY;
+    // Check if Groq is configured
+    const hasGroq = !!process.env.GROQ_API_KEY;
     
     // Generate AI response
     const aiResponse = await MockAIService.generateResponse(prompt, userId);

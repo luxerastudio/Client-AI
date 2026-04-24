@@ -83,13 +83,12 @@ export const config = {
       return provider;
     })(),
     apiKey: (() => {
-      const key = process.env.OPENAI_API_KEY || process.env.AI_API_KEY;
-      if (!key) throw new Error('OPENAI_API_KEY or AI_API_KEY environment variable is required');
+      const key = process.env.GROQ_API_KEY || process.env.OPENAI_API_KEY || process.env.AI_API_KEY;
+      if (!key) throw new Error('GROQ_API_KEY environment variable is required');
       return key;
     })(),
     model: (() => {
-      const model = process.env.AI_MODEL;
-      if (!model) throw new Error('AI_MODEL environment variable is required');
+      const model = process.env.AI_MODEL || 'llama-3.3-70b-versatile';
       return model;
     })(),
     maxTokens: (() => {
@@ -450,7 +449,7 @@ function validateConfig(): void {
   
   // Critical environment variables for all environments
   const criticalEnvVars = [
-    'OPENAI_API_KEY',
+    'GROQ_API_KEY',
     'DATABASE_URL',
     'DB_USER',
     'DB_PASSWORD',

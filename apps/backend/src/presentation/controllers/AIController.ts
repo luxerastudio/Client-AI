@@ -12,7 +12,7 @@ export class AIController {
       
       const result = await aiEngine.generate({
         prompt,
-        model: 'gpt-4',
+        model: 'llama-3.3-70b-versatile',
         maxTokens: 1000,
         temperature: 0.7
       });
@@ -41,7 +41,7 @@ export class AIController {
       // For now, return a simple response. In production, this would stream
       const result = await aiEngine.generate({
         prompt,
-        model: 'gpt-4',
+        model: 'llama-3.3-70b-versatile',
         maxTokens: 1000,
         temperature: 0.7
       });

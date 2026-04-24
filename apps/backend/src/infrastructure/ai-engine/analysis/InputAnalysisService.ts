@@ -6,14 +6,17 @@ export class InputAnalysisService implements IInputAnalysisService {
   private openai: OpenAI;
 
   constructor(apiKey: string) {
-    this.openai = new OpenAI({ apiKey });
+    this.openai = new OpenAI({ 
+      apiKey,
+      baseURL: 'https://api.groq.com/openai/v1'
+    });
   }
 
   async analyzeIntent(input: string | Record<string, any>): Promise<string> {
     const inputText = typeof input === 'string' ? input : JSON.stringify(input);
     
     const response = await this.openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'llama-3.3-70b-versatile',
       messages: [
         {
           role: 'system',
@@ -35,7 +38,7 @@ export class InputAnalysisService implements IInputAnalysisService {
     const inputText = typeof input === 'string' ? input : JSON.stringify(input);
     
     const response = await this.openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'llama-3.3-70b-versatile',
       messages: [
         {
           role: 'system',
@@ -60,7 +63,7 @@ export class InputAnalysisService implements IInputAnalysisService {
 
   async analyzeSentiment(input: string): Promise<'positive' | 'negative' | 'neutral'> {
     const response = await this.openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'llama-3.3-70b-versatile',
       messages: [
         {
           role: 'system',
@@ -107,7 +110,7 @@ export class InputAnalysisService implements IInputAnalysisService {
     `;
 
     const response = await this.openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'llama-3.3-70b-versatile',
       messages: [
         {
           role: 'system',

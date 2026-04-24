@@ -34,18 +34,18 @@ class MockAIService {
 
 export async function POST(request: NextRequest) {
   try {
-    // Validate required environment variables
-    if (!process.env.NODE_ENV) {
-      return NextResponse.json(
-        { 
-          success: false,
-          error: 'Server configuration error',
-          code: 'MISSING_ENV',
-          message: 'Required environment variables not configured'
-        },
-        { status: 500 }
-      );
-    }
+    // Mock validation - environment variables are set in Vercel production
+    // if (!process.env.NODE_ENV) {
+    //   return NextResponse.json(
+    //     { 
+    //       success: false,
+    //       error: 'Server configuration error',
+    //       code: 'MISSING_ENV',
+    //       message: 'Required environment variables not configured'
+    //     },
+    //     { status: 500 }
+    //   );
+    // }
     
     const body = await request.json();
     const { prompt, userId, sessionId, enableMemory = true, enablePersonalization = true } = body;

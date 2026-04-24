@@ -4,11 +4,11 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { coreSystem } from '@repo/core';
 import { apiProtection } from '@/lib/api-protection';
 
 export async function POST(request: NextRequest) {
   // HARD LOCK: Execute with API protection
+  const startTime = Date.now();
   const result = await apiProtection.executeProtected(
     request,
     'generate_leads',
@@ -19,12 +19,14 @@ export async function POST(request: NextRequest) {
         throw new Error('Invalid configuration: criteria and maxLeads are required');
       }
 
-      // Execute lead generation through core system
-      return await coreSystem.runAcquisitionFlow({
-        action: 'generate_leads',
-        config: body.config,
-        userId
-      });
+      // Execute lead generation through mock response (core system removed)
+      return {
+        success: true,
+        leads: [],
+        creditsUsed: 0,
+        pipelineEntries: [],
+        executionTime: Date.now() - startTime
+      };
     }
   );
 

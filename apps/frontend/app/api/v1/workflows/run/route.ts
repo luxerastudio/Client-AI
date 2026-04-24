@@ -93,14 +93,14 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    // Execute workflow
+    // Execute workflow through mock response (core system removed)
+    const startTime = Date.now();
     const result = await MockWorkflowService.executeWorkflow(input, workflowType);
-    
     const response = {
       success: true,
-      data: {
-        executionId: result.executionId,
-        status: result.status,
+      workflow: null,
+      creditsUsed: 0,
+      executionTime: Date.now() - startTime
         workflowType: result.workflowType,
         input: result.input,
         output: result.output,

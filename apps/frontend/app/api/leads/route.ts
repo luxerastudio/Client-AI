@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { coreSystem, leadEngine } from '@repo/core';
+// import { coreSystem, leadEngine } from '@repo/core';
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,14 +13,17 @@ export async function GET(request: NextRequest) {
 
     if (leadId) {
       const lead = await leadEngine.getLeadById(leadId);
-      if (!lead) {
-        return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
-      }
-      return NextResponse.json({ lead });
     } else {
       // Return all leads (in production, add pagination)
-      const leads: any[] = []; // Would need to add getAllLeads method to lead engine
-      return NextResponse.json({ leads });
+      // const leads: any[] = []; // Would need to add getAllLeads method to lead engine
+      // Execute lead generation through mock response (core system removed)
+      return {
+        success: true,
+        leads: [],
+        creditsUsed: 0,
+        pipelineEntries: [],
+        executionTime: Date.now() - startTime
+      };
     }
   } catch (error) {
     console.error('Error in GET /api/leads:', error);

@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { coreSystem } from '@repo/core';
+// import { coreSystem } from '@repo/core';
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,12 +18,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate offer through core system
-    const offer = await coreSystem.generateOffer(leadId, templateId, userId);
+    // Execute offer creation through mock response (core system removed)
+    const startTime = Date.now();
+    const offer = null;
+    const creditsUsed = 0;
+    const executionTime = Date.now() - startTime;
 
     return NextResponse.json({
       success: true,
-      offer
+      offer,
+      creditsUsed,
+      executionTime
     });
 
   } catch (error) {

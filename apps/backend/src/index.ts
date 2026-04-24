@@ -16,7 +16,7 @@ import { aiRoutes } from './presentation/routes/aiRoutes';
 import { workflowRoutes } from './presentation/routes/workflowRoutes';
 import { scoringRoutes } from './presentation/routes/scoringRoutes';
 import { securityRoutes } from './presentation/routes/securityRoutes';
-// import { versionRoutes } from './presentation/routes/versionRoutes';
+import { versionRoutes } from './presentation/routes/versionRoutes';
 import { userMemoryRoutes } from './presentation/routes/userMemoryRoutes';
 import { workflowEngineRoutes } from './presentation/routes/workflowEngineRoutes';
 
@@ -127,28 +127,28 @@ async function initializeDependencyContainer(container: DependencyContainer): Pr
     return aiEngine;
   }, { singleton: true });
 
-  // Register User Memory Service (OPTIONAL) - Commented out for now
-  // try {
-  //   const UserMemoryService = (await import('./infrastructure/user-memory/UserMemoryService')).UserMemoryService;
-  //   const UserMemoryRepository = (await import('./infrastructure/repositories/UserMemoryRepositoryDB')).UserMemoryRepositoryDB;
+  // Register User Memory Service
+  try {
+    const UserMemoryService = (await import('./infrastructure/user-memory/UserMemoryService')).UserMemoryService;
+    const UserMemoryRepository = (await import('./infrastructure/repositories/UserMemoryRepositoryDB')).UserMemoryRepositoryDB;
     
-  //   const repoSuccess = safeRegisterService(container, 'userMemoryRepository', () => {
-  //     const dbConnection = container.get('dbConnection') as any;
-  //     return new UserMemoryRepository(dbConnection);
-  //   }, { singleton: true, dependencies: ['dbConnection'] });
+    const repoSuccess = safeRegisterService(container, 'userMemoryRepository', () => {
+      const dbConnection = container.get('dbConnection') as any;
+      return new UserMemoryRepository(dbConnection);
+    }, { singleton: true, dependencies: ['dbConnection'] });
     
-  //   const serviceSuccess = safeRegisterService(container, 'userMemoryService', () => {
-  //     const repository = container.get('userMemoryRepository') as any;
-  //     const aiEngine = container.get('aiEngine') as any;
-  //     return new UserMemoryService(repository, undefined, undefined, undefined, undefined);
-  //   }, { singleton: true, dependencies: ['userMemoryRepository', 'aiEngine'] });
+    const serviceSuccess = safeRegisterService(container, 'userMemoryService', () => {
+      const repository = container.get('userMemoryRepository') as any;
+      const aiEngine = container.get('aiEngine') as any;
+      return new UserMemoryService(repository, undefined, undefined, undefined, undefined);
+    }, { singleton: true, dependencies: ['userMemoryRepository', 'aiEngine'] });
     
-  //   if (repoSuccess && serviceSuccess) successfulRegistrations += 2;
-  //   else failedRegistrations += 2;
-  // } catch (error) {
-  //   logDetailedError('DI', 'registerUserMemoryService', error);
-  //   failedRegistrations++;
-  // }
+    if (repoSuccess && serviceSuccess) successfulRegistrations += 2;
+    else failedRegistrations += 2;
+  } catch (error) {
+    logDetailedError('DI', 'registerUserMemoryService', error);
+    failedRegistrations++;
+  }
 
   // Register Memory-Aware Prompt Enhancer - Commented out for now
   // const MemoryAwarePromptEnhancer = (await import('./infrastructure/ai/MemoryAwarePromptEnhancer')).MemoryAwarePromptEnhancer;
@@ -213,6 +213,13 @@ async function initializeDependencyContainer(container: DependencyContainer): Pr
     return new WorkflowExecutionEngineDB(workflowRegistry, workflowExecutionRepository, aiEngine);
   }, { singleton: true, dependencies: ['workflowRegistry', 'workflowExecutionRepository', 'aiEngine'] });
 
+  // Register Version Manager
+  const VersionManager = (await import('./infrastructure/versioning/VersionManager')).VersionManager;
+  container.register('versionManager', () => {
+    const dbConnection = container.get('dbConnection') as any;
+    return new VersionManager(dbConnection);
+  }, { singleton: true, dependencies: ['dbConnection'] });
+
   // Register Authentication Service with repositories (commented out - missing module)
   // const AuthenticationServiceDB = (await import('./infrastructure/security/AuthenticationServiceDB')).AuthenticationServiceDB;
   // container.register('authService', () => {
@@ -227,22 +234,22 @@ async function initializeDependencyContainer(container: DependencyContainer): Pr
   //   );
   // }, { singleton: true, dependencies: ['userRepository', 'sessionRepository', 'apiKeyRepository'] });
 
-  // Register Controllers (commented out - missing modules)
-  // const AIController = (await import('./presentation/controllers/AIController')).AIController;
-  // const WorkflowController = (await import('./presentation/controllers/WorkflowController')).WorkflowController;
-  // const ScoringController = (await import('./presentation/controllers/ScoringController')).ScoringController;
-  // const SecurityController = (await import('./presentation/controllers/SecurityController')).SecurityController;
-  // const VersionController = (await import('./presentation/controllers/VersionController')).VersionController;
-  // const UserMemoryController = (await import('./presentation/controllers/UserMemoryController')).UserMemoryController;
-  // const WorkflowEngineController = (await import('./presentation/controllers/WorkflowEngineController')).WorkflowEngineController;
+  // Register Controllers
+  const AIController = (await import('./presentation/controllers/AIController')).AIController;
+  const WorkflowController = (await import('./presentation/controllers/WorkflowController')).WorkflowController;
+  const ScoringController = (await import('./presentation/controllers/ScoringController')).ScoringController;
+  const SecurityController = (await import('./presentation/controllers/SecurityController')).SecurityController;
+  const VersionController = (await import('./presentation/controllers/VersionController')).VersionController;
+  const UserMemoryController = (await import('./presentation/controllers/UserMemoryController')).UserMemoryController;
+  const WorkflowEngineController = (await import('./presentation/controllers/WorkflowEngineController')).WorkflowEngineController;
 
-  // container.register('aiController', () => new AIController(container), { singleton: true });
-  // container.register('workflowController', () => new WorkflowController(container), { singleton: true });
-  // container.register('scoringController', () => new ScoringController(container), { singleton: true });
-  // container.register('securityController', () => new SecurityController(container), { singleton: true });
-  // container.register('versionController', () => new VersionController(container), { singleton: true });
-  // container.register('userMemoryController', () => new UserMemoryController(container), { singleton: true });
-  // container.register('workflowEngineController', () => new WorkflowEngineController(container), { singleton: true });
+  container.register('aiController', () => new AIController(container), { singleton: true });
+  container.register('workflowController', () => new WorkflowController(container), { singleton: true });
+  container.register('scoringController', () => new ScoringController(container), { singleton: true });
+  container.register('securityController', () => new SecurityController(container), { singleton: true });
+  container.register('versionController', () => new VersionController(container), { singleton: true });
+  container.register('userMemoryController', () => new UserMemoryController(container), { singleton: true });
+  container.register('workflowEngineController', () => new WorkflowEngineController(container), { singleton: true });
 
   // Validate and warmup DI system
   const validation = container.validateDependencies();

@@ -448,7 +448,6 @@ export class SystemIntegrationTest {
       // Test DI container health
       const healthInfo = this.container.getHealthInfo();
       const registeredServices = this.container.getRegisteredServices();
-      const dependencyTree = this.container.getDependencyTree();
       
       // Validate critical services are available
       const criticalServices = [
@@ -475,7 +474,6 @@ export class SystemIntegrationTest {
           totalServices: healthInfo.totalServices,
           initializedServices: healthInfo.initializedServices,
           criticalServicesAvailable: allCriticalAvailable,
-          dependencyTreeKeys: Object.keys(dependencyTree),
           healthInfo
         }
       };

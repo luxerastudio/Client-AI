@@ -6,10 +6,14 @@ import { ICreditService } from '../../domain/credit/entities/Credit';
 interface AuthenticatedRequest extends FastifyRequest {
   user?: {
     id: string;
+    role?: string;
+    roles?: string[];
   };
   securityContext?: {
     user?: {
       id: string;
+      role?: string;
+      roles?: string[];
     };
   };
 }
@@ -62,7 +66,7 @@ export async function creditRoutes(fastify: FastifyInstance, container: Dependen
     }
   }, async (request: AuthenticatedRequest, reply) => {
     try {
-      const userId = request.user?.id || request.securityContext?.user?.id;
+      const userId = (request as AuthenticatedRequest).user?.id || (request as AuthenticatedRequest).securityContext?.user?.id;
       if (!userId) {
         return reply.status(401).send({
           success: false,
@@ -157,7 +161,7 @@ export async function creditRoutes(fastify: FastifyInstance, container: Dependen
     }
   }, async (request, reply) => {
     try {
-      const userId = request.user?.id || request.securityContext?.user?.id;
+      const userId = (request as AuthenticatedRequest).user?.id || (request as AuthenticatedRequest).securityContext?.user?.id;
       if (!userId) {
         return reply.status(401).send({
           success: false,
@@ -272,7 +276,7 @@ export async function creditRoutes(fastify: FastifyInstance, container: Dependen
     }
   }, async (request, reply) => {
     try {
-      const userId = request.user?.id || request.securityContext?.user?.id;
+      const userId = (request as AuthenticatedRequest).user?.id || (request as AuthenticatedRequest).securityContext?.user?.id;
       if (!userId) {
         return reply.status(401).send({
           success: false,
@@ -412,7 +416,7 @@ export async function creditRoutes(fastify: FastifyInstance, container: Dependen
     }
   }, async (request, reply) => {
     try {
-      const userId = request.user?.id || request.securityContext?.user?.id;
+      const userId = (request as AuthenticatedRequest).user?.id || (request as AuthenticatedRequest).securityContext?.user?.id;
       if (!userId) {
         return reply.status(401).send({
           success: false,
@@ -472,7 +476,7 @@ export async function creditRoutes(fastify: FastifyInstance, container: Dependen
   }, async (request, reply) => {
     try {
       // Check if user is admin
-      const user = request.user || request.securityContext?.user;
+      const user = (request as AuthenticatedRequest).user || (request as AuthenticatedRequest).securityContext?.user;
       if (!user || (user.role !== 'admin' && !(user as any).roles?.includes('admin'))) {
         return reply.status(403).send({
           success: false,
@@ -512,7 +516,7 @@ export async function creditRoutes(fastify: FastifyInstance, container: Dependen
   }, async (request, reply) => {
     try {
       // Check if user is admin
-      const user = request.user || request.securityContext?.user;
+      const user = (request as AuthenticatedRequest).user || (request as AuthenticatedRequest).securityContext?.user;
       if (!user || (user.role !== 'admin' && !(user as any).roles?.includes('admin'))) {
         return reply.status(403).send({
           success: false,

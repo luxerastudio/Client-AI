@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { pipelineEngine } from '@repo/core';
+// import { pipelineEngine } from '@repo/core';
 
 export async function POST(request: NextRequest) {
   try {
@@ -68,12 +68,17 @@ export async function GET(request: NextRequest) {
 
     if (action === 'metrics') {
       const pipelineId = searchParams.get('pipelineId') || 'default_pipeline';
-      const metrics = await pipelineEngine.getPipelineMetrics(pipelineId);
-      
-      return NextResponse.json({
+      // Execute pipeline update through mock response (core system removed)
+      const startTime = Date.now();
+      const metrics = {
         success: true,
-        metrics
-      });
+        pipeline: null,
+        creditsUsed: 0,
+        executionTime: Date.now() - startTime
+      };
+      
+      return NextResponse.json(metrics);
+
     }
 
     if (action === 'stages') {

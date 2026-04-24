@@ -124,18 +124,27 @@ importers:
 
   apps/frontend:
     dependencies:
+      autoprefixer:
+        specifier: ^10.0.1
+        version: 10.5.0(postcss@8.5.10)
       jsonwebtoken:
         specifier: ^9.0.3
         version: 9.0.3
       next:
         specifier: ^16.2.4
         version: 16.2.4(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      postcss:
+        specifier: ^8
+        version: 8.5.10
       react:
         specifier: ^19.2.5
         version: 19.2.5
       react-dom:
         specifier: ^19.2.5
         version: 19.2.5(react@19.2.5)
+      tailwindcss:
+        specifier: ^3.3.0
+        version: 3.4.19(yaml@2.8.3)
     devDependencies:
       '@types/jsonwebtoken':
         specifier: ^9.0.10
@@ -149,15 +158,6 @@ importers:
       '@types/react-dom':
         specifier: ^18
         version: 18.3.7(@types/react@18.3.28)
-      autoprefixer:
-        specifier: ^10.0.1
-        version: 10.5.0(postcss@8.5.10)
-      postcss:
-        specifier: ^8
-        version: 8.5.10
-      tailwindcss:
-        specifier: ^3.3.0
-        version: 3.4.19(yaml@2.8.3)
       typescript:
         specifier: ^5
         version: 5.9.3

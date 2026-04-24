@@ -98,15 +98,15 @@ export async function POST(request: NextRequest) {
     const result = await MockWorkflowService.executeWorkflow(input, workflowType);
     const response = {
       success: true,
-      workflow: null,
-      creditsUsed: 0,
-      executionTime: Date.now() - startTime
+      workflow: {
         workflowType: result.workflowType,
         input: result.input,
         output: result.output,
         steps: result.steps,
         metadata: result.metadata
       },
+      creditsUsed: 0,
+      executionTime: Date.now() - startTime,
       timestamp: new Date().toISOString()
     };
     

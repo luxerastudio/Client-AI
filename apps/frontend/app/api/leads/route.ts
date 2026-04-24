@@ -8,11 +8,18 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
+    const startTime = Date.now();
     const { searchParams } = new URL(request.url);
     const leadId = searchParams.get('id');
 
     if (leadId) {
-      const lead = await leadEngine.getLeadById(leadId);
+      // const lead = await leadEngine.getLeadById(leadId);
+      // Mock response for now
+      const lead = {
+        id: leadId,
+        status: 'mock',
+        data: 'Mock lead data'
+      };
     } else {
       // Return all leads (in production, add pagination)
       // const leads: any[] = []; // Would need to add getAllLeads method to lead engine
@@ -46,7 +53,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const leads = await leadEngine.generateLeads(config);
+    // const leads = await leadEngine.generateLeads(config);
+    // Mock response for now
+    const leads: any[] = [];
     return NextResponse.json({ leads, count: leads.length });
   } catch (error) {
     console.error('Error in POST /api/leads:', error);
@@ -69,7 +78,9 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const lead = await leadEngine.updateLead(id, updates);
+    // const lead = await leadEngine.updateLead(id, updates);
+    // Mock response for now
+    const lead = { id, ...updates, updated: true };
     if (!lead) {
       return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
     }

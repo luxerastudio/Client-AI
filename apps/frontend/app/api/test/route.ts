@@ -67,6 +67,7 @@ export async function POST(request: NextRequest) {
         normalizedNiche.charAt(0).toUpperCase() + normalizedNiche.slice(1);
 
       // Store input for response
+      const startTime = Date.now();
       inputNiche = body.niche;
       inputLocation = body.location;
 
@@ -97,6 +98,11 @@ export async function POST(request: NextRequest) {
       return {
         success: true,
         tests: [],
+        leads: [],
+        personalizedLeads: [],
+        outreachMessages: [],
+        offers: [],
+        pipelineEntries: [],
         executionTime: Date.now() - startTime
       };
     }

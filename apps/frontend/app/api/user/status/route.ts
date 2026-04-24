@@ -9,26 +9,12 @@ import { apiProtection } from '@/lib/api-protection';
 export async function GET(request: NextRequest) {
   try {
     // Get user status through mock response (access control removed)
-    return {
+    return NextResponse.json({
       success: true,
       status: 'active',
       credits: 100,
       lastActivity: new Date().toISOString()
-    };
-    } catch (error) {
-    console.error('Error in GET /api/user/status:', error);
-    return NextResponse.json(
-      { success: false, error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
-  } catch (error) {
-    console.error('Error in GET /api/user/status:', error);
-    return NextResponse.json(
-      { success: false, error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
+    });
   } catch (error) {
     console.error('Error in GET /api/user/status:', error);
     return NextResponse.json(

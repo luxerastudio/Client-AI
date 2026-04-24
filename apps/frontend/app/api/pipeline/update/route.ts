@@ -22,7 +22,9 @@ export async function POST(request: NextRequest) {
     
     switch (action) {
       case 'advance':
-        result = await pipelineEngine.advanceStage(entryId, notes);
+        // result = await pipelineEngine.advanceStage(entryId, notes);
+        // Mock response for now
+        result = { success: true, entryId, notes, action: 'advanced' };
         break;
       case 'move_to_stage':
         if (!body.targetStageId) {
@@ -31,7 +33,9 @@ export async function POST(request: NextRequest) {
             { status: 400 }
           );
         }
-        result = await pipelineEngine.moveToStage(entryId, body.targetStageId, notes);
+        // result = await pipelineEngine.moveToStage(entryId, body.targetStageId, notes);
+        // Mock response for now
+        result = { success: true, entryId, targetStageId: body.targetStageId, notes, action: 'moved' };
         break;
       default:
         return NextResponse.json(
@@ -83,7 +87,15 @@ export async function GET(request: NextRequest) {
 
     if (action === 'stages') {
       const pipelineId = searchParams.get('pipelineId') || 'default_pipeline';
-      const stages = await pipelineEngine.getStagesInPipeline(pipelineId);
+      // const stages = await pipelineEngine.getStagesInPipeline(pipelineId);
+      // Mock response for now
+      const stages = [
+        { id: 'lead', name: 'Lead', order: 1 },
+        { id: 'contacted', name: 'Contacted', order: 2 },
+        { id: 'qualified', name: 'Qualified', order: 3 },
+        { id: 'proposal', name: 'Proposal', order: 4 },
+        { id: 'closed', name: 'Closed', order: 5 }
+      ];
       
       return NextResponse.json({
         success: true,

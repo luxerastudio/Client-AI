@@ -270,6 +270,17 @@ async function initializeDependencyContainer(container: DependencyContainer): Pr
 async function registerRoutes(server: FastifyInstance, container: DependencyContainer): Promise<void> {
   logger.info('Registering routes...');
 
+  // Safe root route for service information
+  server.get('/', async (request, reply) => {
+    return {
+      status: 'running',
+      service: 'AI Client Acquisition System Backend',
+      version: '1.0.0',
+      docs: '/docs',
+      health: '/health'
+    };
+  });
+
   // Simple test route first
   server.get('/test', async (request, reply) => {
     return { message: 'DI system is working!', containerServices: container.getRegisteredServices() };

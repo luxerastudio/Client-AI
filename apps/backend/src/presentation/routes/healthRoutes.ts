@@ -74,6 +74,23 @@ export async function healthRoutes(fastify: FastifyInstance, container: Dependen
     }
   });
 
+  // Simple ping endpoint for connectivity testing
+  fastify.get('/ping', async (request, reply) => {
+    try {
+      return reply.status(200).send({
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime()
+      });
+    } catch (error) {
+      return reply.status(500).send({
+        status: 'error',
+        timestamp: new Date().toISOString(),
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
+    }
+  });
+
   // Detailed health check
   fastify.get('/detailed', async (request, reply) => {
     try {

@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { EnhancedDependencyContainer } from '../../infrastructure/di/EnhancedDependencyContainer';
+import { DependencyContainer } from '../../infrastructure/di/DependencyContainer';
 
 export interface IntegrationTestResult {
   testName: string;
@@ -19,10 +19,10 @@ export interface SystemFlowTest {
 
 export class SystemIntegrationTest {
   private server: FastifyInstance;
-  private container: EnhancedDependencyContainer;
+  private container: DependencyContainer;
   private testResults: IntegrationTestResult[] = [];
 
-  constructor(server: FastifyInstance, container: EnhancedDependencyContainer) {
+  constructor(server: FastifyInstance, container: DependencyContainer) {
     this.server = server;
     this.container = container;
   }

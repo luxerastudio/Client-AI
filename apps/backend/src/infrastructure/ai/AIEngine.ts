@@ -53,19 +53,10 @@ export class OpenAIProvider implements AIProvider {
         throw new Error('Invalid request: prompt is required and must not be empty');
       }
 
-      // If no API key, return mock response
+      // If no API key, fail safe instead of mocking
       if (!this.client) {
-        console.warn('Using mock response (no OpenAI API key configured)');
-        return {
-          content: `Mock response for: ${request.prompt}. To get real OpenAI responses, set OPENAI_API_KEY environment variable.`,
-          usage: {
-            promptTokens: Math.floor(request.prompt.length / 4),
-            completionTokens: 50,
-            totalTokens: Math.floor(request.prompt.length / 4) + 50
-          },
-          model: 'gpt-4-mock',
-          finishReason: 'stop'
-        };
+        console.error('❌ OpenAI API key not configured - cannot generate AI response');
+        throw new Error('OpenAI API key not configured. Set OPENAI_API_KEY environment variable to enable AI generation.');
       }
 
       // Prepare messages for OpenAI API
@@ -266,11 +257,10 @@ export class AIEngine {
       const openAIProvider = this.currentProvider as OpenAIProvider;
       const client = openAIProvider.getClient();
       
-      // If no API key, return mock stream
+      // If no API key, fail safe instead of mocking
       if (!client) {
-        console.warn('Using mock stream (no OpenAI API key configured)');
-        const mockContent = `Mock stream response for: ${request.prompt}. To get real OpenAI streaming, set OPENAI_API_KEY environment variable.`;
-        return this.createMockStream(mockContent);
+        console.error('❌ OpenAI API key not configured - cannot generate AI stream');
+        throw new Error('OpenAI API key not configured. Set OPENAI_API_KEY environment variable to enable AI streaming.');
       }
       
       // Prepare messages for OpenAI API
@@ -316,15 +306,6 @@ export class AIEngine {
       }
       
       throw new Error(`OpenAI streaming call failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
-  }
-
-  private async *createMockStream(content: string): AsyncIterable<string> {
-    const words = content.split(' ');
-    
-    for (const word of words) {
-      yield word + ' ';
-      await new Promise(resolve => setTimeout(resolve, 50)); // Simulate streaming delay
     }
   }
 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { config } from '../../config';
 
 export interface ScoringFactor {
@@ -72,7 +71,7 @@ export class WeightedAlgorithm implements ScoringAlgorithm {
     );
   }
 
-  private calculateConfidence(factors: ScoringFactor[]): number {
+  public calculateConfidence(factors: ScoringFactor[]): number {
     // Simple confidence calculation based on factor count and weights
     const factorCount = factors.length;
     const totalWeight = factors.reduce((sum, factor) => sum + factor.weight, 0);
@@ -235,28 +234,10 @@ export class ScoringEngine {
   }
 
   async getHistoricalScores(entityType: string, entityId: string): Promise<ScoringResult[]> {
-    // Mock implementation - in production, this would query the database
-    const mockResults: ScoringResult[] = [];
-    
-    // Generate some historical data
-    for (let i = 0; i < 10; i++) {
-      const factors: ScoringFactor[] = [
-        { name: 'relevance', weight: 0.4, value: Math.random() },
-        { name: 'quality', weight: 0.3, value: Math.random() },
-        { name: 'engagement', weight: 0.2, value: Math.random() },
-        { name: 'conversion', weight: 0.1, value: Math.random() }
-      ];
-
-      const algorithm = this.algorithms.get(this.config.algorithm)!;
-      const result = algorithm.calculate(factors);
-      
-      mockResults.push({
-        ...result,
-        timestamp: new Date(Date.now() - (i * 24 * 60 * 60 * 1000)) // i days ago
-      });
-    }
-
-    return mockResults.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+    // In production, this would query a real scoring database or service
+    // For now, return empty array - fail safe instead of mock data
+    const results: ScoringResult[] = [];
+    return results;
   }
 
   async compareScores(requests: ScoringRequest[]): Promise<{

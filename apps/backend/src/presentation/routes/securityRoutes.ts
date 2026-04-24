@@ -104,12 +104,14 @@ export async function securityRoutes(fastify: FastifyInstance, container: Depend
   }, async (request, reply) => {
     try {
       const { data, schema, options } = request.body as any;
-      // Mock validation since service isn't implemented
-      const result = { isValid: true, errors: [], data };
       
-      return reply.send({
-        success: true,
-        data: result
+      // Validation service not available - fail safe
+      return reply.status(503).send({
+        success: false,
+        error: {
+          message: 'Validation service not available',
+          code: 'VALIDATION_SERVICE_UNAVAILABLE'
+        }
       });
     } catch (error) {
       fastify.log.error('Validation failed:' + (error as Error).message);
@@ -139,28 +141,14 @@ export async function securityRoutes(fastify: FastifyInstance, container: Depend
   }, async (request, reply) => {
     try {
       const { data, type, options } = request.body as any;
-      let result;
       
-      switch (type) {
-        case 'request':
-          result = data; // Mock sanitization
-          break;
-        case 'response':
-          result = data; // Mock sanitization
-          break;
-        case 'string':
-          result = data; // Mock sanitization
-          break;
-        case 'html':
-          result = data; // Mock sanitization
-          break;
-        default:
-          result = data; // Mock sanitization
-      }
-      
-      return reply.send({
-        success: true,
-        data: result
+      // Sanitization service not available - fail safe
+      return reply.status(503).send({
+        success: false,
+        error: {
+          message: 'Sanitization service not available',
+          code: 'SANITIZATION_SERVICE_UNAVAILABLE'
+        }
       });
     } catch (error) {
       fastify.log.error('Sanitization failed:' + (error as Error).message);
@@ -190,8 +178,9 @@ export async function securityRoutes(fastify: FastifyInstance, container: Depend
   }, async (request, reply) => {
     try {
       const { userId, payload, expiresIn } = request.body as any;
-      // Mock token generation since service isn't implemented
-      const token = 'mock-token-' + Date.now();
+      const authService = container.get('authenticationService') as any;
+      
+      const token = await authService.generateToken(userId, payload, expiresIn);
       
       return reply.send({
         success: true,
@@ -223,12 +212,28 @@ export async function securityRoutes(fastify: FastifyInstance, container: Depend
   }, async (request, reply) => {
     try {
       const { token } = request.body as { token: string };
-      // Mock API key validation since service isn't implemented
-      const result = { isValid: true, userId: 'mock-user', permissions: ['read'] };
+      const authService = container.get('authenticationService') as any;
+      
+      const user = await authService.validateToken(token);
+      
+      if (!user) {
+        return reply.status(401).send({
+          success: false,
+          error: {
+            message: 'Invalid or expired token',
+            code: 'INVALID_TOKEN'
+          }
+        });
+      }
       
       return reply.send({
         success: true,
-        data: result
+        data: { 
+          isValid: true, 
+          userId: user.id, 
+          permissions: user.permissions || [],
+          user: user
+        }
       });
     } catch (error) {
       fastify.log.error('Token verification failed:' + (error as Error).message);
@@ -247,7 +252,7 @@ export async function securityRoutes(fastify: FastifyInstance, container: Depend
     schema: {
       body: {
         type: 'object',
-        required: ['userId'],
+        required: ['userId', 'name'],
         properties: {
           userId: { type: 'string' },
           name: { type: 'string' },
@@ -259,12 +264,22 @@ export async function securityRoutes(fastify: FastifyInstance, container: Depend
   }, async (request, reply) => {
     try {
       const { userId, name, permissions, expiresAt } = request.body as any;
-      // Mock API key generation since service isn't implemented
-      const result = { apiKey: 'mock-api-key-' + Date.now(), permissions, expiresIn: expiresAt };
+      const authService = container.get('authenticationService') as any;
+      
+      const apiKey = await authService.createApiKey(userId, {
+        name,
+        permissions: permissions || [],
+        expiresAt: expiresAt ? new Date(expiresAt) : undefined
+      });
       
       return reply.send({
         success: true,
-        data: result
+        data: { 
+          apiKey: apiKey.key,
+          permissions: apiKey.permissions,
+          expiresAt: apiKey.expiresAt,
+          name: apiKey.name
+        }
       });
     } catch (error) {
       fastify.log.error('API key generation failed:' + (error as Error).message);
@@ -279,26 +294,17 @@ export async function securityRoutes(fastify: FastifyInstance, container: Depend
   });
 
   // Get security events
-  fastify.get('/events', {
-    schema: {
-      querystring: {
-        limit: { type: 'number' },
-        offset: { type: 'number' },
-        level: { type: 'string' },
-        type: { type: 'string' },
-        startDate: { type: 'string' },
-        endDate: { type: 'string' }
-      }
-    }
-  }, async (request, reply) => {
+  fastify.get('/events', async (request, reply) => {
     try {
       const filters = request.query as any;
-      // Mock threat monitoring since service isn't implemented
-      const events: any[] = [];
       
-      return reply.send({
-        success: true,
-        data: events
+      // Security monitoring service not available - fail safe
+      return reply.status(503).send({
+        success: false,
+        error: {
+          message: 'Security monitoring service not available',
+          code: 'SECURITY_MONITORING_UNAVAILABLE'
+        }
       });
     } catch (error) {
       fastify.log.error('Failed to get security events:' + (error as Error).message);
@@ -315,12 +321,13 @@ export async function securityRoutes(fastify: FastifyInstance, container: Depend
   // Get security metrics
   fastify.get('/metrics', async (request, reply) => {
     try {
-      // Mock security metrics since service isn't implemented
-      const metrics = { totalRequests: 0, blockedRequests: 0, threatsDetected: 0 };
-      
-      return reply.send({
-        success: true,
-        data: metrics
+      // Security metrics service not available - fail safe
+      return reply.status(503).send({
+        success: false,
+        error: {
+          message: 'Security metrics service not available',
+          code: 'SECURITY_METRICS_UNAVAILABLE'
+        }
       });
     } catch (error) {
       fastify.log.error('Failed to get security metrics:' + (error as Error).message);
@@ -346,22 +353,14 @@ export async function securityRoutes(fastify: FastifyInstance, container: Depend
   }, async (request, reply) => {
     try {
       const { startDate, endDate, format } = request.query as any;
-      // Mock report generation since service isn't implemented
-      const report = {
-        startDate: startDate ? new Date(startDate) : new Date(),
-        endDate: endDate ? new Date(endDate) : new Date(),
-        format: format || 'json',
-        data: { summary: 'Mock security report' }
-      };
       
-      if (format === 'pdf') {
-        reply.type('application/pdf');
-        return reply.send(report);
-      }
-      
-      return reply.send({
-        success: true,
-        data: report
+      // Security reporting service not available - fail safe
+      return reply.status(503).send({
+        success: false,
+        error: {
+          message: 'Security reporting service not available',
+          code: 'SECURITY_REPORTING_UNAVAILABLE'
+        }
       });
     } catch (error) {
       fastify.log.error('Failed to generate security report:' + (error as Error).message);
@@ -378,15 +377,12 @@ export async function securityRoutes(fastify: FastifyInstance, container: Depend
   // Health check
   fastify.get('/health', async (request, reply) => {
     try {
-      // Mock health checks since services aren't implemented
-      const configHealth = { status: 'healthy', lastCheck: new Date() };
-      const monitoringHealth = { status: 'healthy', lastCheck: new Date() };
-      
-      return reply.send({
-        success: true,
-        data: {
-          config: configHealth,
-          monitoring: monitoringHealth
+      // Security health check service not available - fail safe
+      return reply.status(503).send({
+        success: false,
+        error: {
+          message: 'Security health check service not available',
+          code: 'SECURITY_HEALTH_UNAVAILABLE'
         }
       });
     } catch (error) {

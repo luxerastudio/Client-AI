@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { DependencyContainer } from '../../infrastructure/di/DependencyContainer';
-import { AuthenticationService } from '../../infrastructure/security/AuthenticationService';
+import { AuthenticationServiceDB } from '../../infrastructure/security/AuthenticationServiceDB';
 
 // Simple sanitize function since the original is private
 function sanitizeUser(user: any) {
@@ -14,7 +14,7 @@ export class SecurityController {
   async login(request: FastifyRequest, reply: FastifyReply) {
     try {
       const { email, password } = request.body as any;
-      const authService = this.container.get('authService') as AuthenticationService;
+      const authService = this.container.get('authService') as AuthenticationServiceDB;
       
       const result = await authService.login(email, password);
       
@@ -33,15 +33,13 @@ export class SecurityController {
   async register(request: FastifyRequest, reply: FastifyReply) {
     try {
       const { email, password, username } = request.body as any;
-      const authService = this.container.get('authService') as AuthenticationService;
+      const authService = this.container.get('authService') as AuthenticationServiceDB;
       
       // For now, create a simple user. In production, this would have more validation
-      const user = await authService.createUser({
+      const user = await authService.register({
         email,
         password,
-        username,
-        roles: ['user'],
-        permissions: ['read']
+        name: username
       });
       
       return {
@@ -59,7 +57,7 @@ export class SecurityController {
   async refreshToken(request: FastifyRequest, reply: FastifyReply) {
     try {
       const { refreshToken } = request.body as any;
-      const authService = this.container.get('authService') as AuthenticationService;
+      const authService = this.container.get('authService') as AuthenticationServiceDB;
       
       const tokens = await authService.refreshToken(refreshToken);
       
@@ -78,7 +76,7 @@ export class SecurityController {
   async logout(request: FastifyRequest, reply: FastifyReply) {
     try {
       const { sessionId } = request.body as any;
-      const authService = this.container.get('authService') as AuthenticationService;
+      const authService = this.container.get('authService') as AuthenticationServiceDB;
       
       await authService.logout(sessionId);
       
@@ -97,7 +95,7 @@ export class SecurityController {
   async getProfile(request: FastifyRequest, reply: FastifyReply) {
     try {
       const { userId } = request.params as any;
-      const authService = this.container.get('authService') as AuthenticationService;
+      const authService = this.container.get('authService') as AuthenticationServiceDB;
       
       // Since getUserById doesn't exist, we'll use validateToken to get user info
       // For now, return a simple profile response

@@ -3,7 +3,7 @@ import { WorkflowEngineController } from '../controllers/WorkflowEngineControlle
 import { DependencyContainer } from '../../infrastructure/di/DependencyContainer';
 
 export async function workflowEngineRoutes(fastify: FastifyInstance, container: DependencyContainer) {
-  const controller = new WorkflowEngineController(container);
+  const controller = container.get('workflowEngineController') as WorkflowEngineController;
 
   // Template Management Routes
   

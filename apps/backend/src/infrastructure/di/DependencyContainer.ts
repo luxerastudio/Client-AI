@@ -51,13 +51,22 @@ export class DependencyContainer {
 
     // Create instance
     const instance = serviceDef.factory();
-
-    // Store instance if singleton
     if (serviceDef.singleton) {
       this.instances.set(name, instance);
     }
 
     return instance as T;
+  }
+
+  getRegisteredServices(): string[] {
+    return Array.from(this.services.keys());
+  }
+
+  getHealthInfo(): any {
+    return {
+      registeredServices: this.getRegisteredServices(),
+      instanceCount: this.instances.size
+    };
   }
 
   has(name: string): boolean {
@@ -67,10 +76,6 @@ export class DependencyContainer {
   clear(): void {
     this.services.clear();
     this.instances.clear();
-  }
-
-  getRegisteredServices(): string[] {
-    return Array.from(this.services.keys());
   }
 
   getActiveInstances(): string[] {

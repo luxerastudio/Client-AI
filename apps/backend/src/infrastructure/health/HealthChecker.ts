@@ -310,24 +310,13 @@ export class HealthChecker {
   static createDiskSpaceHealthCheck(path: string = '/'): HealthCheckFunction {
     return async (): Promise<HealthCheck> => {
       try {
-        // Mock disk space check - in production, you'd use fs.statSync or similar
-        const mockUsage = Math.random() * 100; // Mock disk usage percentage
-        
-        let status: 'healthy' | 'unhealthy' | 'degraded' = 'healthy';
-        
-        if (mockUsage > 95) {
-          status = 'unhealthy';
-        } else if (mockUsage > 85) {
-          status = 'degraded';
-        }
-
+        // Disk space check not available - fail safe
         return {
           name: 'disk_space',
-          status,
-          details: {
-            path,
-            usage: `${mockUsage.toFixed(2)}%`,
-            available: 'Mock data'
+          status: 'unhealthy',
+          details: { 
+            error: 'Disk space monitoring not available',
+            path
           },
           timestamp: new Date()
         };

@@ -1,7 +1,19 @@
-import { FastifyInstance } from 'fastify';
+import { FastifyInstance, FastifyRequest } from 'fastify';
 import { DependencyContainer } from '../../infrastructure/di/DependencyContainer';
 import { AIEngine } from '../../infrastructure/ai/AIEngine';
 import { MemoryAwarePromptEnhancer } from '../../infrastructure/ai/MemoryAwarePromptEnhancer';
+
+// Extend FastifyRequest to include user context
+interface AuthenticatedRequest extends FastifyRequest {
+  user?: {
+    id: string;
+  };
+  securityContext?: {
+    user?: {
+      id: string;
+    };
+  };
+}
 
 export async function aiRoutes(fastify: FastifyInstance, container: DependencyContainer) {
   const aiEngine = container.get('aiEngine') as AIEngine;
@@ -27,7 +39,7 @@ export async function aiRoutes(fastify: FastifyInstance, container: DependencyCo
         }
       }
     }
-  }, async (request, reply) => {
+  }, async (request: AuthenticatedRequest, reply) => {
     try {
       const { prompt, userId, sessionId, enableMemory = true, enablePersonalization = true, ...options } = request.body as any;
       
@@ -115,7 +127,7 @@ export async function aiRoutes(fastify: FastifyInstance, container: DependencyCo
         }
       }
     }
-  }, async (request, reply) => {
+  }, async (request: AuthenticatedRequest, reply) => {
     try {
       const { prompt, userId, sessionId, enableMemory = true, ...options } = request.body as any;
       
@@ -191,10 +203,9 @@ export async function aiRoutes(fastify: FastifyInstance, container: DependencyCo
         }
       }
     }
-  }, async (request, reply) => {
+  }, async (request: AuthenticatedRequest, reply) => {
     try {
-      const { userId } = request.params as any;
-      
+      const userId = request.user?.id || request.securityContext?.user?.id || 'anonymous';
       const memoryStats = await promptEnhancer.getMemoryStats(userId);
       
       return reply.send({
@@ -227,7 +238,7 @@ export async function aiRoutes(fastify: FastifyInstance, container: DependencyCo
         }
       }
     }
-  }, async (request, reply) => {
+  }, async (request: AuthenticatedRequest, reply) => {
     try {
       const { prompt } = request.body as { prompt: string };
       const validation = await aiEngine.validatePrompt(prompt);
@@ -259,7 +270,7 @@ export async function aiRoutes(fastify: FastifyInstance, container: DependencyCo
         }
       }
     }
-  }, async (request, reply) => {
+  }, async (request: AuthenticatedRequest, reply) => {
     try {
       const { text } = request.body as { text: string };
       const tokens = await aiEngine.estimateTokens(text);
@@ -292,7 +303,7 @@ export async function aiRoutes(fastify: FastifyInstance, container: DependencyCo
         }
       }
     }
-  }, async (request, reply) => {
+  }, async (request: AuthenticatedRequest, reply) => {
     try {
       const { text, maxTokens } = request.body as { text: string; maxTokens: number };
       const truncated = await aiEngine.truncateText(text, maxTokens);

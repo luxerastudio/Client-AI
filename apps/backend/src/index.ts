@@ -8,7 +8,7 @@ import swaggerUi from '@fastify/swagger-ui';
 
 import { config } from './infrastructure/config/Config';
 import { logger } from './infrastructure/logging/Logger';
-import { EnhancedDependencyContainer } from './infrastructure/di/EnhancedDependencyContainer';
+import { DependencyContainer } from './infrastructure/di/DependencyContainer';
 
 // Import all routes for proper registration
 import { healthRoutes } from './presentation/routes/healthRoutes';
@@ -16,7 +16,7 @@ import { aiRoutes } from './presentation/routes/aiRoutes';
 import { workflowRoutes } from './presentation/routes/workflowRoutes';
 import { scoringRoutes } from './presentation/routes/scoringRoutes';
 import { securityRoutes } from './presentation/routes/securityRoutes';
-import { versionRoutes } from './presentation/routes/versionRoutes';
+// import { versionRoutes } from './presentation/routes/versionRoutes';
 import { userMemoryRoutes } from './presentation/routes/userMemoryRoutes';
 import { workflowEngineRoutes } from './presentation/routes/workflowEngineRoutes';
 
@@ -65,7 +65,7 @@ async function createServer(): Promise<FastifyInstance> {
   });
 
   // Initialize EnhancedDependencyContainer and register all services
-  const container = new EnhancedDependencyContainer();
+  const container = new DependencyContainer();
   await initializeDependencyContainer(container);
 
   // Register all routes through proper DI system
@@ -85,7 +85,7 @@ async function createServer(): Promise<FastifyInstance> {
 }
 
 // Initialize EnhancedDependencyContainer with all services
-async function initializeDependencyContainer(container: EnhancedDependencyContainer): Promise<void> {
+async function initializeDependencyContainer(container: DependencyContainer): Promise<void> {
   logger.info('Initializing EnhancedDependencyContainer...');
 
   // Register Database Connection
@@ -108,20 +108,28 @@ async function initializeDependencyContainer(container: EnhancedDependencyContai
     return aiEngine;
   }, { singleton: true });
 
-  // Register User Memory Repository
-  const UserMemoryRepositoryDB = (await import('./infrastructure/repositories/UserMemoryRepositoryDB')).UserMemoryRepositoryDB;
-  container.register('userMemoryRepository', () => {
-    const dbConnection = container.get('dbConnection') as any;
-    return new UserMemoryRepositoryDB(dbConnection);
-  }, { singleton: true, dependencies: ['dbConnection'] });
-
-  // Register User Memory Service
-  const UserMemoryServiceDB = (await import('./infrastructure/user-memory/UserMemoryServiceDB')).UserMemoryServiceDB;
-  container.register('userMemoryService', () => {
-    const userMemoryRepository = container.get('userMemoryRepository') as any;
-    const aiEngine = container.get('aiEngine') as any;
-    return new UserMemoryServiceDB(userMemoryRepository, aiEngine);
-  }, { singleton: true, dependencies: ['userMemoryRepository', 'aiEngine'] });
+  // Register User Memory Service (OPTIONAL)
+  try {
+    const UserMemoryService = (await import('./infrastructure/user-memory/UserMemoryService')).UserMemoryService;
+    const UserMemoryRepository = (await import('./infrastructure/repositories/UserMemoryRepositoryDB')).UserMemoryRepositoryDB;
+    
+    const repoSuccess = safeRegisterService(container, 'userMemoryRepository', () => {
+      const dbConnection = container.get('dbConnection') as any;
+      return new UserMemoryRepository(dbConnection);
+    }, { singleton: true, dependencies: ['dbConnection'] });
+    
+    const serviceSuccess = safeRegisterService(container, 'userMemoryService', () => {
+      const repository = container.get('userMemoryRepository') as any;
+      const aiEngine = container.get('aiEngine') as any;
+      return new UserMemoryService(repository, undefined, undefined, undefined, undefined);
+    }, { singleton: true, dependencies: ['userMemoryRepository', 'aiEngine'] });
+    
+    if (repoSuccess && serviceSuccess) successfulRegistrations += 2;
+    else failedRegistrations += 2;
+  } catch (error) {
+    logDetailedError('DI', 'registerUserMemoryService', error);
+    failedRegistrations++;
+  }
 
   // Register Memory-Aware Prompt Enhancer
   const MemoryAwarePromptEnhancer = (await import('./infrastructure/ai/MemoryAwarePromptEnhancer')).MemoryAwarePromptEnhancer;

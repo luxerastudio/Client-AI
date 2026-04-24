@@ -55,7 +55,7 @@ src/
 1. **Clone and install dependencies:**
    ```bash
    cd backend
-   npm install
+   pnpm install
    ```
 
 2. **Set up environment variables:**
@@ -72,7 +72,7 @@ src/
 
 4. **Start the development server:**
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 
 The server will start on `http://localhost:3001`
@@ -189,12 +189,12 @@ curl -X POST http://localhost:3001/api/v1/content/generate \
 
 ### Scripts
 
-- `npm run dev` - Start development server with hot reload
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm test` - Run tests
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint issues
+- `pnpm run dev` - Start development server with hot reload
+- `pnpm run build` - Build for production
+- `pnpm start` - Start production server
+- `pnpm test` - Run tests
+- `pnpm run lint` - Run ESLint
+- `pnpm run lint:fix` - Fix ESLint issues
 
 ### Database
 
@@ -213,10 +213,10 @@ npx prisma studio
 
 ```bash
 # Run all tests
-npm test
+pnpm test
 
 # Run tests in watch mode
-npm run test:watch
+pnpm run test:watch
 ```
 
 ## Architecture Details
@@ -269,14 +269,14 @@ API layer with controllers and routes:
 
 1. Build the application:
    ```bash
-   npm run build
+   pnpm run build
    ```
 
 2. Set production environment variables
 
 3. Start the server:
    ```bash
-   npm start
+   pnpm start
    ```
 
 4. Use a process manager like PM2 for production:

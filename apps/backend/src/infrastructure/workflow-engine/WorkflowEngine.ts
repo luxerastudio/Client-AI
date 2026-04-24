@@ -274,8 +274,8 @@ export class WorkflowEngine {
         }
         return { stored: true };
       case 'calculate':
-        // Simple calculation action
-        return { result: Math.random() * 100 }; // Mock calculation
+        // Calculation action not available - fail safe
+        throw new Error('Calculation action not implemented');
       default:
         throw new Error(`Unknown action: ${config.action}`);
     }

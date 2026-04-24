@@ -1,4 +1,4 @@
-import { UserMemoryServiceDB } from '../user-memory/UserMemoryServiceDB';
+// import { UserMemoryServiceDB } from '../user-memory/UserMemoryServiceDB';
 
 export interface EnhancedPromptRequest {
   userId: string;
@@ -34,7 +34,7 @@ export interface EnhancedPromptResponse {
 
 export class MemoryAwarePromptEnhancer {
   constructor(
-    private userMemoryService: UserMemoryServiceDB,
+    private userMemoryService?: any,
     private aiEngine?: any
   ) {}
 
@@ -52,7 +52,7 @@ export class MemoryAwarePromptEnhancer {
       adaptations: []
     };
 
-    if (request.enableMemoryContext !== false) {
+    if (request.enableMemoryContext !== false && this.userMemoryService) {
       try {
         memoryContext = await this.userMemoryService.getContextForAI(request.userId, {
           userId: request.userId,
@@ -81,7 +81,7 @@ export class MemoryAwarePromptEnhancer {
       changes: [] as string[]
     };
 
-    if (request.enablePersonalization !== false) {
+    if (request.enablePersonalization !== false && this.userMemoryService) {
       try {
         const personalizationResult = await this.userMemoryService.personalizeContent(
           request.userId,
@@ -183,33 +183,35 @@ Keep the summary concise but maintain all important details and context.
   // Method to store interaction after AI response
   async storeInteraction(request: EnhancedPromptRequest, aiResponse: string, metadata?: {
     satisfaction?: number;
+    processingTime?: number;
     tokensUsed?: number;
-    responseTime?: number;
   }): Promise<void> {
     try {
       // Store the original prompt
-      await this.userMemoryService.storePrompt(request.userId, request.originalPrompt, {
-        response: aiResponse,
-        sessionId: request.sessionId,
-        satisfactionScore: metadata?.satisfaction,
-        tokensUsed: metadata?.tokensUsed,
-        metadata: {
-          ...request.context,
-          enhancementApplied: true,
-          responseTime: metadata?.responseTime
-        }
-      });
+      if (this.userMemoryService) {
+        await this.userMemoryService.storePrompt(request.userId, request.originalPrompt, {
+          response: aiResponse,
+          sessionId: request.sessionId,
+          satisfactionScore: metadata?.satisfaction,
+          tokensUsed: metadata?.tokensUsed,
+          metadata: {
+            ...request.context,
+            enhancementApplied: true,
+            responseTime: metadata?.processingTime
+          }
+        });
 
-      // Store the AI response
-      await this.userMemoryService.storeResponse(request.userId, aiResponse, {
-        prompt: request.originalPrompt,
-        sessionId: request.sessionId,
-        satisfactionScore: metadata?.satisfaction,
-        metadata: {
-          ...request.context,
-          enhanced: true
-        }
-      });
+        // Store the AI response
+        await this.userMemoryService.storeResponse(request.userId, aiResponse, {
+          prompt: request.originalPrompt,
+          sessionId: request.sessionId,
+          satisfactionScore: metadata?.satisfaction,
+          metadata: {
+            ...request.context,
+            enhanced: true
+          }
+        });
+      }
     } catch (error) {
       console.error('Failed to store interaction:', error);
     }
@@ -224,6 +226,17 @@ Keep the summary concise but maintain all important details and context.
     lastActivity: Date;
   }> {
     try {
+      if (!this.userMemoryService) {
+        // Return default stats when userMemoryService is not available
+        return {
+          totalInteractions: 0,
+          averageSatisfaction: 0,
+          personalizationScore: 0,
+          memoryDepth: 'new',
+          lastActivity: new Date()
+        };
+      }
+      
       const stats = await this.userMemoryService.getUserMemoryStats(userId);
       const insights = await this.userMemoryService.getUserInsights(userId);
 

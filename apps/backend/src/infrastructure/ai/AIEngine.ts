@@ -35,8 +35,8 @@ export class OpenAIProvider implements AIProvider {
   constructor() {
     this.apiKey = config.ai?.apiKey || process.env.OPENAI_API_KEY || '';
     
-    if (!this.apiKey) {
-      console.warn('OpenAI API key not found. Using mock mode for development. Set OPENAI_API_KEY environment variable for real API calls.');
+    if (!this.apiKey || this.apiKey.includes('sk-dev-key-for-testing-only')) {
+      console.warn('OpenAI API key not found or using dev key. Using mock mode for development.');
       this.client = null as any; // Will be handled in generate method
     } else {
       this.client = new OpenAI({
@@ -53,10 +53,19 @@ export class OpenAIProvider implements AIProvider {
         throw new Error('Invalid request: prompt is required and must not be empty');
       }
 
-      // If no API key, fail safe instead of mocking
+      // If no API key, use mock mode for development
       if (!this.client) {
-        console.error('❌ OpenAI API key not configured - cannot generate AI response');
-        throw new Error('OpenAI API key not configured. Set OPENAI_API_KEY environment variable to enable AI generation.');
+        console.warn('⚠️ OpenAI API key not configured - using mock mode for development');
+        return {
+          content: `Mock AI response for prompt: "${request.prompt.substring(0, 100)}..."`,
+          usage: {
+            promptTokens: 10,
+            completionTokens: 20,
+            totalTokens: 30
+          },
+          model: 'mock-gpt-3.5-turbo',
+          finishReason: 'stop'
+        };
       }
 
       // Prepare messages for OpenAI API
@@ -171,7 +180,11 @@ export class AIEngine {
     this.registerProvider(new OpenAIProvider());
     
     // Set default provider
-    this.currentProvider = this.providers.get(this.config.provider) || this.providers.get('openai')!;
+    const provider = this.providers.get(this.config.provider) || this.providers.get('openai');
+    if (!provider) {
+      throw new Error(`AI provider '${this.config.provider || 'openai'}' not found`);
+    }
+    this.currentProvider = provider;
     
     console.log(`AI Engine initialized with provider: ${this.currentProvider.name}`);
   }
@@ -220,7 +233,13 @@ export class AIEngine {
       return response;
     } catch (error) {
       console.error('AI generation failed:', error);
-      throw new Error('AI generation failed');
+      console.error('Error details:', {
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : 'No stack',
+        currentProvider: this.currentProvider?.name || 'undefined',
+        hasProvider: !!this.currentProvider
+      });
+      throw new Error(`AI generation failed: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 

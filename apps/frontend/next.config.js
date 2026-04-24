@@ -18,13 +18,11 @@ const nextConfig = {
   },
   
   webpack: (config, { isServer }) => {
-    // Add workspace module resolution
+    // Add local module resolution only
     const path = require('path');
     
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@repo/core': path.resolve(__dirname, '../../packages/core/dist'),
-      '@repo/shared': path.resolve(__dirname, '../../packages/shared/dist'),
       '@/lib': path.resolve(__dirname, './lib'),
     }
     

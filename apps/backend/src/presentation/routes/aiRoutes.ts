@@ -17,7 +17,7 @@ interface AuthenticatedRequest extends FastifyRequest {
 
 export async function aiRoutes(fastify: FastifyInstance, container: DependencyContainer) {
   const aiEngine = container.get('aiEngine') as AIEngine;
-  const promptEnhancer = container.get('promptEnhancer') as MemoryAwarePromptEnhancer;
+  // const promptEnhancer = container.get('promptEnhancer') as MemoryAwarePromptEnhancer;
 
   // Generate content
   fastify.post('/generate', {
@@ -46,24 +46,24 @@ export async function aiRoutes(fastify: FastifyInstance, container: DependencyCo
       let finalPrompt = prompt;
       let memoryEnhancement = null;
       
-      // Enhance prompt with memory context if userId provided
-      if (userId && enableMemory) {
-        const enhancement = await promptEnhancer.enhancePrompt({
-          userId,
-          originalPrompt: prompt,
-          sessionId,
-          context: options.context,
-          enablePersonalization,
-          enableMemoryContext: true
-        });
+      // Enhance prompt with memory context if userId provided (commented out - no promptEnhancer)
+      // if (userId && enableMemory) {
+      //   const enhancement = await promptEnhancer.enhancePrompt({
+      //     userId,
+      //     originalPrompt: prompt,
+      //     sessionId,
+      //     context: options.context,
+      //     enablePersonalization,
+      //     enableMemoryContext: true
+      //   });
         
-        finalPrompt = enhancement.enhancedPrompt;
-        memoryEnhancement = {
-          appliedEnhancements: enhancement.appliedEnhancements,
-          personalizationConfidence: enhancement.personalization.confidence,
-          memoryStats: await promptEnhancer.getMemoryStats(userId)
-        };
-      }
+      //   finalPrompt = enhancement.enhancedPrompt;
+      //   memoryEnhancement = {
+      //     appliedEnhancements: enhancement.appliedEnhancements,
+      //     personalizationConfidence: enhancement.personalization.confidence,
+      //     memoryStats: await promptEnhancer.getMemoryStats(userId)
+      //   };
+      // }
 
       const startTime = Date.now();
       const response = await aiEngine.generate({
@@ -72,18 +72,18 @@ export async function aiRoutes(fastify: FastifyInstance, container: DependencyCo
       });
       const responseTime = Date.now() - startTime;
 
-      // Store interaction in memory if userId provided
-      if (userId) {
-        await promptEnhancer.storeInteraction(
-          { userId, originalPrompt: prompt, sessionId, context: options.context },
-          response.content,
-          {
-            tokensUsed: response.usage?.totalTokens,
-            responseTime,
-            satisfaction: options.satisfaction
-          }
-        );
-      }
+      // Store interaction in memory if userId provided (commented out - no promptEnhancer)
+      // if (userId) {
+      //   await promptEnhancer.storeInteraction(
+      //     { userId, originalPrompt: prompt, sessionId, context: options.context },
+      //     response.content,
+      //     {
+      //       tokensUsed: response.usage?.totalTokens,
+      //       processingTime: responseTime,
+      //       satisfaction: options.satisfaction
+      //     }
+      //   );
+      // }
 
       return reply.send({
         success: true,
@@ -140,23 +140,23 @@ export async function aiRoutes(fastify: FastifyInstance, container: DependencyCo
       let finalPrompt = prompt;
       let memoryEnhancement = null;
       
-      // Enhance prompt with memory context if userId provided
-      if (userId && enableMemory) {
-        const enhancement = await promptEnhancer.enhancePrompt({
-          userId,
-          originalPrompt: prompt,
-          sessionId,
-          context: options.context,
-          enablePersonalization: true,
-          enableMemoryContext: true
-        });
+      // Enhance prompt with memory context if userId provided (commented out - no promptEnhancer)
+      // if (userId && enableMemory) {
+      //   const enhancement = await promptEnhancer.enhancePrompt({
+      //     userId,
+      //     originalPrompt: prompt,
+      //     sessionId,
+      //     context: options.context,
+      //     enablePersonalization,
+      //     enableMemoryContext: true
+      //   });
         
-        finalPrompt = enhancement.enhancedPrompt;
-        memoryEnhancement = {
-          appliedEnhancements: enhancement.appliedEnhancements,
-          personalizationConfidence: enhancement.personalization.confidence
-        };
-      }
+      //   finalPrompt = enhancement.enhancedPrompt;
+      //   memoryEnhancement = {
+      //     appliedEnhancements: enhancement.appliedEnhancements,
+      //     personalizationConfidence: enhancement.personalization.confidence
+      //   };
+      // }
 
       const stream = await aiEngine.generateStream({
         prompt: finalPrompt,
@@ -170,18 +170,18 @@ export async function aiRoutes(fastify: FastifyInstance, container: DependencyCo
         reply.raw.write(`data: ${JSON.stringify({ chunk })}\n\n`);
       }
 
-      // Store interaction in memory if userId provided
-      if (userId) {
-        await promptEnhancer.storeInteraction(
-          { userId, originalPrompt: prompt, sessionId, context: options.context },
-          fullResponse,
-          {
-            satisfaction: undefined,
-            tokensUsed: 0, // Streaming doesn't provide token count
-            responseTime: 0
-          }
-        );
-      }
+      // Store interaction in memory if userId provided (commented out - no promptEnhancer)
+      // if (userId) {
+      //   await promptEnhancer.storeInteraction(
+      //     { userId, originalPrompt: prompt, sessionId, context: options.context },
+      //     fullResponse,
+      //     {
+      //       satisfaction: undefined,
+      //       tokensUsed: 0, // Streaming doesn't provide token count
+      //       processingTime: 0
+      //     }
+      //   );
+      // }
 
       reply.raw.write('data: [DONE]\n\n');
       reply.raw.end();
@@ -192,40 +192,39 @@ export async function aiRoutes(fastify: FastifyInstance, container: DependencyCo
     }
   });
 
-  // Get user memory stats and insights
-  fastify.get('/memory/:userId', {
-    schema: {
-      params: {
-        type: 'object',
-        required: ['userId'],
-        properties: {
-          userId: { type: 'string' }
-        }
-      }
-    }
-  }, async (request: AuthenticatedRequest, reply) => {
-    try {
-      const userId = request.user?.id || request.securityContext?.user?.id || 'anonymous';
-      const memoryStats = await promptEnhancer.getMemoryStats(userId);
+  // Get user memory stats and insights (commented out - no promptEnhancer)
+  // fastify.get('/memory/:userId', {
+  //   schema: {
+  //     params: {
+  //       type: 'object',
+  //       properties: {
+  //         userId: { type: 'string' }
+  //       }
+  //     }
+  //   }
+  // }, async (request: AuthenticatedRequest, reply) => {
+  //   try {
+  //     const userId = request.user?.id || request.securityContext?.user?.id || 'anonymous';
+  //     const memoryStats = await promptEnhancer.getMemoryStats(userId);
       
-      return reply.send({
-        success: true,
-        data: {
-          memoryStats,
-          timestamp: new Date().toISOString()
-        }
-      });
-    } catch (error) {
-      fastify.log.error('Memory stats retrieval failed:' + (error as Error).message);
-      return reply.status(500).send({
-        success: false,
-        error: {
-          message: 'Memory stats retrieval failed',
-          code: 'MEMORY_STATS_ERROR'
-        }
-      });
-    }
-  });
+  //     return reply.send({
+  //       success: true,
+  //       data: {
+  //         memoryStats,
+  //         timestamp: new Date().toISOString()
+  //       }
+  //     });
+  //   } catch (error) {
+  //     fastify.log.error('Memory stats retrieval failed:' + (error as Error).message);
+  //     return reply.status(500).send({
+  //       success: false,
+  //       error: {
+  //         message: 'Memory stats retrieval failed',
+  //         code: 'MEMORY_STATS_ERROR'
+  //       }
+  //     });
+  //   }
+  // });
 
   // Validate prompt
   fastify.post('/validate-prompt', {

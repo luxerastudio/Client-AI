@@ -81,4 +81,61 @@ export class DependencyContainer {
   getActiveInstances(): string[] {
     return Array.from(this.instances.keys());
   }
+
+  validateDependencies(): { valid: boolean; errors: string[] } {
+    const errors: string[] = [];
+    
+    for (const [name, serviceDef] of this.services) {
+      if (serviceDef.dependencies) {
+        for (const dep of serviceDef.dependencies) {
+          if (!this.services.has(dep)) {
+            errors.push(`Service '${name}' depends on missing service '${dep}'`);
+          }
+        }
+      }
+    }
+    
+    return { valid: errors.length === 0, errors };
+  }
+
+  async warmup(): Promise<void> {
+    // Warm up all singleton services by accessing them
+    for (const name of this.services.keys()) {
+      try {
+        this.get(name);
+      } catch (error) {
+        console.warn(`Failed to warm up service '${name}':`, error);
+      }
+    }
+  }
+
+  getInitializationOrder(): string[] {
+    const order: string[] = [];
+    const visited = new Set<string>();
+    const visiting = new Set<string>();
+
+    const visit = (name: string) => {
+      if (visited.has(name)) return;
+      if (visiting.has(name)) {
+        throw new Error(`Circular dependency detected involving '${name}'`);
+      }
+
+      visiting.add(name);
+      const serviceDef = this.services.get(name);
+      if (serviceDef?.dependencies) {
+        for (const dep of serviceDef.dependencies) {
+          visit(dep);
+        }
+      }
+      visiting.delete(name);
+      visited.add(name);
+      order.push(name);
+    };
+
+    for (const name of this.services.keys()) {
+      visit(name);
+    }
+
+    return order;
+  }
 }

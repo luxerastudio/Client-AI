@@ -142,6 +142,12 @@ export default function Home() {
       return;
     }
 
+    // Prevent concurrent requests
+    if (testLoading) {
+      console.log('Request already in progress, ignoring duplicate call');
+      return;
+    }
+
     const trimmedNiche = testData.niche.trim();
     const trimmedLocation = testData.location.trim();
     

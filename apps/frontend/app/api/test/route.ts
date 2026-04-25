@@ -109,7 +109,10 @@ export async function POST(request: NextRequest) {
     try {
       console.log("API ROUTE: Calling backend client acquisition API");
       
-      // Call backend API to execute the actual client acquisition generation
+      // Call backend API to execute the actual client acquisition generation with timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 25000); // 25 second timeout
+      
       const backendResponse = await fetch(`${process.env.BACKEND_URL || 'http://localhost:3002'}/api/v1/client-acquisition/generate`, {
         method: 'POST',
         headers: {
@@ -120,8 +123,11 @@ export async function POST(request: NextRequest) {
           niche: trimmedNiche,
           location: trimmedLocation,
           maxLeads: 3
-        })
+        }),
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
 
       if (!backendResponse.ok) {
         throw new Error(`Backend client acquisition failed: ${backendResponse.status} ${backendResponse.statusText}`);
@@ -189,9 +195,32 @@ export async function POST(request: NextRequest) {
     } catch (backendError) {
       console.error("API ROUTE: Backend client acquisition failed:", backendError);
       
-      // Check if it's a rate limit error and provide user-friendly message
+      // Check if it's a timeout error specifically
       const errorMessage = backendError instanceof Error ? backendError.message : 'Backend acquisition failed';
+      const isTimeoutError = errorMessage.includes('AbortError') || errorMessage.includes('timeout') || errorMessage.includes('aborted');
       const isRateLimitError = errorMessage.includes('rate limit') || errorMessage.includes('System busy') || errorMessage.includes('502');
+      
+      // Handle timeout errors specifically to prevent 502 crashes
+      if (isTimeoutError) {
+        return NextResponse.json(
+          { 
+            success: false,
+            error: 'Request timed out. Please try again.',
+            errorCode: 'TIMEOUT_ERROR',
+            fallbackData: {
+              leadsGenerated: 0,
+              personalizedLeads: 0,
+              outreachMessages: 0,
+              offersCreated: 0,
+              pipelineEntries: 0,
+              creditsUsed: 0,
+              executionTime: 0,
+              message: 'Request timed out. Please try again.'
+            }
+          },
+          { status: 408 }
+        );
+      }
       
       // Return user-friendly error message with fallback data to prevent UI breaking
       return NextResponse.json(

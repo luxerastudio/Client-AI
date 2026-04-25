@@ -325,6 +325,7 @@ async function registerRoutes(server: FastifyInstance, container: DependencyCont
       }, async (request, reply) => {
         console.log('CLIENT ACQUISITION: Request received', { body: request.body });
         
+        // Global error handler to prevent serverless function crashes
         try {
           const { niche, location, maxLeads = 3 } = request.body as any;
           
@@ -393,8 +394,8 @@ async function registerRoutes(server: FastifyInstance, container: DependencyCont
           console.log('STEP 1: LEAD GENERATION COMPLETED', { leadsCount: leads.length, leadsGenerated: leads.length > 0 });
           
           // Add delay between AI calls to prevent Groq rate limiting (502 errors)
-          console.log('🔄 Adding 2-second delay between AI calls to prevent rate limiting...');
-          await new Promise(resolve => setTimeout(resolve, 2000));
+          console.log('🔄 Adding 5-second delay between AI calls to prevent rate limiting...');
+          await new Promise(resolve => setTimeout(resolve, 5000));
           
           // STEP 2: PERSONALIZATION
           console.log('STEP 2: PERSONALIZATION STARTED');
@@ -653,6 +654,27 @@ async function registerRoutes(server: FastifyInstance, container: DependencyCont
           
           console.log('CLIENT ACQUISITION: Fallback result ready', { success: true });
           return reply.status(200).send(fallbackResult);
+        }
+        } catch (globalError) {
+          console.error('CLIENT ACQUISITION: Global error caught:', globalError);
+          
+          // Return graceful failure to prevent serverless function crash
+          return reply.status(500).send({
+            success: false,
+            message: 'System temporarily unavailable. Please try again.',
+            errorCode: 'GLOBAL_ERROR',
+            timestamp: new Date().toISOString(),
+            fallbackData: {
+              leadsGenerated: 0,
+              personalizedLeads: 0,
+              outreachMessages: 0,
+              offersCreated: 0,
+              pipelineEntries: 0,
+              creditsUsed: 0,
+              executionTime: 0,
+              message: 'System temporarily unavailable. Please try again.'
+            }
+          });
         }
       });
     }, { prefix: '/api/v1' });

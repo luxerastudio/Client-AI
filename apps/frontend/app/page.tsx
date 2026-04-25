@@ -186,11 +186,11 @@ export default function Home() {
       }
 
       const safe = (arr: any) => Array.isArray(arr) ? arr : [];
-      const leads = safe(data?.details?.result?.leads);
-      const personalized = safe(data?.details?.result?.personalizedLeads);
-      const outreach = safe(data?.details?.result?.outreachMessages);
-      const offers = safe(data?.details?.result?.offers);
-      const pipeline = safe(data?.details?.result?.pipelineEntries);
+      const leads = safe(data?.details?.leads);
+      const personalized = safe(data?.details?.personalizedMessages);
+      const outreach = safe(data?.details?.outreachMessages);
+      const offers = safe(data?.details?.offers || (data?.details?.offer ? [data?.details?.offer] : []));
+      const pipeline = safe(data?.details?.pipeline);
 
       const result: TestResult = {
         success: data?.success || false,

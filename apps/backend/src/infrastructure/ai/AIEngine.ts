@@ -213,8 +213,8 @@ export class AIEngine {
       throw new Error('Invalid AI request');
     }
 
-    // Check rate limiting
-    this.checkRateLimit();
+    // Apply rate limiting with delay to prevent 502 errors
+    await this.enforceRateLimitDelay();
 
     // Apply default values
     const enrichedRequest: AIRequest = {
@@ -224,24 +224,45 @@ export class AIEngine {
       model: request.model ?? this.config.model
     };
 
+    let lastError: Error;
+    
+    // Try first attempt
     try {
-      // Generate response
       const response = await this.currentProvider.generate(enrichedRequest);
-      
-      // Log usage
       this.logUsage(response);
-      
       return response;
     } catch (error) {
-      console.error('AI generation failed:', error);
-      console.error('Error details:', {
-        message: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : 'No stack',
-        currentProvider: this.currentProvider?.name || 'undefined',
-        hasProvider: !!this.currentProvider
-      });
-      throw new Error(`AI generation failed: ${error instanceof Error ? error.message : String(error)}`);
+      lastError = error as Error;
+      console.error('AI generation failed (attempt 1):', lastError.message);
+      
+      // Check if it's a 429 rate limit error
+      if (lastError.message.includes('rate limit') || lastError.message.includes('429')) {
+        console.log('🔄 429 Rate limit detected, waiting 2 seconds before retry...');
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Retry once
+        try {
+          const response = await this.currentProvider.generate(enrichedRequest);
+          this.logUsage(response);
+          console.log('✅ Retry successful after rate limit');
+          return response;
+        } catch (retryError) {
+          lastError = retryError as Error;
+          console.error('AI generation failed (retry):', lastError.message);
+        }
+      }
     }
+    
+    // If we get here, both attempts failed
+    console.error('AI generation failed permanently:', {
+      message: lastError.message,
+      stack: lastError.stack,
+      currentProvider: this.currentProvider?.name || 'undefined',
+      hasProvider: !!this.currentProvider
+    });
+    
+    // Return graceful failure message
+    throw new Error('System is busy, please try again in a moment');
   }
 
   async generateWithRetry(request: AIRequest, maxRetries: number = 3): Promise<AIResponse> {
@@ -391,7 +412,7 @@ export class AIEngine {
     const key = this.currentProvider.name;
     const now = Date.now();
     const windowMs = 60000; // 1 minute
-    const maxRequests = this.config.rateLimitPerMinute;
+    const maxRequests = this.config.rateLimitPerMinute || 20; // Default to 20 requests/minute for Groq free tier
 
     if (!this.rateLimiter.has(key)) {
       this.rateLimiter.set(key, []);
@@ -405,6 +426,32 @@ export class AIEngine {
 
     if (validRequests.length >= maxRequests) {
       throw new Error('Rate limit exceeded');
+    }
+
+    validRequests.push(now);
+  }
+
+  private async enforceRateLimitDelay(): Promise<void> {
+    const key = this.currentProvider.name;
+    const now = Date.now();
+    const windowMs = 60000; // 1 minute
+    const maxRequests = this.config.rateLimitPerMinute || 20; // Default to 20 requests/minute for Groq free tier
+
+    if (!this.rateLimiter.has(key)) {
+      this.rateLimiter.set(key, []);
+    }
+
+    const requests = this.rateLimiter.get(key)!;
+    
+    // Remove old requests outside the window
+    const validRequests = requests.filter(timestamp => now - timestamp < windowMs);
+    this.rateLimiter.set(key, validRequests);
+
+    // If we're approaching the rate limit, add a delay
+    if (validRequests.length >= Math.floor(maxRequests * 0.8)) {
+      const delayMs = Math.ceil((windowMs / maxRequests) * 2); // 2x the normal interval
+      console.log(`🔄 Rate limit approach detected, adding ${delayMs}ms delay to prevent 502 errors`);
+      await new Promise(resolve => setTimeout(resolve, delayMs));
     }
 
     validRequests.push(now);

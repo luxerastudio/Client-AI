@@ -392,6 +392,10 @@ async function registerRoutes(server: FastifyInstance, container: DependencyCont
           leads = await generateLeads();
           console.log('STEP 1: LEAD GENERATION COMPLETED', { leadsCount: leads.length, leadsGenerated: leads.length > 0 });
           
+          // Add delay between AI calls to prevent Groq rate limiting (502 errors)
+          console.log('🔄 Adding 2-second delay between AI calls to prevent rate limiting...');
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          
           // STEP 2: PERSONALIZATION
           console.log('STEP 2: PERSONALIZATION STARTED');
           let personalizedMessages = [];
@@ -538,7 +542,21 @@ async function registerRoutes(server: FastifyInstance, container: DependencyCont
           return reply.status(200).send(result);
           
         } catch (error) {
-          console.error('CLIENT ACQUISITION: AI generation failed, using fallback:', { error: error.message });
+          console.error('CLIENT ACQUISITION: AI generation failed:', { error: error.message });
+          
+          // Check if it's a rate limit or system busy error
+          const errorMessage = (error as Error).message;
+          const isRateLimitError = errorMessage.includes('rate limit') || errorMessage.includes('System busy') || errorMessage.includes('429');
+          
+          // Return graceful failure with clean JSON response
+          if (isRateLimitError) {
+            return reply.status(429).send({
+              success: false,
+              message: 'System is busy, please try again in a moment',
+              errorCode: 'RATE_LIMIT_ERROR',
+              timestamp: new Date().toISOString()
+            });
+          }
           
           // Fallback: Generate realistic leads without AI
           const generateFallbackLeads = (niche: string, location: string, maxLeads: number) => {

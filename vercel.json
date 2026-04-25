@@ -4,6 +4,14 @@
   "installCommand": "pnpm install --no-frozen-lockfile",
   "buildCommand": "cd apps/frontend && pnpm build",
   "outputDirectory": "apps/frontend/.next",
+  "functions": {
+    "app/api/test/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
   "build": {
     "env": {
       "NEXT_PUBLIC_API_URL": "https://client-acquisition-system-ku8rphms3-luxerastudios-projects.vercel.app",

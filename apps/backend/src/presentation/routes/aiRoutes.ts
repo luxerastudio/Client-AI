@@ -97,11 +97,16 @@ export async function aiRoutes(fastify: FastifyInstance, container: DependencyCo
       });
     } catch (error) {
       fastify.log.error('AI generation failed:' + (error as Error).message);
-      return reply.status(500).send({
+      
+      // Handle rate limiting errors specifically
+      const errorMessage = (error as Error).message;
+      const isRateLimitError = errorMessage.includes('rate limit') || errorMessage.includes('System busy');
+      
+      return reply.status(isRateLimitError ? 429 : 500).send({
         success: false,
         error: {
-          message: 'AI generation failed',
-          code: 'AI_GENERATION_ERROR'
+          message: isRateLimitError ? 'System busy due to high demand. Please try again in a minute.' : 'AI generation failed',
+          code: isRateLimitError ? 'RATE_LIMIT_ERROR' : 'AI_GENERATION_ERROR'
         }
       });
     }

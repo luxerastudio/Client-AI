@@ -189,13 +189,28 @@ export async function POST(request: NextRequest) {
     } catch (backendError) {
       console.error("API ROUTE: Backend client acquisition failed:", backendError);
       
-      // Return error response instead of fake zeros - let frontend handle the failure
+      // Check if it's a rate limit error and provide user-friendly message
+      const errorMessage = backendError instanceof Error ? backendError.message : 'Backend acquisition failed';
+      const isRateLimitError = errorMessage.includes('rate limit') || errorMessage.includes('System busy') || errorMessage.includes('502');
+      
+      // Return user-friendly error message with fallback data to prevent UI breaking
       return NextResponse.json(
         { 
           success: false,
-          error: backendError instanceof Error ? backendError.message : 'Backend acquisition failed',
-          errorCode: 'BACKEND_ERROR',
-          backendError: backendError instanceof Error ? backendError.message : 'Unknown backend error'
+          error: isRateLimitError ? 'System busy due to high demand. Please try again in a minute.' : errorMessage,
+          errorCode: isRateLimitError ? 'RATE_LIMIT_ERROR' : 'BACKEND_ERROR',
+          backendError: backendError instanceof Error ? backendError.message : 'Unknown backend error',
+          // Provide fallback data to keep UI intact
+          fallbackData: {
+            leadsGenerated: 0,
+            personalizedLeads: 0,
+            outreachMessages: 0,
+            offersCreated: 0,
+            pipelineEntries: 0,
+            creditsUsed: 0,
+            executionTime: 0,
+            message: isRateLimitError ? 'System busy, please try again in a minute.' : 'Service temporarily unavailable.'
+          }
         },
         { status: 502 }
       );

@@ -289,12 +289,12 @@ export default function Home() {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       
       // Handle error response properly - check if it's our new structured error
-      if (errorMessage.includes('BACKEND_ERROR') || errorMessage.includes('Backend acquisition failed')) {
+      if (errorMessage.includes('BACKEND_ERROR') || errorMessage.includes('Backend acquisition failed') || errorMessage.includes('RATE_LIMIT_ERROR')) {
         // Backend failed - use SAFE MODE if available
         if (lastSuccessfulResponse) {
           setTestResult(lastSuccessfulResponse);
           setSafeMode(true);
-          setTestError(`Backend Error: ${errorMessage}. Showing last successful data (SAFE MODE)`);
+          setTestError(`System busy: ${errorMessage}. Showing last successful data (SAFE MODE)`);
           setDbWriteStatus('success');
           
           if (debugMode) {
@@ -305,7 +305,9 @@ export default function Home() {
             });
           }
         } else {
-          setTestError(`Backend Error: ${errorMessage}. No cached data available.`);
+          // Show user-friendly error message without breaking UI
+          const isRateLimitError = errorMessage.includes('RATE_LIMIT_ERROR') || errorMessage.includes('System busy');
+          setTestError(isRateLimitError ? 'System busy due to high demand. Please try again in a minute.' : 'Service temporarily unavailable. Please try again later.');
           setDbWriteStatus('failed');
           
           if (debugMode) {

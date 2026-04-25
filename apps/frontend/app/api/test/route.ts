@@ -189,33 +189,16 @@ export async function POST(request: NextRequest) {
     } catch (backendError) {
       console.error("API ROUTE: Backend client acquisition failed:", backendError);
       
-      // Return a simple fallback without complex demo logic
-      const fallbackResult = {
-        success: true,
-        tests: ['fallback_generation'],
-        leads: [],
-        personalizedMessages: [],
-        outreachMessages: [],
-        offers: [],
-        pipeline: [],
-        executionTime: Date.now() - startTime,
-        backendError: backendError instanceof Error ? backendError.message : 'Unknown backend error'
-      };
-
-      return NextResponse.json({
-        success: true,
-        input: { niche: inputNiche, location: inputLocation },
-        output: {
-          leadsGenerated: 0,
-          personalizedLeads: 0,
-          outreachMessages: 0,
-          offersCreated: 0,
-          pipelineEntries: 0,
-          creditsUsed: 0,
-          executionTime: Date.now() - startTime
+      // Return error response instead of fake zeros - let frontend handle the failure
+      return NextResponse.json(
+        { 
+          success: false,
+          error: backendError instanceof Error ? backendError.message : 'Backend acquisition failed',
+          errorCode: 'BACKEND_ERROR',
+          backendError: backendError instanceof Error ? backendError.message : 'Unknown backend error'
         },
-        details: fallbackResult
-      });
+        { status: 502 }
+      );
     }
 
   } catch (error) {

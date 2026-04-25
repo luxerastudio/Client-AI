@@ -193,47 +193,43 @@ export default function Home() {
   const normalizeAcquisitionResponse = (data: any) => {
     console.log("NORMALIZING RESPONSE:", data);
     
-    // Primary mapping from details arrays (backend response)
-    const leads = Array.isArray(data?.details?.leads) ? data.details.leads : [];
-    const personalizedMessages = Array.isArray(data?.details?.personalizedMessages) ? data.details.personalizedMessages : [];
-    const outreachMessages = Array.isArray(data?.details?.outreachMessages) ? data.details.outreachMessages : [];
-    const offers = Array.isArray(data?.details?.offers) ? data.details.offers : 
-                  (data?.details?.offer ? [data.details.offer] : []);
-    const pipeline = Array.isArray(data?.details?.pipeline) ? data.details.pipeline : [];
+    // PRIMARY MAPPING: Prioritize output field (API response structure)
+    const outputLeads = data?.output?.leadsGenerated ?? 0;
+    const outputPersonalized = data?.output?.personalizedLeads ?? 0;
+    const outputOutreach = data?.output?.outreachMessages ?? 0;
+    const outputOffers = data?.output?.offersCreated ?? 0;
+    const outputPipeline = data?.output?.pipelineEntries ?? 0;
     
-    // Fallback to output structure if details is missing
-    const fallbackLeads = Array.isArray(data?.output?.leads) ? data.output.leads : leads;
-    const fallbackPersonalized = Array.isArray(data?.output?.personalizedLeads) ? data.output.personalizedLeads : personalizedMessages;
-    const fallbackOutreach = Array.isArray(data?.output?.outreachMessages) ? data.output.outreachMessages : outreachMessages;
-    const fallbackOffers = Array.isArray(data?.output?.offers) ? data.output.offers : offers;
-    const fallbackPipeline = Array.isArray(data?.output?.pipeline) ? data.output.pipeline : pipeline;
+    // FALLBACK: Use details arrays only if output fields are null/zero
+    const detailsLeads = Array.isArray(data?.details?.leads) ? data.details.leads : [];
+    const detailsPersonalized = Array.isArray(data?.details?.personalizedMessages) ? data.details.personalizedMessages : [];
+    const detailsOutreach = Array.isArray(data?.details?.outreachMessages) ? data.details.outreachMessages : [];
+    const detailsOffers = Array.isArray(data?.details?.offers) ? data.details.offers : 
+                          (data?.details?.offer ? [data.details.offer] : []);
+    const detailsPipeline = Array.isArray(data?.details?.pipeline) ? data.details.pipeline : [];
     
-    // Final arrays to use
-    const finalLeads = leads.length > 0 ? leads : fallbackLeads;
-    const finalPersonalized = personalizedMessages.length > 0 ? personalizedMessages : fallbackPersonalized;
-    const finalOutreach = outreachMessages.length > 0 ? outreachMessages : fallbackOutreach;
-    const finalOffers = offers.length > 0 ? offers : fallbackOffers;
-    const finalPipeline = pipeline.length > 0 ? pipeline : fallbackPipeline;
+    // Use output fields if they have real data (> 0), otherwise fallback to details arrays
+    const finalLeads = outputLeads > 0 ? Array(outputLeads).fill(null).map((_, i) => ({ id: `output_${i}` })) : detailsLeads;
+    const finalPersonalized = outputPersonalized > 0 ? Array(outputPersonalized).fill(null).map((_, i) => ({ id: `output_${i}` })) : detailsPersonalized;
+    const finalOutreach = outputOutreach > 0 ? Array(outputOutreach).fill(null).map((_, i) => ({ id: `output_${i}` })) : detailsOutreach;
+    const finalOffers = outputOffers > 0 ? Array(outputOffers).fill(null).map((_, i) => ({ id: `output_${i}` })) : detailsOffers;
+    const finalPipeline = outputPipeline > 0 ? Array(outputPipeline).fill(null).map((_, i) => ({ id: `output_${i}` })) : detailsPipeline;
     
     const normalizedOutput = {
-      leadsGenerated: finalLeads.length,
-      personalizedLeads: finalPersonalized.length,
-      outreachMessages: finalOutreach.length,
-      offersCreated: finalOffers.length,
-      pipelineEntries: finalPipeline.length,
+      leadsGenerated: outputLeads > 0 ? outputLeads : finalLeads.length,
+      personalizedLeads: outputPersonalized > 0 ? outputPersonalized : finalPersonalized.length,
+      outreachMessages: outputOutreach > 0 ? outputOutreach : finalOutreach.length,
+      offersCreated: outputOffers > 0 ? outputOffers : finalOffers.length,
+      pipelineEntries: outputPipeline > 0 ? outputPipeline : finalPipeline.length,
       creditsUsed: data?.output?.creditsUsed || data?.details?.apiUsage?.totalCost || 0,
       executionTime: data?.output?.executionTime || data?.details?.executionTime || duration
     };
     
     console.log("NORMALIZED OUTPUT:", {
       ...normalizedOutput,
-      rawArrays: {
-        leads: finalLeads.length,
-        personalized: finalPersonalized.length,
-        outreach: finalOutreach.length,
-        offers: finalOffers.length,
-        pipeline: finalPipeline.length
-      }
+      source: outputLeads > 0 ? 'output_field' : 'details_arrays',
+      rawOutput: { leadsGenerated: outputLeads, personalizedLeads: outputPersonalized, outreachMessages: outputOutreach, offersCreated: outputOffers, pipelineEntries: outputPipeline },
+      rawDetails: { leads: detailsLeads.length, personalizedMessages: detailsPersonalized.length, outreachMessages: detailsOutreach.length, offers: detailsOffers.length, pipeline: detailsPipeline.length }
     });
     
     return {
@@ -292,28 +288,42 @@ export default function Home() {
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       
-      // SAFE MODE: Check if we have a cached successful response
-      if (lastSuccessfulResponse && !testError) {
-        setTestResult(lastSuccessfulResponse);
-        setSafeMode(true);
-        setTestError(`API Error: ${errorMessage}. Showing last successful data (SAFE MODE)`);
-        setDbWriteStatus('success');
-        
-        if (debugMode) {
-          addDebugLog('info', 'SAFE MODE activated - using cached response', { 
-            error: errorMessage,
-            cachedResponse: lastSuccessfulResponse,
-            timestamp: new Date().toISOString()
-          });
+      // Handle error response properly - check if it's our new structured error
+      if (errorMessage.includes('BACKEND_ERROR') || errorMessage.includes('Backend acquisition failed')) {
+        // Backend failed - use SAFE MODE if available
+        if (lastSuccessfulResponse) {
+          setTestResult(lastSuccessfulResponse);
+          setSafeMode(true);
+          setTestError(`Backend Error: ${errorMessage}. Showing last successful data (SAFE MODE)`);
+          setDbWriteStatus('success');
+          
+          if (debugMode) {
+            addDebugLog('info', 'SAFE MODE activated - using cached response', { 
+              error: errorMessage,
+              cachedResponse: lastSuccessfulResponse,
+              timestamp: new Date().toISOString()
+            });
+          }
+        } else {
+          setTestError(`Backend Error: ${errorMessage}. No cached data available.`);
+          setDbWriteStatus('failed');
+          
+          if (debugMode) {
+            addDebugLog('error', 'Backend failed - no cached response', { 
+              error: errorMessage,
+              hasCachedResponse: !!lastSuccessfulResponse,
+              timestamp: new Date().toISOString()
+            });
+          }
         }
       } else {
+        // Other API errors
         setTestError(`API Error: ${errorMessage}`);
         setDbWriteStatus('failed');
         
         if (debugMode) {
-          addDebugLog('error', 'Test acquisition failed - no cached response', { 
+          addDebugLog('error', 'API request failed', { 
             error: errorMessage,
-            hasCachedResponse: !!lastSuccessfulResponse,
             timestamp: new Date().toISOString()
           });
         }

@@ -18,8 +18,8 @@ export const dynamic = 'force-dynamic';
 export async function POST(request: NextRequest) {
   console.log("API ROUTE: Request received");
   
-  // DEMO MODE CONFIGURATION
-  const DEMO_MODE = process.env.DEMO_MODE === 'true'; // Only use demo mode if explicitly enabled
+  // DEMO MODE CONFIGURATION - DISABLED FOR PRODUCTION
+  const DEMO_MODE = false; // Mock mode disabled - use real Groq API
   const MAX_LEADS_DEMO = 5;
   const MAX_AI_CALLS_DEMO = 3;
   

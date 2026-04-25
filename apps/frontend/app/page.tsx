@@ -255,94 +255,23 @@ export default function Home() {
       const result: TestResult = {
         success: data?.success || false,
         input: data?.input || { niche: '', location: '' },
-        output: normalized.output,
-        details: normalized.details,
-        error: data?.error,
-        errorCode: data?.errorCode
-      };
-
-      // UI REAL-TIME SYNC: Only update state if we have complete, valid data
-      if (result.success && normalized.output.leadsGenerated >= 0) {
-        setTestResult(result);
-        setDbWriteStatus('success');
-        
-        // SAFE MODE: Cache successful response for future fallbacks
-        setLastSuccessfulResponse(result);
-        setSafeMode(false);
-      } else {
-        // Prevent partial state overwrite - keep existing state if data is invalid
-        if (debugMode) {
-          addDebugLog('info', 'Prevented partial state overwrite', { 
-            reason: 'Invalid or incomplete response data',
-            response: result,
-            timestamp: new Date().toISOString()
-          });
-        }
-      }
-      
-      setLastSavedRecord({
-        timestamp: new Date().toISOString(),
-        leads: normalized.output.leadsGenerated,
-        creditsUsed: result.output?.creditsUsed || 0,
-        executionTime: duration
-      });
-      
-      if (debugMode) {
-        addDebugLog('response', 'Database write status', { status: 'success', record: lastSavedRecord });
-      }
-
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      
-      // Handle error response properly - check if it's our new structured error
-      if (errorMessage.includes('BACKEND_ERROR') || errorMessage.includes('Backend acquisition failed') || errorMessage.includes('RATE_LIMIT_ERROR')) {
-        // Backend failed - use SAFE MODE if available
-        if (lastSuccessfulResponse) {
-          setTestResult(lastSuccessfulResponse);
-          setSafeMode(true);
-          setTestError(`System busy: ${errorMessage}. Showing last successful data (SAFE MODE)`);
-          setDbWriteStatus('success');
-          
-          if (debugMode) {
-            addDebugLog('info', 'SAFE MODE activated - using cached response', { 
-              error: errorMessage,
-              cachedResponse: lastSuccessfulResponse,
-              timestamp: new Date().toISOString()
-            });
-          }
-        } else {
-          // Show user-friendly error message without breaking UI
-          const isRateLimitError = errorMessage.includes('RATE_LIMIT_ERROR') || errorMessage.includes('System busy');
-          setTestError(isRateLimitError ? 'System busy due to high demand. Please try again in a minute.' : 'Service temporarily unavailable. Please try again later.');
-          setDbWriteStatus('failed');
-          
-          if (debugMode) {
-            addDebugLog('error', 'Backend failed - no cached response', { 
-              error: errorMessage,
-              hasCachedResponse: !!lastSuccessfulResponse,
-              timestamp: new Date().toISOString()
-            });
-          }
-        }
-      } else {
-        // Other API errors
-        setTestError(`API Error: ${errorMessage}`);
-        setDbWriteStatus('failed');
-        
-        if (debugMode) {
-          addDebugLog('error', 'API request failed', { 
-            error: errorMessage,
-            timestamp: new Date().toISOString()
-          });
-        }
-      }
-    } finally {
-      setTestLoading(false);
     }
-  };
+    
+    setLastSavedRecord({
+      timestamp: new Date().toISOString(),
+      leads: normalized.output.leadsGenerated,
+      creditsUsed: result.output?.creditsUsed || 0,
+      executionTime: duration
+    });
 
-  const handleRetry = () => {
-    setTestError('');
+    // Check if this is a system success (data generated successfully)
+    if (data?.success && data?.output?.leadsGenerated > 0) {
+      return {
+        success: false,
+        error: 'System working properly - data generated successfully',
+        errorCode: 'SYSTEM_SUCCESS',
+        message: 'System operational - check dashboard for results'
+      };
     runTestAcquisition();
   };
 
@@ -724,11 +653,9 @@ export default function Home() {
                   <span className="text-sm font-medium">Response Type:</span>
                   <span className={`px-2 py-1 rounded text-xs ${
                     testResult.details?.result ? 'bg-green-100 text-green-800' :
-                    testResult.output?.creditsUsed === 0 ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-red-100 text-red-800'
+                    'bg-blue-100 text-blue-800'
                   }`}>
-                    {testResult.details?.result ? 'Real AI' :
-                     testResult.output?.creditsUsed === 0 ? 'Mock Mode' :
+                    {testResult.details?.result ? 'Real AI Response' :
                      'Error'}
                   </span>
                 </div>

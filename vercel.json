@@ -20,6 +20,7 @@
     }
   },
   "env": {
-    "BACKEND_URL": "https://client-acquisition-system-ai.vercel.app"
+    "BACKEND_URL": "https://client-acquisition-system-ai.vercel.app",
+    "GROQ_API_KEY": "@groq-api-key-placeholder"
   }
 }

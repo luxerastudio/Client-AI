@@ -195,6 +195,32 @@ export default function Home() {
         addDebugLog('timing', 'Request completed', { duration: `${duration}ms` });
       }
 
+      setTestResult(processTestResult(data));
+      setTestLoading(false);
+    } catch (error: any) {
+      const errorMessage = error?.message || 'Unknown error occurred';
+      const errorCode = error?.code || 'UNKNOWN_ERROR';
+      
+      if (debugMode) {
+        addDebugLog('error', 'Test acquisition failed', { 
+          error: errorMessage, 
+          code: errorCode,
+          stack: error?.stack 
+        });
+      }
+      
+      setTestError(errorMessage);
+      setTestResult({
+        success: false,
+        error: errorMessage,
+        errorCode: errorCode
+      });
+      setTestLoading(false);
+    } finally {
+      setTestLoading(false);
+    }
+  };
+
   // Create comprehensive normalization function for acquisition response
   const normalizeAcquisitionResponse = (data: any) => {
     console.log("NORMALIZING RESPONSE:", data);
@@ -228,7 +254,7 @@ export default function Home() {
       offersCreated: outputOffers > 0 ? outputOffers : finalOffers.length,
       pipelineEntries: outputPipeline > 0 ? outputPipeline : finalPipeline.length,
       creditsUsed: data?.output?.creditsUsed || data?.details?.apiUsage?.totalCost || 0,
-      executionTime: data?.output?.executionTime || data?.details?.executionTime || duration
+      executionTime: data?.output?.executionTime || data?.details?.executionTime || 0
     };
     
     console.log("NORMALIZED OUTPUT:", {
@@ -264,7 +290,7 @@ export default function Home() {
       timestamp: new Date().toISOString(),
       leads: normalized.output.leadsGenerated,
       creditsUsed: result.output?.creditsUsed || 0,
-      executionTime: duration
+      executionTime: 0
     });
 
     // Check if this is a system success (data generated successfully)
@@ -792,5 +818,4 @@ const handleRetry = () => {
       </div>
     </main>
   );
-};
-});
+}

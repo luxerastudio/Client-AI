@@ -251,11 +251,14 @@ export default function Home() {
     };
   };
 
-      const normalized = normalizeAcquisitionResponse(data);
-      const result: TestResult = {
-        success: data?.success || false,
-        input: data?.input || { niche: '', location: '' },
-    }
+      const processTestResult = (data: any) => {
+    const normalized = normalizeAcquisitionResponse(data);
+    const result: TestResult = {
+      success: data?.success || false,
+      input: data?.input || { niche: '', location: '' },
+      output: normalized.output,
+      details: normalized.details
+    };
     
     setLastSavedRecord({
       timestamp: new Date().toISOString(),
@@ -272,7 +275,8 @@ export default function Home() {
         errorCode: 'SYSTEM_SUCCESS',
         message: 'System operational - check dashboard for results'
       };
-    runTestAcquisition();
+    }
+    return result;
   };
 
   const handleFeatureClick = (featureName: string) => {
@@ -298,6 +302,11 @@ export default function Home() {
       </div>
     );
   }
+
+const handleRetry = () => {
+  setTestError('');
+  runTestAcquisition();
+};
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -782,5 +791,6 @@ export default function Home() {
         </div>
       </div>
     </main>
-  )
-}
+  );
+};
+});

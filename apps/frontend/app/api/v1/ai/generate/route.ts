@@ -1,32 +1,53 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Mock AI service for Vercel deployment
-// In production, this would use OpenAI API
-class MockAIService {
-  static async generateResponse(prompt: string, userId?: string) {
-    // Simulate processing time
-    await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
+// Real Groq AI Service - NO MOCK MODE
+class GroqAIService {
+  static async generateResponse(prompt: string, options: any = {}) {
+    const apiKey = process.env.GROQ_API_KEY;
     
-    const responses = [
-      `Based on your request about "${prompt.substring(0, 50)}...", I've generated a comprehensive response that addresses your needs. This is a mock response since we're deploying to Vercel without the full AI infrastructure.`,
-      `I understand you're looking for assistance with "${prompt.substring(0, 50)}...". Here's a tailored response that would typically come from our AI engine. This is a simulated response for Vercel deployment.`,
-      `For your query regarding "${prompt.substring(0, 50)}...", I've processed your request and created a personalized response. This is a mock implementation for Vercel serverless functions.`
-    ];
-    
-    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+    // Force error if key is missing - NO MOCK FALLBACK
+    if (!apiKey) {
+      throw new Error('GROQ_API_KEY is required. Please configure in environment variables.');
+    }
+
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        max_tokens: options.maxTokens || 1000,
+        temperature: options.temperature || 0.7,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`Groq API error: ${error.error?.message || response.statusText}`);
+    }
+
+    const data = await response.json();
     
     return {
-      content: randomResponse,
-      model: 'mock-llama-3.3-70b-versatile-vercel',
+      content: data.choices[0].message.content,
+      model: data.model,
       usage: {
-        prompt_tokens: prompt.length,
-        completion_tokens: randomResponse.length,
-        total_tokens: prompt.length + randomResponse.length
+        prompt_tokens: data.usage.prompt_tokens,
+        completion_tokens: data.usage.completion_tokens,
+        total_tokens: data.usage.total_tokens
       },
       metadata: {
-        userId: userId || 'anonymous',
+        userId: options.userId || 'anonymous',
         timestamp: new Date().toISOString(),
-        processingTime: Math.round(Math.random() * 1000) + 500
+        processingTime: Date.now() - new Date().getTime()
       }
     };
   }
@@ -34,21 +55,8 @@ class MockAIService {
 
 export async function POST(request: NextRequest) {
   try {
-    // Mock validation - environment variables are set in Vercel production
-    // if (!process.env.NODE_ENV) {
-    //   return NextResponse.json(
-    //     { 
-    //       success: false,
-    //       error: 'Server configuration error',
-    //       code: 'MISSING_ENV',
-    //       message: 'Required environment variables not configured'
-    //     },
-    //     { status: 500 }
-    //   );
-    // }
-    
     const body = await request.json();
-    const { prompt, userId, sessionId, enableMemory = true, enablePersonalization = true } = body;
+    const { prompt, userId, sessionId, enableMemory = true, enablePersonalization = true, maxTokens, temperature } = body;
     
     if (!prompt) {
       return NextResponse.json(
@@ -61,11 +69,8 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    // Check if Groq is configured
-    const hasGroq = !!process.env.GROQ_API_KEY;
-    
-    // Generate AI response
-    const aiResponse = await MockAIService.generateResponse(prompt, userId);
+    // Generate AI response using REAL Groq API
+    const aiResponse = await GroqAIService.generateResponse(prompt, { userId, maxTokens, temperature });
     
     // Memory enhancement simulation
     const memoryEnhancement = {

@@ -12,7 +12,7 @@ export class DatabaseConnection {
   private config: DatabaseConfig;
   private isConfigured: boolean;
   private connectionError: Error | null = null;
-  private isMockMode: boolean = false;
+  private isMockMode: boolean = false; // DISABLED - Force real connection
   private retryCount: number = 0;
   private readonly maxRetries: number = 3;
   private readonly connectionTimeout: number = 5000; // 5 seconds
@@ -22,8 +22,8 @@ export class DatabaseConnection {
     this.isConfigured = this.validateConfiguration();
     
     if (!this.isConfigured) {
-      console.log('🔧 DATABASE NOT CONFIGURED - SWITCHING TO SAFE MOCK MODE');
-      this.isMockMode = true;
+      console.log('🔧 DATABASE NOT CONFIGURED - REQUIRE REAL CONNECTION');
+      // this.isMockMode = true; // DISABLED - Force real connection
     }
   }
 
@@ -50,14 +50,14 @@ export class DatabaseConnection {
     // Safe initialization - never crash the app
     try {
       if (this.isMockMode) {
-        console.log('🔧 DATABASE NOT AVAILABLE - RUNNING IN DEGRADED MODE');
-        return;
+        console.log('🔧 DATABASE NOT AVAILABLE - REQUIRING REAL CONNECTION');
+        // DISABLED: return; // Force real connection
       }
 
       if (!this.isConfigured) {
-        console.log('❌ DATABASE NOT CONFIGURED - SWITCHING TO DEGRADED MODE');
-        this.isMockMode = true;
-        return;
+        console.log('❌ DATABASE NOT CONFIGURED - REQUIRING REAL CONNECTION');
+        // this.isMockMode = true; // DISABLED - Force real connection
+        // return; // DISABLED - Force real connection
       }
 
       // Retry logic with timeout protection

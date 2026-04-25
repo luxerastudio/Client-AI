@@ -1,5 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Simplified Prisma schema for essential functionality only
 
 generator client {
   provider = "prisma-client-js"
@@ -10,52 +9,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Workflow {
+model Lead {
   id          String   @id @default(cuid())
-  name        String
-  type        String
-  status      String
-  userId      String
-  steps       Json
-  definition  Json?
-  config      Json?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  niche       String
+  location    String
+  businessName String?
+  contactPerson String?
+  email       String?
+  phone       String?
+  painPoint   String?
+  generatedAt DateTime @default(now())
+  userId      String?
 
-  @@map("workflows")
-}
-
-model AIWorkflow {
-  id           String   @id @default(cuid())
-  name         String
-  description  String?
-  type         String
-  status       String
-  steps        Json
-  modelConfig  Json
-  inputSchema  Json
-  outputSchema Json
-  metadata     Json?
-  userId       String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  @@map("ai_workflows")
-}
-
-model WorkflowExecution {
-  id          String   @id @default(cuid())
-  workflowId  String
-  status      String
-  input       Json
-  output      Json?
-  error       String?
-  startedAt   DateTime @default(now())
-  completedAt DateTime?
-  metadata    Json?
-  stepResults Json?
-  results     Json?
-  metrics     Json?
-
-  @@map("workflow_executions")
+  @@map("leads")
 }

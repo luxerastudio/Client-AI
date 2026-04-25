@@ -24,7 +24,9 @@ export async function POST(request: NextRequest) {
     });
     
     // Forward to real backend API
-    const backendUrl = 'http://localhost:3002/api/v1/test';
+    const backendUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://client-acquisition-system-ai.vercel.app/api/test-simple'
+      : 'http://localhost:3002/api/v1/test';
     
     const response = await fetch(backendUrl, {
       method: 'POST',

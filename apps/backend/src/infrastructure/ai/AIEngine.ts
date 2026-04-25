@@ -33,18 +33,17 @@ export class OpenAIProvider implements AIProvider {
   private apiKey: string;
 
   constructor() {
-    this.apiKey = config.ai?.apiKey || process.env.GROQ_API_KEY || process.env.OPENAI_API_KEY || '';
+    this.apiKey = process.env.GROQ_API_KEY || '';
     
-    if (!this.apiKey || this.apiKey.includes('sk-dev-key-for-testing-only')) {
-      console.warn('Groq API key not found or using dev key. Using mock mode for development.');
-      this.client = null as any; // Will be handled in generate method
-    } else {
-      this.client = new OpenAI({
-        apiKey: this.apiKey,
-        baseURL: 'https://api.groq.com/openai/v1',
-        timeout: 60000, // 60 seconds timeout
-      });
+    if (!this.apiKey) {
+      throw new Error('GROQ_API_KEY environment variable is required');
     }
+    
+    this.client = new OpenAI({
+      apiKey: this.apiKey,
+      baseURL: 'https://api.groq.com/openai/v1',
+      timeout: 60000, // 60 seconds timeout
+    });
   }
 
   async generate(request: AIRequest): Promise<AIResponse> {
@@ -54,21 +53,7 @@ export class OpenAIProvider implements AIProvider {
         throw new Error('Invalid request: prompt is required and must not be empty');
       }
 
-      // If no API key, use mock mode for development
-      if (!this.client) {
-        console.warn('⚠️ Groq API key not configured - using mock mode for development');
-        return {
-          content: `Mock AI response for prompt: "${request.prompt.substring(0, 100)}..."`,
-          usage: {
-            promptTokens: 10,
-            completionTokens: 20,
-            totalTokens: 30
-          },
-          model: 'mock-llama-3.3-70b-versatile',
-          finishReason: 'stop'
-        };
-      }
-
+      
       // Prepare messages for OpenAI API
       const messages: any[] = [];
       

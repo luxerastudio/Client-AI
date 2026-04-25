@@ -5,6 +5,12 @@
   "buildCommand": "cd apps/frontend && pnpm build",
   "outputDirectory": "apps/frontend/.next",
   "functions": {
+    "api/v1/test.ts": {
+      "maxDuration": 30
+    },
+    "api/v1/health.ts": {
+      "maxDuration": 30
+    },
     "app/api/test/route.ts": {
       "maxDuration": 30
     },

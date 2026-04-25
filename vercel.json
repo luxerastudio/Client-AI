@@ -18,5 +18,8 @@
       "NEXT_PUBLIC_ENV": "production",
       "BACKEND_URL": "https://client-acquisition-system-ai.vercel.app"
     }
+  },
+  "env": {
+    "BACKEND_URL": "https://client-acquisition-system-ai.vercel.app"
   }
 }

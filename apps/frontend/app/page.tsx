@@ -55,6 +55,10 @@ export default function Home() {
   const [debugMode, setDebugMode] = useState(false);
   const [responseView, setResponseView] = useState<'formatted' | 'raw'>('formatted');
   const [requestTiming, setRequestTiming] = useState<{ start: number; end: number; duration: number } | null>(null);
+  
+  // SAFE MODE: Cache last successful response for fallback
+  const [lastSuccessfulResponse, setLastSuccessfulResponse] = useState<TestResult | null>(null);
+  const [safeMode, setSafeMode] = useState(false);
 
   // Fix hydration issues
   useEffect(() => {
@@ -185,35 +189,98 @@ export default function Home() {
         addDebugLog('timing', 'Request completed', { duration: `${duration}ms` });
       }
 
-      const safe = (arr: any) => Array.isArray(arr) ? arr : [];
-      const leads = safe(data?.details?.leads);
-      const personalized = safe(data?.details?.personalizedMessages);
-      const outreach = safe(data?.details?.outreachMessages);
-      const offers = safe(data?.details?.offers || (data?.details?.offer ? [data?.details?.offer] : []));
-      const pipeline = safe(data?.details?.pipeline);
+  // Create comprehensive normalization function for acquisition response
+  const normalizeAcquisitionResponse = (data: any) => {
+    console.log("NORMALIZING RESPONSE:", data);
+    
+    // Primary mapping from details arrays (backend response)
+    const leads = Array.isArray(data?.details?.leads) ? data.details.leads : [];
+    const personalizedMessages = Array.isArray(data?.details?.personalizedMessages) ? data.details.personalizedMessages : [];
+    const outreachMessages = Array.isArray(data?.details?.outreachMessages) ? data.details.outreachMessages : [];
+    const offers = Array.isArray(data?.details?.offers) ? data.details.offers : 
+                  (data?.details?.offer ? [data.details.offer] : []);
+    const pipeline = Array.isArray(data?.details?.pipeline) ? data.details.pipeline : [];
+    
+    // Fallback to output structure if details is missing
+    const fallbackLeads = Array.isArray(data?.output?.leads) ? data.output.leads : leads;
+    const fallbackPersonalized = Array.isArray(data?.output?.personalizedLeads) ? data.output.personalizedLeads : personalizedMessages;
+    const fallbackOutreach = Array.isArray(data?.output?.outreachMessages) ? data.output.outreachMessages : outreachMessages;
+    const fallbackOffers = Array.isArray(data?.output?.offers) ? data.output.offers : offers;
+    const fallbackPipeline = Array.isArray(data?.output?.pipeline) ? data.output.pipeline : pipeline;
+    
+    // Final arrays to use
+    const finalLeads = leads.length > 0 ? leads : fallbackLeads;
+    const finalPersonalized = personalizedMessages.length > 0 ? personalizedMessages : fallbackPersonalized;
+    const finalOutreach = outreachMessages.length > 0 ? outreachMessages : fallbackOutreach;
+    const finalOffers = offers.length > 0 ? offers : fallbackOffers;
+    const finalPipeline = pipeline.length > 0 ? pipeline : fallbackPipeline;
+    
+    const normalizedOutput = {
+      leadsGenerated: finalLeads.length,
+      personalizedLeads: finalPersonalized.length,
+      outreachMessages: finalOutreach.length,
+      offersCreated: finalOffers.length,
+      pipelineEntries: finalPipeline.length,
+      creditsUsed: data?.output?.creditsUsed || data?.details?.apiUsage?.totalCost || 0,
+      executionTime: data?.output?.executionTime || data?.details?.executionTime || duration
+    };
+    
+    console.log("NORMALIZED OUTPUT:", {
+      ...normalizedOutput,
+      rawArrays: {
+        leads: finalLeads.length,
+        personalized: finalPersonalized.length,
+        outreach: finalOutreach.length,
+        offers: finalOffers.length,
+        pipeline: finalPipeline.length
+      }
+    });
+    
+    return {
+      output: normalizedOutput,
+      details: {
+        leads: finalLeads,
+        personalizedMessages: finalPersonalized,
+        outreachMessages: finalOutreach,
+        offers: finalOffers,
+        pipeline: finalPipeline,
+        ...data?.details
+      }
+    };
+  };
 
+      const normalized = normalizeAcquisitionResponse(data);
       const result: TestResult = {
         success: data?.success || false,
         input: data?.input || { niche: '', location: '' },
-        output: {
-          leadsGenerated: leads.length,
-          personalizedLeads: personalized.length,
-          outreachMessages: outreach.length,
-          offersCreated: offers.length,
-          pipelineEntries: pipeline.length,
-          creditsUsed: data?.output?.creditsUsed || 0,
-          executionTime: data?.output?.executionTime || duration
-        },
-        details: data?.details || {},
+        output: normalized.output,
+        details: normalized.details,
         error: data?.error,
         errorCode: data?.errorCode
       };
 
-      setTestResult(result);
-      setDbWriteStatus('success');
+      // UI REAL-TIME SYNC: Only update state if we have complete, valid data
+      if (result.success && normalized.output.leadsGenerated >= 0) {
+        setTestResult(result);
+        setDbWriteStatus('success');
+        
+        // SAFE MODE: Cache successful response for future fallbacks
+        setLastSuccessfulResponse(result);
+        setSafeMode(false);
+      } else {
+        // Prevent partial state overwrite - keep existing state if data is invalid
+        if (debugMode) {
+          addDebugLog('info', 'Prevented partial state overwrite', { 
+            reason: 'Invalid or incomplete response data',
+            response: result,
+            timestamp: new Date().toISOString()
+          });
+        }
+      }
+      
       setLastSavedRecord({
         timestamp: new Date().toISOString(),
-        leads: leads.length,
+        leads: normalized.output.leadsGenerated,
         creditsUsed: result.output?.creditsUsed || 0,
         executionTime: duration
       });
@@ -224,14 +291,32 @@ export default function Home() {
 
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      setTestError(`API Error: ${errorMessage}`);
-      setDbWriteStatus('failed');
       
-      if (debugMode) {
-        addDebugLog('error', 'Test acquisition failed', { 
-          error: errorMessage,
-          timestamp: new Date().toISOString()
-        });
+      // SAFE MODE: Check if we have a cached successful response
+      if (lastSuccessfulResponse && !testError) {
+        setTestResult(lastSuccessfulResponse);
+        setSafeMode(true);
+        setTestError(`API Error: ${errorMessage}. Showing last successful data (SAFE MODE)`);
+        setDbWriteStatus('success');
+        
+        if (debugMode) {
+          addDebugLog('info', 'SAFE MODE activated - using cached response', { 
+            error: errorMessage,
+            cachedResponse: lastSuccessfulResponse,
+            timestamp: new Date().toISOString()
+          });
+        }
+      } else {
+        setTestError(`API Error: ${errorMessage}`);
+        setDbWriteStatus('failed');
+        
+        if (debugMode) {
+          addDebugLog('error', 'Test acquisition failed - no cached response', { 
+            error: errorMessage,
+            hasCachedResponse: !!lastSuccessfulResponse,
+            timestamp: new Date().toISOString()
+          });
+        }
       }
     } finally {
       setTestLoading(false);

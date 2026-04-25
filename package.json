@@ -6,7 +6,9 @@
   "packageManager": "pnpm@9.0.0",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "dev": "pnpm --parallel dev",
+    "dev": "./scripts/cleanup-ports.sh && cd apps/frontend && pnpm dev",
+    "dev:all": "./scripts/cleanup-ports.sh && pnpm --parallel dev",
+    "dev:backend": "./scripts/cleanup-ports.sh && cd apps/backend && pnpm dev",
     "build": "pnpm -r build",
     "build:clean": "rm -rf node_modules pnpm-lock.yaml && pnpm install && pnpm build",
     "start": "pnpm --parallel start",
